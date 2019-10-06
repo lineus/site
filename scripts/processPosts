@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 
+const pug = require('pug');
+const fn = pug.compileFile('includes/postTemplate.pug');
+const md = require('marked');
 const { readdir, readFile, writeFile } = require('fs').promises;
 
 const inDir = './posts/';
@@ -13,7 +16,8 @@ async function run() {
   const files = mdFiles.map(f => {
     return {
       in: `${inDir}${f}`,
-      out: `${outDir}${f}`
+      out: `${outDir}${f.replace(/\.md$/, '.html')}`,
+      title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`
     };
   });
 
@@ -28,6 +32,7 @@ async function getMDs(dir) {
 }
 
 async function process(file) {
-  let contents = await readFile(file.in);
-  await writeFile(file.out, contents);
+  let contents = await readFile(file.in, 'utf-8');
+  let blargh = fn({ title: file.title, post: md(contents) });
+  await writeFile(file.out, blargh);
 }
