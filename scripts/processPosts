@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+'use strict';
+
+const { readdir, readFile, writeFile } = require('fs').promises;
+
+const inDir = './posts/';
+const outDir = './docs/posts/';
+
+run();
+
+async function run() {
+  const mdFiles = await getMDs(inDir);
+  const files = mdFiles.map(f => {
+    return {
+      in: `${inDir}${f}`,
+      out: `${outDir}${f}`
+    };
+  });
+
+  for (let file of files) {
+    await process(file);
+  }
+}
+
+async function getMDs(dir) {
+  const files = await readdir(dir);
+  return files.filter(f => /\.md$/.test(f));
+}
+
+async function process(file) {
+  let contents = await readFile(file.in);
+  await writeFile(file.out, contents);
+}
