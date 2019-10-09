@@ -27,3 +27,10 @@ body {
 #nav {
   display: inline-block;
 }
+
+@media (max-width: 414px) {
+  #logo, #nav {
+    display: block;
+    color: blue;
+  }
+}
