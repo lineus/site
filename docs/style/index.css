@@ -19,3 +19,7 @@ body {
   text-decoration: none;
   color: #ccc;
 }
+
+#logo {
+  color: red;
+}
