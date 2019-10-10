@@ -17,7 +17,10 @@ async function run() {
         console.error(e);
         process.exit(1);
       });
-      writeFile(`${o}${file.replace('.scss', '.css')}`, result.css);
+      writeFile(`${o}${file.replace('.scss', '.css')}`, result.css).catch(e => {
+        console.error(e);
+        console.log(`IAMIN: ${process.cwd}`);
+      });
     }
   }
 }
