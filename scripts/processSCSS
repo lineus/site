@@ -19,7 +19,7 @@ async function run() {
       });
       writeFile(`${o}${file.replace('.scss', '.css')}`, result.css).catch(e => {
         console.error(e);
-        console.log(`IAMIN: ${process.cwd}`);
+        console.log(`IAMIN: ${process.cwd()}`);
       });
     }
   }
