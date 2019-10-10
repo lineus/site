@@ -1,7 +1,7 @@
 html
   head
     title lineus.dev
-    link(rel="stylesheet" href="./style/index.css")
+    include headCommon.pug
   body
     #header
       include logo.pug
@@ -10,6 +10,6 @@ html
       ul
         each val in posts
           li
-            a(href=`${val}`) #{val}
+            a(href=`${val.out}` class="post") #{val.title}
     #footer
       include footer.pug

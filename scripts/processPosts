@@ -27,7 +27,7 @@ async function run() {
     await process(file);
   }
 
-  const lsHTML = makeLS({ posts: files.map(f => f.out)});
+  const lsHTML = makeLS({ posts: files });
   await writeFile(lsOut, lsHTML);
 }
 
@@ -39,5 +39,6 @@ async function getMDs(dir) {
 async function process(file) {
   let contents = await readFile(file.in, 'utf-8');
   let blargh = fn({ title: file.title, post: md(contents) });
-  await writeFile(file.out, blargh);
+  let post = blargh.replace(/<!--[\W\s\w]*-->/g, '');
+  await writeFile(file.out, post);
 }
