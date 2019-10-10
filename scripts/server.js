@@ -25,19 +25,19 @@ const map = {
 http.createServer(function (req, res) {
   const parsedUrl = url.parse(req.url);
   let input = parsedUrl.pathname === '/' ? '/index.html':parsedUrl.pathname;
-  let pathname = `./docs${input.replace(/^(\.)+/, '.')}`;
-  const ext = path.parse(pathname).ext || '.html';
+  let pName = `./docs${input.replace(/^(\.)+/, '.').replace(/^\/docs/, '')}`;
+  const ext = path.parse(pName).ext || '.html';
 
-  fs.exists(pathname, function (exist) {
+  fs.exists(pName, function (exist) {
     if (!exist) {
       res.statusCode = 404;
-      res.end(`File ${pathname} not found!`);
+      res.end(`File ${pName} not found!`);
       return;
     }
 
-    if (fs.statSync(pathname).isDirectory()) pathname += '/index' + ext;
+    if (fs.statSync(pName).isDirectory()) pName += '/index' + ext;
 
-    fs.readFile(pathname, function (err, data) {
+    fs.readFile(pName, function (err, data) {
       if (err) {
         res.statusCode = 500;
         res.end(`Error getting the file: ${err}.`);

@@ -6,7 +6,10 @@ html
     #header
       include logo.pug
       include nav.pug
-    #container
-      p contains things
+    #posts
+      ul
+        each val in posts
+          li
+            a(href=`${val}`) #{val}
     #footer
       include footer.pug

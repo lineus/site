@@ -2,14 +2,14 @@
 'use strict';
 
 const pug = require('pug');
-const fn = pug.compileFile('includes/index.pug');
+const makeIndex = pug.compileFile('includes/index.pug');
 const { writeFile } = require('fs').promises;
 
-const out = './docs/index.html';
+const indexOut = './docs/index.html';
 
 run();
 
 async function run() {
-  const html = fn({});
-  writeFile(out, html);
+  const indexHTML = makeIndex({});
+  await writeFile(indexOut, indexHTML);
 }

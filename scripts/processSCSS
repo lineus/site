@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+'use strict';
+
+const sass = require('node-sass');
+const { readdir, writeFile } = require('fs').promises;
+
+const i = './includes/sass/';
+const o = './docs/style/';
+
+run();
+
+async function run() {
+  const files = await readdir(i);
+  for (let file of files) {
+    if (/\.scss$/.test(file)) {
+      let result = await render(`${i}${file}`).catch(e => {
+        console.error(e);
+        process.exit(1);
+      });
+      writeFile(`${o}${file.replace('.scss', '.css')}`, result.css);
+    }
+  }
+}
+
+function render(f) {
+  return new Promise((res, rej) => {
+    sass.render({ file: f }, (err, r) => {
+      if (err) {
+        return rej(err);
+      }
+      return res(r);
+    });
+  });
+}

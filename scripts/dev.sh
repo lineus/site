@@ -12,7 +12,7 @@ if [ -e ./node_modules/.bin/nodemon ]; then
   fi
   if [[ $n -eq 0 ]]; then
     echo "starting nodemon"
-    ./node_modules/.bin/nodemon --ignore docs ./scripts/build.sh -- &
+    ./node_modules/.bin/nodemon -e pug,scss --watch posts --watch includes ./scripts/build.sh -- &
   else
     echo "nodemon running."
   fi

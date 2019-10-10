@@ -3,11 +3,13 @@
 
 const pug = require('pug');
 const fn = pug.compileFile('includes/postTemplate.pug');
+const makeLS = pug.compileFile('includes/ls.pug');
 const md = require('marked');
 const { readdir, readFile, writeFile } = require('fs').promises;
 
 const inDir = './posts/';
 const outDir = './docs/posts/';
+const lsOut = './docs/ls.html';
 
 run();
 
@@ -24,6 +26,9 @@ async function run() {
   for (let file of files) {
     await process(file);
   }
+
+  const lsHTML = makeLS({ posts: files.map(f => f.out)});
+  await writeFile(lsOut, lsHTML);
 }
 
 async function getMDs(dir) {
