@@ -3,5 +3,9 @@ html
     title Kev.in.Words/posts/#{title}
     include headCommon.pug
   body
-    include nav.pug
+    #header
+      include logo.pug
+      include nav.pug
     #container !{post}
+    #footer
+      include footer.pug
