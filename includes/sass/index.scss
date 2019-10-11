@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Norican|Roboto|Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Norican|Nanum+Gothic|Cabin|Raleway&display=swap');
 
-$bg: #CECFCE;
+$bg: #8EAAE8;
+$bgl: #DCDFDC;
 $bgd: #9A9A9A;
 $fg: #212321;
-$fg_ibt: #383838;
-$fg_sup: #656865;
+$fg_ibt: #A28EE8;
+$fg_sup: #43506E;
 
 * {
   margin: 0;
@@ -15,13 +16,15 @@ body {
   height: 100vh;
   background-color: $bg;
   color: $fg;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
   display: flex;
   flex-direction: column;
 }
 
 #header {
   flex-grow: 0;
+  display: flex;
+  flex-direction: row;
 }
 
 #footer {
@@ -30,64 +33,97 @@ body {
 }
 
 #footer>p {
-  margin-left: 50%;
-  color: $bgd;
+  margin-left: 5%;
+  font-family: 'Raleway', sans-serif;
+  color: $bgl;
 }
 
 #container,#posts {
-  background-color: #fff;
+  border-radius: .4em;
+  background-color: $bgl;
   flex-grow: 30;
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
+  // margin-left: 1em;
+  // margin-right: 1em;
+  padding-top: 1em;
+}
+
+#container {
+  padding-left: 1em;
+}
+
+#container > h1,h2,h3 {
+  font-family: 'Cabin', sans-serif;
+}
+
+#container > p {
+  color: $fg_sup;
 }
 
 #nav {
-  width: 60vw;
-  display: inline-flex;
+  flex-grow: 20;
+  display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-end;
+  align-self: flex-end;
 }
 
 .navlink {
   // background-color: $bgd;
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
   font-weight: 600;
   text-decoration: none;
-  color: $fg_ibt;
+  color: $fg_sup;
   padding: 1em;
   margin-right: 2em;
 }
 
 #logo {
-  width: 20vw;
+  flex-grow: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  row-gap: 0;
+  column-gap: 0;
+}
+
+#logo > #name {
+  grid-row-start: 1;
+  grid-row-end: 6;
+  grid-column-start: 2;
+  grid-column-end: 8;
+}
+
+#logo > #dev {
+  grid-row-start: 4;
+  grid-row-end: 6;
+  grid-column-start: 8;
+  grid-column-end: 12;
+  padding-left: .75em;
+}
+
+#logo {
+  width: 360px;
+  height: 100px;
 }
 
 #logo span.a {
   font-family: 'Norican', cursive;
   color: $fg;
   font-size: 90px;
-  margin-left: 10px;
+  // margin-left: 10px;
 }
 
 #logo span.b {
-  color: $fg_sup;
-  font-size: 54px;
-  font-family: 'Roboto Condensed';
+  color: $bgl;
+  font-size: 40px;
+  font-family: 'Raleway';
 }
 
 #logo span.c,span.d {
   color: $fg_ibt;
-  font-size: 62px;
-}
-
-#logo span.c {
-  margin-left: 10px;
-}
-
-#posts {
-  font-family: 'Roboto Condensed', sans-serif;
-  margin-left: 1em;
-  margin-right: 1em;
+  font-size: 40px;
 }
 
 #posts>ul {
@@ -95,7 +131,7 @@ body {
 }
 
 #posts a.post {
-  font-size: 4em;
+  font-size: 1em;
   padding-left: 1em;
 }
 
@@ -112,11 +148,28 @@ body {
     display: flex;
     flex-direction: column;
   }
+
+  #header {
+    display: block;
+  }
+
   #logo, #nav {
     overflow: hidden;
     width: 100vw;
     margin: 0;
     padding: 0;
-    display: block;
+  }
+
+  #nav {
+    justify-content: space-around;
+    align-content: space-around;
+  }
+
+  .navlink {
+    margin: 0;
+  }
+
+  #posts a.post {
+    font-size: 1em;
   }
 }
