@@ -2,8 +2,8 @@
 'use strict';
 
 const pug = require('pug');
-const fn = pug.compileFile('includes/postTemplate.pug');
-const makeLS = pug.compileFile('includes/ls.pug');
+const fn = pug.compileFile('includes/pug/postTemplate.pug');
+const makeLS = pug.compileFile('includes/pug/ls.pug');
 const md = require('marked');
 const { stat, readdir, readFile, writeFile } = require('fs').promises;
 

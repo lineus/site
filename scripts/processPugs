@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+'use strict';
+
+const pug = require('pug');
+const { readdir, writeFile } = require('fs').promises;
+
+const PUGDIR = './includes';
+
+run();
+
+async function run() {
+  const dirEntries = await readdir(PUGDIR);
+  const topLevelPugFiles = dirEntries.filter(e => /\.pug$/.test(e));
+  for (let pugFile of topLevelPugFiles) {
+    let fn = pug.compileFile(`./includes/${pugFile}`);
+    let outName = pugFile.replace(/pug$/, 'html');
+    let HTML = fn({});
+    await writeFile(`./docs/${outName}`, HTML);
+  }
+}

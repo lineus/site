@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha test/**/**.spec.js",
-    "build": "scripts/processPosts && scripts/processIndex && scripts/processSCSS",
+    "build": "scripts/processPosts && scripts/processPugs && scripts/processSCSS",
     "dev": "./scripts/dev.sh",
     "undev": "./scripts/undev.sh"
   },
