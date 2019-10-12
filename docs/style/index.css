@@ -23,11 +23,10 @@ body {
 #footer > p {
   margin-left: 5%;
   font-family: 'Raleway', sans-serif;
-  color: #DCDFDC; }
+  color: #BBF5FA; }
 
 #container, #posts {
-  border-radius: .4em;
-  background-color: #DCDFDC;
+  background-color: #BBF5FA;
   flex-grow: 30;
   font-family: 'Nanum Gothic', sans-serif;
   padding-top: 1em; }
@@ -63,7 +62,8 @@ body {
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(6, 1fr);
   row-gap: 0;
-  column-gap: 0; }
+  column-gap: 0;
+  margin-bottom: .5em; }
 
 #logo > #name {
   grid-row-start: 1;
@@ -88,7 +88,7 @@ body {
   font-size: 90px; }
 
 #logo span.b {
-  color: #DCDFDC;
+  color: #BBF5FA;
   font-size: 40px;
   font-family: 'Raleway'; }
 
@@ -109,7 +109,35 @@ body {
 #posts a.post:visited {
   color: #43506E; }
 
-@media (max-width: 414px) {
+#postList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap; }
+
+.postListing {
+  background-color: #8EAAE8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  border: 1px dotted #9A9A9A;
+  padding-bottom: 1em;
+  padding-right: 1em;
+  margin-bottom: 1em; }
+
+.postListing {
+  width: 25vw;
+  height: 25vw; }
+
+.postsDate {
+  color: #BBF5FA;
+  font-style: italic;
+  font-size: .75em; }
+
+@media (max-width: 500px) {
   body {
     display: flex;
     flex-direction: column; }
@@ -120,6 +148,16 @@ body {
     width: 100vw;
     margin: 0;
     padding: 0; }
+  #container, #posts {
+    padding-top: .1em; }
+  #postList {
+    flex-direction: column;
+    width: 100vw; }
+  #postList > li {
+    width: 100vw; }
+  .postListing {
+    width: 100vw;
+    margin-bottom: .1em; }
   #nav {
     justify-content: space-around;
     align-content: space-around; }

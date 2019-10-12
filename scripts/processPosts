@@ -5,7 +5,7 @@ const pug = require('pug');
 const fn = pug.compileFile('includes/postTemplate.pug');
 const makeLS = pug.compileFile('includes/ls.pug');
 const md = require('marked');
-const { readdir, readFile, writeFile } = require('fs').promises;
+const { stat, readdir, readFile, writeFile } = require('fs').promises;
 
 const inDir = './posts/';
 const outDir = './docs/posts/';
@@ -15,11 +15,14 @@ run();
 
 async function run() {
   const mdFiles = await getMDs(inDir);
-  const files = mdFiles.map(f => {
+  const stats = await getStats(mdFiles);
+  const files = mdFiles.map((f, i) => {
     return {
       in: `${inDir}${f}`,
       out: `${outDir}${f.replace(/\.md$/, '.html')}`,
-      title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`
+      title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`,
+      created: stats[i].created,
+      modified: stats[i].modified
     };
   });
 
@@ -29,6 +32,19 @@ async function run() {
 
   const lsHTML = makeLS({ posts: files });
   await writeFile(lsOut, lsHTML);
+}
+
+async function getStats(arr) {
+  let ret = [];
+  for (let file of arr) {
+    ret.push(await stat(`${inDir}${file}`));
+  }
+  return ret.map(s => {
+    return {
+      created: s.ctime.toDateString(),
+      modified: s.mtime.toDateString()
+    };
+  });
 }
 
 async function getMDs(dir) {

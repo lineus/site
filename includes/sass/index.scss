@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Norican|Nanum+Gothic|Cabin|Raleway&display=swap');
 
 $bg: #8EAAE8;
-$bgl: #DCDFDC;
+$bgl: #BBF5FA;
 $bgd: #9A9A9A;
 $fg: #212321;
 $fg_ibt: #A28EE8;
@@ -22,6 +22,7 @@ body {
 }
 
 #header {
+  // background-image: linear-gradient(to bottom, $bg, $bgl);
   flex-grow: 0;
   display: flex;
   flex-direction: row;
@@ -39,7 +40,6 @@ body {
 }
 
 #container,#posts {
-  border-radius: .4em;
   background-color: $bgl;
   flex-grow: 30;
   font-family: 'Nanum Gothic', sans-serif;
@@ -86,6 +86,7 @@ body {
   grid-template-rows: repeat(6, 1fr);
   row-gap: 0;
   column-gap: 0;
+  margin-bottom: .5em;
 }
 
 #logo > #name {
@@ -143,7 +144,41 @@ body {
   color: $fg_sup;
 }
 
-@media (max-width: 414px) {
+#postList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+.postListing {
+  // background-image: linear-gradient(to bottom,#fff, $bg);
+  background-color: $bg;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  border: 1px dotted $bgd;
+  padding-bottom: 1em;
+  padding-right: 1em;
+  margin-bottom: 1em;
+}
+
+.postListing {
+  width: 25vw;
+  height: 25vw;
+}
+
+.postsDate {
+  color: $bgl;
+  font-style: italic;
+  font-size: .75em;
+}
+
+@media (max-width: 500px) {
   body {
     display: flex;
     flex-direction: column;
@@ -158,6 +193,25 @@ body {
     width: 100vw;
     margin: 0;
     padding: 0;
+  } 
+
+  #container, #posts {
+    padding-top: .1em;
+    // overflow: hidden;
+  }
+
+  #postList {
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  #postList > li {
+    width: 100vw;
+  }
+
+  .postListing {
+    width: 100vw;
+    margin-bottom: .1em;
   }
 
   #nav {
