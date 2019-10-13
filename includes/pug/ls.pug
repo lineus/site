@@ -11,7 +11,7 @@ html
         each val in posts
           li
             div(class="postListing")
-              a(href=`${val.out}` class="post") #{val.title} 
+              a(href=`${val.out.replace(/^\.\/docs/, '.')}` class="post") #{val.title} 
               div(class="postsDate") #{val.created}
     #footer
       include footer.pug
