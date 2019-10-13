@@ -10,7 +10,8 @@
     "test": "mocha test/**/**.spec.js",
     "build": "scripts/processPosts && scripts/processPugs && scripts/processSCSS",
     "dev": "./scripts/dev.sh",
-    "undev": "./scripts/undev.sh"
+    "undev": "./scripts/undev.sh",
+    "deploy": "npm run build && bash -lc \"shirley 'deploying site'\""
   },
   "repository": {
     "type": "git",
