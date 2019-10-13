@@ -151,6 +151,7 @@ body {
     padding-top: .1em;
     overflow: hidden; }
   #postList {
+    overflow: hidden;
     flex-direction: column;
     width: 100vw; }
   #postList > li {

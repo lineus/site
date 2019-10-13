@@ -199,6 +199,7 @@ body {
   }
 
   #postList {
+    overflow: hidden;
     flex-direction: column;
     width: 100vw;
   }
