@@ -176,6 +176,18 @@ body {
   font-size: .75em;
 }
 
+#sort {
+  background-color: $fg;
+  color: $bg;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.sortButton:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 500px) {
   body {
     display: flex;

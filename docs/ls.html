@@ -1,1 +1,40 @@
-<html><head><title>lineus.dev</title><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="stylesheet" href="/style/index.css"/></head><body><div id="header"><div id="logo"><div id="name"><span class="a">lineus</span></div><div id="dev"><span class="c">({</span><span class="b">dev</span><span class="d">})</span></div></div><div id="nav"><a class="navlink" id="cd" href="/" title="home">Home</a><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list posts">Posts</a><a class="navlink" id="grep" href="/grep.html" title="search posts">Search</a></div></div><div id="posts"><ul id="postList"><li><div class="postListing"><a class="post" href="./posts/Johnny_5_is_Alive.html">Johnny 5 is Alive </a><div class="postsDate">Sun Oct 13 2019</div></div></li><li><div class="postListing"><a class="post" href="./posts/Third_Times_The_Charm.html">Third Times The Charm </a><div class="postsDate">Thu Oct 10 2019</div></div></li><li><div class="postListing"><a class="post" href="./posts/This_is_Test_2.html">This is Test 2 </a><div class="postsDate">Sun Oct 06 2019</div></div></li><li><div class="postListing"><a class="post" href="./posts/fourth_awesome_post.html">fourth awesome post </a><div class="postsDate">Fri Oct 11 2019</div></div></li><li><div class="postListing"><a class="post" href="./posts/test.html">test </a><div class="postsDate">Fri Oct 11 2019</div></div></li></ul></div><div id="footer"><span id="footer"><p>lineus wrote this.</p></span></div></body></html>
+<html><head><title>lineus.dev</title><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="stylesheet" href="/style/index.css"/></head><body><div id="header"><div id="logo"><div id="name"><span class="a">lineus</span></div><div id="dev"><span class="c">({</span><span class="b">dev</span><span class="d">})</span></div></div><div id="nav"><a class="navlink" id="cd" href="/" title="home">Home</a><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list posts">Posts</a><a class="navlink" id="grep" href="/grep.html" title="search posts">Search</a></div></div><div id="sort"><span class="sortButton" onclick="up()">Newest First</span><span class="sortButton" onclick="down()">Oldest First</span></div><div id="posts"><ul id="postList"></ul></div><script>const postString = '[{"in":"./posts/Johnny_5_is_Alive.md","out":"./docs/posts/Johnny_5_is_Alive.html","title":"Johnny 5 is Alive","created":"Sun Oct 13 2019","modified":"Sun Oct 13 2019"},{"in":"./posts/fourth_awesome_post.md","out":"./docs/posts/fourth_awesome_post.html","title":"fourth awesome post","created":"Fri Oct 11 2019","modified":"Fri Oct 11 2019"},{"in":"./posts/test.md","out":"./docs/posts/test.html","title":"test","created":"Fri Oct 11 2019","modified":"Fri Oct 11 2019"},{"in":"./posts/Third_Times_The_Charm.md","out":"./docs/posts/Third_Times_The_Charm.html","title":"Third Times The Charm","created":"Thu Oct 10 2019","modified":"Thu Oct 10 2019"},{"in":"./posts/This_is_Test_2.md","out":"./docs/posts/This_is_Test_2.html","title":"This is Test 2","created":"Sun Oct 06 2019","modified":"Sun Oct 06 2019"}]';
+let posts = JSON.parse(postString);
+const postEl = document.querySelector('#postList');
+
+drawPosts();
+
+function up() {
+  posts = posts.sort((a,b) => {
+    let aD = new Date(a.created);
+    let bD = new Date(b.created);
+    return bD - aD;
+  });
+  drawPosts();
+}
+
+function down() {
+  posts = posts.sort((a,b) => {
+    let aD = new Date(a.created);
+    let bD = new Date(b.created);
+    return aD - bD;
+  });
+  drawPosts();
+}
+
+function drawPosts() {
+  while(postEl.firstChild) {
+    postEl.removeChild(postEl.firstChild);
+  }
+  posts.map(p => {
+    let li = document.createElement('li');
+    let d = document.createElement('div');
+    d.classList.add('postListing');
+    d.innerHTML = `
+      <a href="${p.out.replace(/^\.\/docs/, '.')}" class="post">${p.title}</a>
+      <div class="postsDate">${p.created}</div>
+    `;
+    li.appendChild(d);
+    postEl.appendChild(li);
+  });
+}</script><div id="footer"><span id="footer"><p>lineus wrote this.</p></span></div></body></html>

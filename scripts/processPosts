@@ -30,7 +30,13 @@ async function run() {
     await process(file);
   }
 
-  const lsHTML = makeLS({ posts: files });
+  const lsHTML = makeLS({
+    posts: files.sort((a, b) => {
+      let aD = new Date(a.created);
+      let bD = new Date(b.created);
+      return bD - aD;
+    })
+  });
   await writeFile(lsOut, lsHTML);
 }
 

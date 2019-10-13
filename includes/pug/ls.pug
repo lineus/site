@@ -6,15 +6,51 @@ html
     #header
       include logo.pug
       include nav.pug
+    #sort
+      span.sortButton(onclick="up()") Newest First
+      span.sortButton(onclick="down()") Oldest First
     #posts
       ul#postList
-        each val in posts
-          li
-            div(class="postListing")
-              a(
-                href=`${val.out.replace(/^\.\/docs/, '.')}`
-                class="post"
-              ) #{val.title} 
-              div(class="postsDate") #{val.created}
+    script.
+      const postString = '!{JSON.stringify(posts)}';
+      let posts = JSON.parse(postString);
+      const postEl = document.querySelector('#postList');
+
+      drawPosts();
+      
+      function up() {
+        posts = posts.sort((a,b) => {
+          let aD = new Date(a.created);
+          let bD = new Date(b.created);
+          return bD - aD;
+        });
+        drawPosts();
+      }
+
+      function down() {
+        posts = posts.sort((a,b) => {
+          let aD = new Date(a.created);
+          let bD = new Date(b.created);
+          return aD - bD;
+        });
+        drawPosts();
+      }
+
+      function drawPosts() {
+        while(postEl.firstChild) {
+          postEl.removeChild(postEl.firstChild);
+        }
+        posts.map(p => {
+          let li = document.createElement('li');
+          let d = document.createElement('div');
+          d.classList.add('postListing');
+          d.innerHTML = `
+            <a href="${p.out.replace(/^\.\/docs/, '.')}" class="post">${p.title}</a>
+            <div class="postsDate">${p.created}</div>
+          `;
+          li.appendChild(d);
+          postEl.appendChild(li);
+        });
+      }
     #footer
       include footer.pug

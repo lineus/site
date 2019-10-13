@@ -136,6 +136,16 @@ body {
   font-style: italic;
   font-size: .75em; }
 
+#sort {
+  background-color: #212321;
+  color: #8EAAE8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
+
+.sortButton:hover {
+  cursor: pointer; }
+
 @media (max-width: 500px) {
   body {
     display: flex;
