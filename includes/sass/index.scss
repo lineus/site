@@ -10,6 +10,7 @@ $fg_sup: #43506E;
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -157,19 +158,16 @@ body {
   // background-image: linear-gradient(to bottom,#fff, $bg);
   background-color: $bg;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   flex-wrap: nowrap;
   align-items: flex-end;
   border: 1px dotted $bgd;
   padding-bottom: 1em;
   padding-right: 1em;
-  margin-bottom: 1em;
-}
-
-.postListing {
-  width: 25vw;
-  height: 25vw;
+  margin: .5em;
+  width: 10em;
+  height: 10em;
 }
 
 .postsDate {
@@ -197,7 +195,7 @@ body {
 
   #container, #posts {
     padding-top: .1em;
-    // overflow: hidden;
+    overflow: hidden;
   }
 
   #postList {
@@ -211,7 +209,10 @@ body {
 
   .postListing {
     width: 100vw;
-    margin-bottom: .1em;
+    height: 4em;
+    margin: 0;
+    margin-bottom: .2em;
+    flex-direction: row;
   }
 
   #nav {
