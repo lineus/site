@@ -101,7 +101,7 @@ body {
   list-style: none; }
 
 #posts a.post {
-  font-size: 1em;
+  font-size: 1.5em;
   padding-left: 1em; }
 
 #posts a.post:link {
@@ -124,7 +124,8 @@ body {
   justify-content: space-between;
   flex-wrap: nowrap;
   align-items: flex-end;
-  border: 1px dotted #9A9A9A;
+  border-radius: .5em;
+  padding-top: 1em;
   padding-bottom: 1em;
   padding-right: 1em;
   margin: .5em;
@@ -178,4 +179,7 @@ body {
   .navlink {
     margin: 0; }
   #posts a.post {
-    font-size: 1em; } }
+    font-size: 1em; }
+  #sort {
+    height: 2em;
+    padding-top: .35em; } }

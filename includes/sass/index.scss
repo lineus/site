@@ -133,7 +133,7 @@ body {
 }
 
 #posts a.post {
-  font-size: 1em;
+  font-size: 1.5em;
   padding-left: 1em;
 }
 
@@ -162,7 +162,8 @@ body {
   justify-content: space-between;
   flex-wrap: nowrap;
   align-items: flex-end;
-  border: 1px dotted $bgd;
+  border-radius: .5em;
+  padding-top: 1em;
   padding-bottom: 1em;
   padding-right: 1em;
   margin: .5em;
@@ -239,5 +240,10 @@ body {
 
   #posts a.post {
     font-size: 1em;
+  }
+
+  #sort {
+    height: 2em;
+    padding-top: .35em;
   }
 }

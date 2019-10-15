@@ -9,15 +9,29 @@ html
     #sort
       span.sortButton(onclick="up()") Newest First
       span.sortButton(onclick="down()") Oldest First
+      span.sortButton(onclick="bytitle()") By Title
     #posts
       ul#postList
     script.
       const postString = '!{JSON.stringify(posts)}';
-      let posts = JSON.parse(postString);
+      let posts = JSON.parse(postString).map(o => {
+        delete o.in;
+        return o;
+      });
       const postEl = document.querySelector('#postList');
 
       drawPosts();
-      
+
+      function bytitle() {
+        posts = posts.sort((a,b) => {
+          if (a.title > b.title) {
+            return 1;
+          }
+          return -1;
+        });
+        drawPosts();
+      }
+
       function up() {
         posts = posts.sort((a,b) => {
           let aD = new Date(a.created);
