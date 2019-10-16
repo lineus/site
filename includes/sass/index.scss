@@ -29,15 +29,44 @@ body {
   flex-direction: row;
 }
 
+#search {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: $fg;
+  width: 100vw;
+  height: 2.25em;
+  flex-grow: 0;
+}
+
+#query {
+  align-self: center;
+  background-color: $bgl;
+  height: 1.75em;
+  color: $fg;
+  width: 60vw;
+}
+
+#results {
+  flex-grow: 30;
+  background-color: $bgl;
+}
+
+.searchLink {
+  font-size: 2em;
+  color: $fg;
+  background: $bg;
+  margin-left: 2em;
+}
+
 #footer {
+  padding: .25em;
   flex-grow: 0;
   justify-self: flex-end;
 }
 
-#footer>p {
-  margin-left: 5%;
-  font-family: 'Raleway', sans-serif;
-  color: $bgl;
+#footer>a {
+  float: right;
 }
 
 #container,#posts {
@@ -227,6 +256,7 @@ body {
     margin: 0;
     margin-bottom: .2em;
     flex-direction: row;
+    border-radius: 0;
   }
 
   #nav {

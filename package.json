@@ -8,10 +8,11 @@
   },
   "scripts": {
     "test": "mocha test/**/**.spec.js",
-    "build": "scripts/processPosts && scripts/processPugs && scripts/processSCSS",
+    "build": "scripts/processPosts && scripts/processPugs && scripts/processSCSS && scripts/processSearchData",
     "dev": "./scripts/dev.sh",
     "undev": "./scripts/undev.sh",
-    "deploy": "npm run build && bash -lc \"shirley 'deploying site'\""
+    "deploy": "npm run build && bash -lc \"shirley 'deploying site'\"",
+    "newPost": "scripts/processSearchData"
   },
   "repository": {
     "type": "git",

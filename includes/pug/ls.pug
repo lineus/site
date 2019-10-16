@@ -7,64 +7,85 @@ html
       include logo.pug
       include nav.pug
     #sort
-      span.sortButton(onclick="up()") Newest First
-      span.sortButton(onclick="down()") Oldest First
-      span.sortButton(onclick="bytitle()") By Title
+      span.sortButton(onclick="bydate()") Oldest First
+      span.sortButton(onclick="bytitle()") Alphabetical
     #posts
       ul#postList
-    script.
-      const postString = '!{JSON.stringify(posts)}';
-      let posts = JSON.parse(postString).map(o => {
-        delete o.in;
-        return o;
-      });
-      const postEl = document.querySelector('#postList');
+        each post in posts
+          li.postListing
+              a(href="#{post.out}" class="post") #{post.title}
+              span.postsDate #{post.created}
+    script. 
+      const dateBut = document.querySelector('span.sortButton:first-child');
+      const titlBut = document.querySelector('span.sortButton:last-child');
+      const list = document.querySelector('#postList');
+      const posts = Array.from(list.childNodes);
 
-      drawPosts();
+      function replacePosts(arr) {
+        while (list.firstChild) {
+          list.removeChild(list.firstChild);
+        }
+        for (let child of arr) {
+          list.appendChild(child);
+        }
+      }
+
+      function bydate() {
+        let nodeList = [].concat(posts);
+        if (dateBut.innerText === 'Oldest First') {
+          dateBut.innerText = 'Newest First';
+          nodeList.sort(oldestFirst);
+        } else {
+          dateBut.innerText = 'Oldest First';
+          nodeList.sort(newestFirst);
+        }
+        replacePosts(nodeList);
+      }
 
       function bytitle() {
-        posts = posts.sort((a,b) => {
-          if (a.title > b.title) {
-            return 1;
-          }
-          return -1;
-        });
-        drawPosts();
-      }
-
-      function up() {
-        posts = posts.sort((a,b) => {
-          let aD = new Date(a.created);
-          let bD = new Date(b.created);
-          return bD - aD;
-        });
-        drawPosts();
-      }
-
-      function down() {
-        posts = posts.sort((a,b) => {
-          let aD = new Date(a.created);
-          let bD = new Date(b.created);
-          return aD - bD;
-        });
-        drawPosts();
-      }
-
-      function drawPosts() {
-        while(postEl.firstChild) {
-          postEl.removeChild(postEl.firstChild);
+        let nodeList = [].concat(posts);
+        if (titlBut.innerText === 'Alphabetical') {
+          titlBut.innerText = 'Reverse Alpha';
+          nodeList.sort(alpha);
+        } else {
+          titlBut.innerText = 'Alphabetical';
+          nodeList.sort(revAlpha);
         }
-        posts.map(p => {
-          let li = document.createElement('li');
-          let d = document.createElement('div');
-          d.classList.add('postListing');
-          d.innerHTML = `
-            <a href="${p.out.replace(/^\.\/docs/, '.')}" class="post">${p.title}</a>
-            <div class="postsDate">${p.created}</div>
-          `;
-          li.appendChild(d);
-          postEl.appendChild(li);
-        });
+        replacePosts(nodeList);
+      }
+
+      function oldestFirst(a,b) {
+        let aEl = a.querySelector('span.postsDate');
+        let bEl = b.querySelector('span.postsDate');
+        let aD = new Date(aEl.innerText);
+        let bD = new Date(bEl.innerText);
+        return aD - bD;
+      }
+
+      function newestFirst(a,b) {
+        let aEl = a.querySelector('span.postsDate');
+        let bEl = b.querySelector('span.postsDate');
+        let aD = new Date(aEl.innerText);
+        let bD = new Date(bEl.innerText);
+        return bD - aD;
+      }
+
+      function alpha(a,b) {
+        let aT = a.querySelector('a').innerText;
+        let bT = b.querySelector('a').innerText;
+        if (aT > bT) {
+          return 1;
+        }
+        return -1
+      }
+
+      function revAlpha(a,b) {
+        let aT = a.querySelector('a').innerText;
+        let bT = b.querySelector('a').innerText;
+        if (aT < bT) {
+          return 1;
+        }
+        return -1
       }
     #footer
       include footer.pug

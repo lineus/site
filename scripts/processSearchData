@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+'use strict';
+
+const pug = require('pug');
+const { searchGen } = require('../lib/utils');
+const { readdir, writeFile } = require('fs').promises;
+const fn = pug.compileFile('./includes/grep.pug');
+
+run();
+
+async function run() {
+  let searchData = [];
+  const files = await readdir('./posts');
+  const postFiles = files.filter(f => /\.md$/.test(f));
+  for (let post of postFiles) {
+    searchData.push(await searchGen(`./posts/${post}`));
+  }
+
+  const grepHTML = fn({ searchData });
+  await writeFile('./docs/grep.html', grepHTML);
+}

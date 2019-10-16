@@ -7,6 +7,118 @@ html
     #header
       include pug/logo.pug
       include pug/nav.pug
-    #container
+    #search
+      #query(contentEditable="true")
+    #results
+      ul#searchResults
+    script.
+      const jsonString = '!{JSON.stringify(searchData)}';
+      const searchData = JSON.parse(jsonString);
+      const q = document.querySelector('#query');
+      const list = document.querySelector('#searchResults');
+      let query = '';
+      const results = new Erray([], updateList);
+
+      function updateList(a) {
+        while (list.firstChild) {
+          list.removeChild(list.firstChild);
+        }
+        a.map(text => {
+          let el = document.createElement('li');
+          el.innerHTML = `<a>${text}</a>`;
+          list.appendChild(el);
+        })
+      }
+
+      function Erray() {
+        this.handler = null;
+        this.stack = null;
+        for (let arg of arguments) {
+          if (typeof arg === 'function') {
+            this.handler = arg;
+          } else if (typeof arg === 'object' && Array.isArray(arg)) {
+            this.stack = arg;
+          }
+        }
+
+        this.length = this.stack.length;
+        
+        let overloaded = [
+          'push',
+          'shift',
+          'sort',
+          'pop',
+          'reverse'
+        ]
+        
+        for (let ol of overloaded) {
+          this[ol] = function(e) {
+            Array.prototype[ol].call(this.stack, e);
+            this.stack = this.stack.filter((e, i, a) => {
+              let higherIndex = a.indexOf(e, i + 1);
+              if(higherIndex === -1) {
+                return true;
+              }
+              return false;
+            });
+            this.length = this.stack.length;
+            this.handler(this.stack);
+          }
+        }
+        
+        return this;
+      }
+
+      const search = debounce(searchFn, 250);
+      q.addEventListener('keyup', handler);
+
+      function handler(event) {
+        if (query !== q.innerText) {
+          query = q.innerText;
+        }
+
+        search(query);
+      }
+
+      function searchFn(q) {
+        const query = q.trim();
+        while(results.length > 0) {
+          results.shift();
+        }
+        if (!/^[\W\s\w]+$/.test(query) || query === '') {
+          return;
+        }
+
+        let i = 4;
+        while (i >= 0) {
+          for (let fileData of searchData) {
+            let a = fileData.level[i].tokens;
+            let re = new RegExp(query, 'i');
+            let index = a.findIndex((e) => {
+              return re.test(e);
+            });
+            if (index > -1) {
+              let dName = fileData.path.replace('./posts/', '').replace('.html', '');
+              results.push(`<li><a class="searchLink" href="${fileData.path}">${dName}</a></li>`);
+            }
+          }
+          i--;
+        }
+      }
+
+      function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+          var context = this, args = arguments;
+          var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+          };
+          var callNow = immediate && !timeout;
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+          if (callNow) func.apply(context, args);
+        };
+      };
     #footer
       include pug/footer.pug
