@@ -1,6 +1,12 @@
-<html><head><title>Kev.in.Words/posts/Johnny 5 is Alive</title><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="stylesheet" href="/style/index.css"/></head><body><div id="header"><div id="logo"><a id="name">lineus</a></div><div id="nav"><a class="navlink" id="cd" href="/" title="home">Home</a><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list posts">Posts</a><a class="navlink" id="grep" href="/grep.html" title="search posts">Search</a></div></div><div id="container"><h1 id="some-things-are-better-left-to-professionals">Some things are better left to professionals.</h1>
-<p>JOHNNY 5 is ALIVE!!!!</p>
-</div><div id="footer"><span id="footer"><style>.bmc-button img {
+<html><head><title>Kev.in.Words/posts/Johnny 5 is Alive</title><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="stylesheet" href="/style/index.css"/></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><a class="navlink" id="grep" href="/grep.html" title="search Articles">Search</a></div></div><div id="container"><h1 id="some-things-are-better-left-to-professionals">Some things are better left to professionals.</h1>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed arcu non odio euismod lacinia. Bibendum enim facilisis gravida neque convallis a. Sed viverra ipsum nunc aliquet bibendum enim facilisis. Metus dictum at tempor commodo ullamcorper a lacus. Habitant morbi tristique senectus et netus et malesuada fames ac. Vitae nunc sed velit dignissim sodales ut eu. A iaculis at erat pellentesque. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Ut sem nulla pharetra diam sit amet nisl. Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing. Est ultricies integer quis auctor elit sed vulputate mi. Turpis tincidunt id aliquet risus feugiat in ante metus. Aenean pharetra magna ac placerat. Vestibulum lorem sed risus ultricies tristique nulla aliquet enim.</p>
+</div><script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.4.0/stitch.js"></script><script>const link = './docs/posts/Johnny_5_is_Alive.html';
+const client = stitch.Stitch.initializeDefaultAppClient('blog-iydtx');
+const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('SiteMetrics');
+client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(function(user) {
+  db.collection('visitors').insertOne({ path: link }).catch(console.dir);
+}).catch(console.dir);</script><div id="footer"><span id="footer"><style>.bmc-button img {
   width: 27px !important;
   margin-bottom: 1px !important;
   box-shadow: none !important;

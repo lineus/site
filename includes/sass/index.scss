@@ -213,14 +213,38 @@ body {
 
 #latestPost {
   font-family: 'Cabin', sans-serif;
+  width: 40vw;
+  border: thin solid black;
+  padding: .75em;
+  background: rgba($bg, .2);
+  border-radius: .6em;
+  color: $fg;
 }
 
-#latestPost>span>h2, #latestPost>span>p {
+#latestPost a:link {
+  color: $fg;
+}
+
+#latestPost a:visited {
+  color: $fg_sup;
+}
+
+#latestPost>span>h3, #latestPost>span>p {
   display: inline-block;
+}
+
+#latestPost>span>h3 {
+  color: rgba($fg_ibt, .5);
+  padding-bottom: 1em;
 }
 
 #latestPost>span>p {
   padding-left: 1em;
+  font-size: 2.5em;
+}
+
+#latestSyn {
+  
 }
 
 @media (max-width: 500px) {
@@ -287,5 +311,10 @@ body {
   .searchLink {
     font-size: 1em;
     margin-left: .5em;
+  }
+
+  #latestPost {
+    width: 90vw;
+    margin-right: 1em;
   }
 }

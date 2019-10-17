@@ -13,6 +13,7 @@ async function run() {
   const post = posts.sort((a,b) => {
     return new Date(b.created) - new Date(a.created);
   })[0];
+
   const indexHTML = fn({ latestPost: post });
   await writeFile('./docs/index.html', indexHTML);
 }

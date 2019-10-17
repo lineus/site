@@ -1,6 +1,10 @@
 # Arduino Raspberry
 This is text that comes after an H1 but before the next heading.
 
+<!-- Synopsis Start -->
+This is the *Synopsis* text.
+<!-- Synopsis End -->
+
 ## solar 
 ## blackhole
 ## wind

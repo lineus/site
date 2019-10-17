@@ -1,11 +1,17 @@
 'use strict';
 
 const assert = require('assert');
-const { searchGen } = require('../lib/utils');
+const { readFile } = require('fs').promises;
+const {
+  searchGen,
+  getSynopsisFromText,
+  getNCharsFrom
+} = require('../lib/utils');
+
 const { isPromise } = require('util').types;
 
 describe('utils', function() {
-  describe('search generator', function() {
+  describe('searchGen', function() {
     it('smoketest', function() {
       assert.strictEqual(typeof searchGen, 'function');
     });
@@ -29,11 +35,17 @@ describe('utils', function() {
 
     it('return object has correct level 0 (fileName) value', function() {
       assert.ok(obj.level[0] && typeof obj.level[0] === 'object');
-      let { tokens, name, tags } = obj.level[0];
-      assert.deepStrictEqual(tokens, ['test', 'icicle']);
+      let { tokens, name } = obj.level[0];
+      let eTokens = [
+        'test',
+        'icicle',
+        'mongoose',
+        'javascript',
+        'node',
+        'mongodb'
+      ];
+      assert.deepStrictEqual(tokens, eTokens);
       assert.strictEqual(name, 'fileName/Tags');
-      let eTags = ['mongoose', 'javascript', 'node', 'mongodb'];
-      assert.deepStrictEqual(tags, eTags);
     });
 
     it('return object has correct level 1 (header1) value', function() {
@@ -75,8 +87,37 @@ describe('utils', function() {
       assert.deepStrictEqual(tokens, eTokens);
       assert.strictEqual(name, 'links');
     });
+  });
 
-    // xit('', function(){ });
-    // xit('', function(){ });
+  describe('getNCharsFrom', function() {
+    it('first six characters', function() {
+      let expected = 'blargh';
+      let actual = getNCharsFrom(6, 'blarghfooeyshlaper');
+      assert.strictEqual(actual, expected);
+    });
+    it('middle six characters', function() {
+      let expected = 'blargh';
+      let actual = getNCharsFrom(6, 'fooeyblarghshlaper', 5);
+      assert.strictEqual(actual, expected);
+    });
+  });
+
+  describe('getSynopsisFromText', function() {
+    it('smoketest', function() {
+      assert.ok(typeof getSynopsisFromText === 'function');
+    });
+
+    it('returns an empty string sans synopsis', async function() {
+      const mdString = await readFile('test/stub/no_synopsis.md', 'utf-8');
+      let str = getSynopsisFromText(mdString);
+      assert.strictEqual(str, '');
+    });
+
+    it('returns html representation of synopsis', async function() {
+      const mdString = await readFile('test/stub/test_icicle.md', 'utf-8');
+      let expected = '<p>This is the <em>Synopsis</em> text.</p>\n';
+      let actual = getSynopsisFromText(mdString);
+      assert.strictEqual(actual, expected);
+    });
   });
 });
