@@ -167,31 +167,40 @@ body {
 .sortButton:hover {
   cursor: pointer; }
 
-#latestPost {
+#latestPost, #top3Posts {
+  margin-top: .5em;
   font-family: 'Cabin', sans-serif;
   width: 40vw;
-  border: thin solid black;
+  border: 0.6em solid rgba(142, 170, 232, 0.1);
   padding: .75em;
   background: rgba(142, 170, 232, 0.2);
   border-radius: .6em;
   color: #212321; }
 
-#latestPost a:link {
+#latestPost a:link, #top3Posts a:link {
   color: #212321; }
 
-#latestPost a:visited {
+#latestPost a:visited, #top3Posts a:visited {
   color: #43506E; }
 
 #latestPost > span > h3, #latestPost > span > p {
   display: inline-block; }
 
-#latestPost > span > h3 {
+#latestPost > span > h3, #top3Posts > h3 {
   color: rgba(162, 142, 232, 0.5);
   padding-bottom: 1em; }
 
 #latestPost > span > p {
   padding-left: 1em;
   font-size: 2.5em; }
+
+#top3Posts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; }
+
+#top3Posts a {
+  font-size: 2em; }
 
 @media (max-width: 500px) {
   body {
@@ -207,7 +216,7 @@ body {
     margin: 0;
     padding: 0; }
   #container, #posts {
-    padding-top: .1em;
+    padding-top: .5em;
     overflow: hidden; }
   #postList {
     overflow: hidden;
@@ -237,4 +246,9 @@ body {
     margin-left: .5em; }
   #latestPost {
     width: 90vw;
-    margin-right: 1em; } }
+    margin-right: 1em; }
+  #top3Posts {
+    width: 90vw;
+    margin-right: 1em; }
+  #top3Posts a {
+    font-size: 1em; } }

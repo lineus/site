@@ -14,5 +14,10 @@ html
           p
             a(href=latestPost.link) !{latestPost.title}
         #latestSyn !{latestPost.synopsis}
+      #top3Posts
+        h3 Top 3 Posts
+        each post in top3
+          div.topPost
+            a(href=post.path) #{post.display}
     #footer
       include pug/footer.pug

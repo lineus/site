@@ -84,7 +84,11 @@ function ignored(fileName) {
 
 async function process(file) {
   let contents = await readFile(file.in, 'utf-8');
-  let blargh = fn({ title: file.title, post: md(contents), postLink: file.out });
+  let blargh = fn({
+    title: file.title,
+    post: md(contents),
+    postLink: file.out
+  });
   let post = blargh.replace(/<!--.*-->/g, '');
   await writeFile(file.out, post);
 }

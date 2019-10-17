@@ -1,19 +1,87 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --no-deprecation
 'use strict';
 
 const pug = require('pug');
 const fn = pug.compileFile('./includes/index.pug');
-const { readFile, writeFile } = require('fs').promises;
+const { stat, readFile, writeFile } = require('fs').promises;
+const { ATLASSRV } = require('/Users/lineus/.env');
+const url = ATLASSRV.replace(/\/[^/]+$/, '/SiteMetrics');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+const opts = {
+  useNewUrlParser: true,
+  useUnifiedTopology: false
+};
+
+const schema = new Schema({
+  path: String
+});
+
+const Log = mongoose.model('visitors', schema, 'visitors');
 
 run();
 
+function getTop3() {
+  let top3;
+  return stat('./top3.json')
+    .then((stats) => {
+      if (Date.now() - stats.mtimeMs < 3600000) {
+        console.log('Top3 File is Young.');
+        return readFile('./top3.json', 'utf-8')
+          .then((jsonString) => {
+            top3 = JSON.parse(jsonString);
+          }).catch((e) => {
+            console.error(e);
+            top3 = [];
+          });
+      } else {
+        console.log('Top3 File is old.');
+        return mongoose.connect(url, opts)
+          .then(() => {
+            return Log.aggregate([
+              { $group: { _id: '$path', n: { $sum: 1 } } },
+              { $sort: { n: -1 } },
+              { $limit: 3 }
+            ])
+              .then((res) => {
+                top3 = res;
+                return writeFile('./top3.json', JSON.stringify(top3, null, 2));
+              });
+          });
+      }
+    })
+    .catch((e) => {
+      console.error(e);
+      top3 = [];
+    })
+    .then(() => {
+      return top3;
+    });
+}
+
 async function run() {
+  let top3 = await getTop3();
   const jsonString = await readFile('./posts.json', 'utf-8');
   const posts = JSON.parse(jsonString);
   const post = posts.sort((a,b) => {
     return new Date(b.created) - new Date(a.created);
   })[0];
 
-  const indexHTML = fn({ latestPost: post });
+  const mut_Top3 = top3.map(t => {
+    t.path = t._id.replace('./docs/', '');
+    t.display = t.path
+      .replace('posts/', '')
+      .replace('.html', '')
+      .replace('_', ' ');
+    return t;
+  });
+
+  const indexHTML = fn({
+    latestPost: post,
+    top3: mut_Top3
+  });
   await writeFile('./docs/index.html', indexHTML);
+  await mongoose.disconnect();
+  console.log('processIndex is complete.');
+  process.exit(0);
 }
