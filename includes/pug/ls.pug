@@ -13,7 +13,7 @@ html
       ul#postList
         each post in posts
           li.postListing
-              a(href="#{post.out}" class="post") #{post.title}
+              a(href=post.out.replace('docs/', '') class="post") #{post.title}
               span.postsDate #{post.created}
     script. 
       const dateBut = document.querySelector('span.sortButton:first-child');
