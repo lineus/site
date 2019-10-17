@@ -82,55 +82,50 @@ body {
   padding: 1em;
   margin-right: 2em; }
 
-#logo {
-  flex-grow: 0;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(6, 1fr);
-  row-gap: 0;
-  column-gap: 0;
-  margin-bottom: .5em; }
-
-#logo > #name {
-  grid-row-start: 1;
-  grid-row-end: 6;
-  grid-column-start: 2;
-  grid-column-end: 8; }
-
-#logo > #dev {
-  grid-row-start: 4;
-  grid-row-end: 6;
-  grid-column-start: 8;
-  grid-column-end: 12;
-  padding-left: .75em; }
+#logo, #name {
+  display: inline-block;
+  padding: 0;
+  margin: 0; }
 
 #logo {
-  width: 360px;
-  height: 100px; }
+  padding-left: 1em;
+  padding-right: 1em;
+  background-color: #8EAAE8; }
 
-#logo span.a {
+#name {
+  text-decoration: none;
   font-family: 'Norican', cursive;
-  color: #212321;
-  font-size: 90px; }
+  font-size: 5em;
+  color: #212321; }
 
-#logo span.b {
-  color: #BBF5FA;
-  font-size: 40px;
-  font-family: 'Raleway'; }
-
-#logo span.c, span.d {
-  color: #A28EE8;
-  font-size: 40px; }
+#name:after {
+  content: 'dev';
+  display: inline-block;
+  color: #ffffff;
+  font-family: 'Raleway', sans-serif;
+  height: 1.6em;
+  width: 1.6em;
+  font-size: .3em;
+  background: #212321;
+  border-radius: 50%;
+  padding: .7em;
+  padding-bottom: .3em;
+  transform: translateY(-0.2em); }
 
 #posts > ul {
   list-style: none; }
 
 #posts a.post {
   font-size: 1.5em;
-  padding-left: 1em; }
+  padding-top: .5em;
+  padding-left: .5em;
+  padding-right: .5em; }
 
 #posts a.post:link {
-  color: #212321; }
+  color: #212321;
+  text-decoration: none;
+  width: 100%;
+  height: 100%; }
 
 #posts a.post:visited {
   color: #43506E; }
@@ -146,13 +141,9 @@ body {
   background-color: #8EAAE8;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   flex-wrap: nowrap;
   align-items: flex-end;
   border-radius: .5em;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  padding-right: 1em;
   margin: .5em;
   width: 10em;
   height: 10em; }
@@ -160,7 +151,9 @@ body {
 .postsDate {
   color: #BBF5FA;
   font-style: italic;
-  font-size: .75em; }
+  font-size: .75em;
+  padding-right: 1em;
+  padding-bottom: .3em; }
 
 #sort {
   background-color: #212321;
@@ -208,4 +201,7 @@ body {
     font-size: 1em; }
   #sort {
     height: 2em;
-    padding-top: .35em; } }
+    padding-top: .35em; }
+  .searchLink {
+    font-size: 1em;
+    margin-left: .5em; } }
