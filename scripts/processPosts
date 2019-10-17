@@ -11,6 +11,8 @@ const inDir = './posts/';
 const outDir = './docs/posts/';
 const lsOut = './docs/ls.html';
 
+const ignoreIf = ['untitled'];
+
 run();
 
 async function run() {
@@ -20,6 +22,7 @@ async function run() {
     return {
       in: `${inDir}${f}`,
       out: `${outDir}${f.replace(/\.md$/, '.html')}`,
+      link: `${outDir.replace('./docs/', '')}${f.replace(/\.md$/, '.html')}`,
       title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`,
       created: stats[i].created,
       modified: stats[i].modified
@@ -38,6 +41,7 @@ async function run() {
     })
   });
   await writeFile(lsOut, lsHTML);
+  await writeFile('./posts.json', JSON.stringify(files, null, 2));
 }
 
 async function getStats(arr) {
@@ -55,7 +59,19 @@ async function getStats(arr) {
 
 async function getMDs(dir) {
   const files = await readdir(dir);
-  return files.filter(f => /\.md$/.test(f));
+  return files
+    .filter(f => /\.md$/.test(f))
+    .filter(ignored);
+}
+
+function ignored(fileName) {
+  for (let isIgnored of ignoreIf) {
+    let re = new RegExp(`${isIgnored}`, 'i');
+    if (re.test(fileName)) {
+      return false;
+    }
+    return true;
+  }
 }
 
 async function process(file) {

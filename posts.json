@@ -1,0 +1,50 @@
+[
+  {
+    "in": "./posts/The_Sixth_Wonder_of_the_World.md",
+    "out": "./docs/posts/The_Sixth_Wonder_of_the_World.html",
+    "link": "posts/The_Sixth_Wonder_of_the_World.html",
+    "title": "The Sixth Wonder of the World",
+    "created": "Wed Oct 16 2019",
+    "modified": "Wed Oct 16 2019"
+  },
+  {
+    "in": "./posts/Johnny_5_is_Alive.md",
+    "out": "./docs/posts/Johnny_5_is_Alive.html",
+    "link": "posts/Johnny_5_is_Alive.html",
+    "title": "Johnny 5 is Alive",
+    "created": "Sun Oct 13 2019",
+    "modified": "Sun Oct 13 2019"
+  },
+  {
+    "in": "./posts/fourth_awesome_post.md",
+    "out": "./docs/posts/fourth_awesome_post.html",
+    "link": "posts/fourth_awesome_post.html",
+    "title": "fourth awesome post",
+    "created": "Fri Oct 11 2019",
+    "modified": "Fri Oct 11 2019"
+  },
+  {
+    "in": "./posts/test.md",
+    "out": "./docs/posts/test.html",
+    "link": "posts/test.html",
+    "title": "test",
+    "created": "Fri Oct 11 2019",
+    "modified": "Fri Oct 11 2019"
+  },
+  {
+    "in": "./posts/Third_Times_The_Charm.md",
+    "out": "./docs/posts/Third_Times_The_Charm.html",
+    "link": "posts/Third_Times_The_Charm.html",
+    "title": "Third Times The Charm",
+    "created": "Thu Oct 10 2019",
+    "modified": "Thu Oct 10 2019"
+  },
+  {
+    "in": "./posts/This_is_Test_2.md",
+    "out": "./docs/posts/This_is_Test_2.html",
+    "link": "posts/This_is_Test_2.html",
+    "title": "This is Test 2",
+    "created": "Sun Oct 06 2019",
+    "modified": "Sun Oct 06 2019"
+  }
+]

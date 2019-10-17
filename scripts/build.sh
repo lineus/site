@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-/usr/bin/env npm run build
+./scripts/processPosts &&\
+./scripts/processPugs &&\
+./scripts/processSCSS &&\
+./scripts/processSearchData &&\
+./scripts/processIndex

@@ -8,6 +8,10 @@ html
       include pug/logo.pug
       include pug/nav.pug
     #container
-      p contains things
+      #latestPost
+        span
+          h2 Latest Post:
+          p
+            a(href=latestPost.link) !{latestPost.title}
     #footer
       include pug/footer.pug

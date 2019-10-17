@@ -5,6 +5,10 @@ const pug = require('pug');
 const { readdir, writeFile } = require('fs').promises;
 
 const PUGDIR = './includes';
+const ignoreThese = [
+  'grep.pug',
+  'index.pug'
+];
 
 run();
 
@@ -12,7 +16,7 @@ async function run() {
   const dirEntries = await readdir(PUGDIR);
   const topLevelPugFiles = dirEntries.filter(e => /\.pug$/.test(e));
   for (let pugFile of topLevelPugFiles) {
-    if (pugFile === 'grep.pug') {
+    if (ignoreThese.includes(pugFile)) {
       continue;
     }
     let fn = pug.compileFile(`./includes/${pugFile}`);

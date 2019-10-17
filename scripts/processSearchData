@@ -18,4 +18,5 @@ async function run() {
 
   const grepHTML = fn({ searchData });
   await writeFile('./docs/grep.html', grepHTML);
+  await writeFile('./search.json', JSON.stringify(searchData, null, 2));
 }

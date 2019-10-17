@@ -211,6 +211,18 @@ body {
   cursor: pointer;
 }
 
+#latestPost {
+  font-family: 'Cabin', sans-serif;
+}
+
+#latestPost>span>h2, #latestPost>span>p {
+  display: inline-block;
+}
+
+#latestPost>span>p {
+  padding-left: 1em;
+}
+
 @media (max-width: 500px) {
   body {
     display: flex;
@@ -221,10 +233,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  #logo {
-    // width: 100vw;
   }
 
   #nav {

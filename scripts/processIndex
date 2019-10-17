@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+'use strict';
+
+const pug = require('pug');
+const fn = pug.compileFile('./includes/index.pug');
+const { readFile, writeFile } = require('fs').promises;
+
+run();
+
+async function run() {
+  const jsonString = await readFile('./posts.json', 'utf-8');
+  const posts = JSON.parse(jsonString);
+  const post = posts.sort((a,b) => {
+    return new Date(b.created) - new Date(a.created);
+  })[0];
+  const indexHTML = fn({ latestPost: post });
+  await writeFile('./docs/index.html', indexHTML);
+}
