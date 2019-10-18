@@ -5,7 +5,7 @@
   box-sizing: border-box; }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #8EAAE8;
   color: #212321;
   font-family: 'Nanum Gothic', sans-serif;
@@ -60,7 +60,8 @@ body {
   padding-top: 1em; }
 
 #container {
-  padding-left: 1em; }
+  padding-left: 1em;
+  padding-bottom: 1em; }
 
 #container > h1, h2, h3 {
   font-family: 'Cabin', sans-serif; }
@@ -215,9 +216,12 @@ body {
     width: 100vw;
     margin: 0;
     padding: 0; }
-  #container, #posts {
-    padding-top: .5em;
-    overflow: hidden; }
+  #container {
+    padding: 0;
+    margin: 0;
+    padding-left: 1em; }
+  #posts {
+    padding-top: .1em; }
   #postList {
     overflow: hidden;
     flex-direction: column;
@@ -251,4 +255,4 @@ body {
     width: 90vw;
     margin-right: 1em; }
   #top3Posts a {
-    font-size: 1em; } }
+    font-size: 1.1em; } }

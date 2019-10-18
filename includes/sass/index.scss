@@ -15,7 +15,7 @@ $w: #ffffff;
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   background-color: $bg;
   color: $fg;
   font-family: 'Nanum Gothic', sans-serif;
@@ -24,7 +24,6 @@ body {
 }
 
 #header {
-  // background-image: linear-gradient(to bottom, $bg, $bgl);
   flex-grow: 0;
   display: flex;
   flex-direction: row;
@@ -83,6 +82,7 @@ body {
 
 #container {
   padding-left: 1em;
+  padding-bottom: 1em;
 }
 
 #container > h1,h2,h3 {
@@ -275,9 +275,14 @@ body {
     padding: 0;
   } 
 
-  #container, #posts {
-    padding-top: .5em;
-    overflow: hidden;
+  #container {
+    padding: 0;
+    margin: 0;
+    padding-left: 1em;
+  }
+  
+  #posts {
+    padding-top: .1em;
   }
 
   #postList {
@@ -332,8 +337,7 @@ body {
     margin-right: 1em;
   }
 
-
   #top3Posts a {
-    font-size: 1em;
+    font-size: 1.1em;
   }
 }
