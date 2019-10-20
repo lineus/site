@@ -205,6 +205,34 @@ describe('mdParser', function() {
       assert.deepEqual(tags, expectedTags);
     });
   });
+  describe('prototype.publishArticle', function() {
+    it('smoketest', function () {
+      const article = new MDArticle({ md: '' });
+      assert.ok(article.publishArticle);
+      assert.ok(typeof article.publishArticle === 'function');
+    });
+    it('returns false for a WIP', function() {
+      const article = new MDArticle({ md: '<!-- Status: WIP -->'});
+      article.parse();
+      assert.strictEqual(article.publishArticle(), false);
+    });
+    it('returns true for PUB with no dates', function () {
+      const article = new MDArticle({
+        md: `
+          <!-- Status: PUB -->
+          <!-- Published: -->
+          <!-- Updated: -->
+        `
+      });
+      article.parse();
+      assert.strictEqual(article.publishArticle(), true);
+    });
+    it('returns true for UPD', function () {
+      const article = new MDArticle({ md: '<!-- Status: UPD -->' });
+      article.parse();
+      assert.strictEqual(article.publishArticle(), true);
+    });
+  });
   describe('prototype.isPublished', function() {
     it('smoketest', function() {
       assert.ok(yParser.isPublished);
