@@ -2,7 +2,7 @@
 'use strict';
 
 const pug = require('pug');
-const { searchGen } = require('../lib/utils');
+const { MDArticleParser } = require('../lib/mdArticleParser');
 const { readdir, writeFile } = require('fs').promises;
 const fn = pug.compileFile('./includes/grep.pug');
 
@@ -13,7 +13,9 @@ async function run() {
   const files = await readdir('./posts');
   const postFiles = files.filter(f => /\.md$/.test(f));
   for (let post of postFiles) {
-    searchData.push(await searchGen(`./posts/${post}`));
+    let parser = new MDArticleParser({ path: `./posts/${post}` });
+    parser.parse();
+    searchData.push(parser.genSearch());
   }
 
   const grepHTML = fn({ searchData });

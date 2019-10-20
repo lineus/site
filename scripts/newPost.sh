@@ -6,12 +6,16 @@ if [[ ! "${title}" =~ md$ ]]; then
   title="${title}.md";
 fi
 
-cat << EOF > "./posts/${title}"
-# 
-<!-- Synopsis Start -->
+title_sans_cruft=$(echo ${title} | sed -e 's/.md$//' -e 's/WIP//');
 
+cat << EOF > "./posts/${title}"
+# ${title_sans_cruft} 
+<!-- Synopsis Start -->
 
 <!-- Synopsis End -->
 
 <!-- Tags: -->
+<!-- Published: -->
+<!-- Updated: -->
+<!-- Status: WIP -->
 EOF

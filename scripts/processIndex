@@ -26,7 +26,6 @@ function getTop3() {
   return stat('./top3.json')
     .then((stats) => {
       if (Date.now() - stats.mtimeMs < 3600000) {
-        console.log('Top3 File is Young.');
         return readFile('./top3.json', 'utf-8')
           .then((jsonString) => {
             top3 = JSON.parse(jsonString);
@@ -35,7 +34,6 @@ function getTop3() {
             top3 = [];
           });
       } else {
-        console.log('Top3 File is old.');
         return mongoose.connect(url, opts)
           .then(() => {
             return Log.aggregate([
