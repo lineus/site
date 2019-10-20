@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const { MDArticleParser } = require('../lib/MDArticleParser');
+const { MDArticle } = require('../lib/MDArticle');
 const { openSync, promises } = require('fs');
 const { readFile } = promises;
 
@@ -48,11 +48,11 @@ const f = `
 <!--Updated: 4725093192045-->
 `;
 
-const yParser = new MDArticleParser({ md: y });
+const yParser = new MDArticle({ md: y });
 yParser.parse();
-const nParser = new MDArticleParser({ md: n });
+const nParser = new MDArticle({ md: n });
 nParser.parse();
-const fParser = new MDArticleParser({ md: f });
+const fParser = new MDArticle({ md: f });
 fParser.parse();
 
 describe('mdParser', function() {
@@ -62,14 +62,14 @@ describe('mdParser', function() {
   let withData;
   describe('smoketests', function() {
     it('is a function', function() {
-      assert.ok(typeof MDArticleParser === 'function');
+      assert.ok(typeof MDArticle === 'function');
     });
 
     it('returns an instance with/without new', function() {
-      const i1 = new MDArticleParser();
-      assert.ok(i1 instanceof MDArticleParser);
-      const i2 = MDArticleParser();
-      assert.ok(i2 instanceof MDArticleParser);
+      const i1 = new MDArticle();
+      assert.ok(i1 instanceof MDArticle);
+      const i2 = MDArticle();
+      assert.ok(i2 instanceof MDArticle);
       assert.notStrictEqual(i1, i2);
     });
   });
@@ -78,17 +78,17 @@ describe('mdParser', function() {
       md = await readFile('./test/stub/test_icicle.md', 'utf-8');
     });
     it('takes a file object', function() {
-      const parser = new MDArticleParser({ file: fh });
+      const parser = new MDArticle({ file: fh });
       assert.ok(parser.mdString);
       assert.equal(typeof parser.mdString, 'string');
     });
     it('takes a path to a file', function() {
-      const parser = new MDArticleParser({ path: pt });
+      const parser = new MDArticle({ path: pt });
       assert.ok(parser.mdString);
       assert.equal(typeof parser.mdString, 'string');
     });
     it('takes a string of markdown', function() {
-      const parser = new MDArticleParser({ md });
+      const parser = new MDArticle({ md });
       assert.ok(parser.mdString);
       assert.equal(typeof parser.mdString, 'string');
     });
@@ -98,18 +98,18 @@ describe('mdParser', function() {
       withData = await readFile('./test/stub/parser.md', 'utf-8');
     });
     it('smoketest', function() {
-      const parser = new MDArticleParser({ md });
+      const parser = new MDArticle({ md });
       assert.equal(typeof parser.parse, 'function');
     });
     it('throws sans mdString', function() {
-      const parser = new MDArticleParser();
+      const parser = new MDArticle();
       assert.throws(() => {
         parser.parse();
       });
     });
     it('creates the parsed data structure', function() {
       const eSynopsis = '\nThis is the *Synopsis* text.\n';
-      const parser = new MDArticleParser({ md });
+      const parser = new MDArticle({ md });
       parser.parse();
       assert.ok(parser.data);
       assert.strictEqual(typeof parser.data, 'object');
@@ -123,25 +123,25 @@ describe('mdParser', function() {
         <!-- Status: PUB -->
       `;
       const expectedStatus = 'PUB';
-      const parser = new MDArticleParser({ md: withStatus });
+      const parser = new MDArticle({ md: withStatus });
       parser.parse();
       const { status } = parser.data;
       assert.strictEqual(status, expectedStatus);
     });
     it('sets data.synopsis', function() {
-      const parser = new MDArticleParser({ md: withData });
+      const parser = new MDArticle({ md: withData });
       parser.parse();
       const { synopsis } = parser.data;
       assert.strictEqual(synopsis, expectedSynopsis);
     });
     it('sets data.publish', function () {
-      const parser = new MDArticleParser({ md: withData });
+      const parser = new MDArticle({ md: withData });
       parser.parse();
       const { publish } = parser.data;
       assert.strictEqual(publish, 1571409402365);
     });
     it('sets data.updated', function () {
-      const parser = new MDArticleParser({ md: withData });
+      const parser = new MDArticle({ md: withData });
       parser.parse();
       const { updated } = parser.data;
       assert.strictEqual(updated, 1571419390214);
@@ -151,7 +151,7 @@ describe('mdParser', function() {
         <!-- Published: -->
         <!-- Updated: -->
       `;
-      const parser = new MDArticleParser({ md: noDates });
+      const parser = new MDArticle({ md: noDates });
       parser.parse();
       const { updated, publish } = parser.data;
       assert.strictEqual(publish, 0);
@@ -162,7 +162,7 @@ describe('mdParser', function() {
         <!-- Published: js98w7sefkjshdf -->
         <!-- Updated: 293847sdfsdf9 -->
       `;
-      const parser = new MDArticleParser({ md: puGarb });
+      const parser = new MDArticle({ md: puGarb });
       parser.parse();
       const { updated, publish } = parser.data;
       assert.strictEqual(publish, 0);
@@ -173,7 +173,7 @@ describe('mdParser', function() {
         <!--Published: 1571409402365-->
         <!--Updated: 1571419390214-->
       `;
-      const parser = new MDArticleParser({ md: input });
+      const parser = new MDArticle({ md: input });
       parser.parse();
       const { updated, publish } = parser.data;
       assert.strictEqual(publish, 1571409402365);
@@ -186,7 +186,7 @@ describe('mdParser', function() {
         'node',
         'mongodb'
       ];
-      const parser = new MDArticleParser({ md });
+      const parser = new MDArticle({ md });
       parser.parse();
       assert.ok(parser.search);
       assert.strictEqual(typeof parser.search, 'object');
@@ -199,7 +199,7 @@ describe('mdParser', function() {
       assert.deepEqual(h3AndUpTokens, ['glarp', 'gindle', 'mandrel', 'yankee']);
     });
     it('sets search.tags', function () {
-      const parser = new MDArticleParser({ md: withData });
+      const parser = new MDArticle({ md: withData });
       parser.parse();
       const { tags } = parser.search;
       assert.deepEqual(tags, expectedTags);
@@ -220,7 +220,7 @@ describe('mdParser', function() {
       assert.strictEqual(fParser.isPublished(), false);
     });
     it('throws an error when calling a method before parse', function () {
-      const parser = new MDArticleParser({ md: '' });
+      const parser = new MDArticle({ md: '' });
       assert.throws(() => {
         parser.isPublished();
       }, /NotParsedYetError/);
@@ -241,7 +241,7 @@ describe('mdParser', function() {
       assert.strictEqual(fParser.isUpdated(), false);
     });
     it('throws an error when calling a method before parse', function () {
-      const parser = new MDArticleParser({ md: '' });
+      const parser = new MDArticle({ md: '' });
       assert.throws(() => {
         parser.isUpdated();
       }, /NotParsedYetError/);
@@ -262,7 +262,7 @@ describe('mdParser', function() {
       assert.strictEqual(fParser.hasPublished(), true);
     });
     it('throws an error when calling a method before parse', function () {
-      const parser = new MDArticleParser({ md: '' });
+      const parser = new MDArticle({ md: '' });
       assert.throws(() => {
         parser.hasPublished();
       }, /NotParsedYetError/);
@@ -283,7 +283,7 @@ describe('mdParser', function() {
       assert.strictEqual(fParser.hasUpdated(), true);
     });
     it('throws an error when calling a method before parse', function () {
-      const parser = new MDArticleParser({ md: '' });
+      const parser = new MDArticle({ md: '' });
       assert.throws(() => {
         parser.hasUpdated();
       }, /NotParsedYetError/);
@@ -304,7 +304,7 @@ describe('mdParser', function() {
       assert.strictEqual(fParser.futurePublish(), true);
     });
     it('throws an error when calling a method before parse', function () {
-      const parser = new MDArticleParser({ md: '' });
+      const parser = new MDArticle({ md: '' });
       assert.throws(() => {
         parser.futurePublish();
       }, /NotParsedYetError/);

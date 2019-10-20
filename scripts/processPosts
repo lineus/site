@@ -4,9 +4,10 @@
 const pug = require('pug');
 const fn = pug.compileFile('includes/pug/postTemplate.pug');
 const makeLS = pug.compileFile('includes/pug/ls.pug');
+const makeGrep = pug.compileFile('./includes/grep.pug');
 const md = require('marked');
 const { stat, readdir, readFile, writeFile } = require('fs').promises;
-const { MDArticleParser } = require('../lib/mdArticleParser');
+const { MDArticle } = require('../lib/MDArticle');
 
 const inDir = './posts/';
 const outDir = './docs/posts/';
@@ -20,10 +21,12 @@ async function run() {
   const mdFiles = await getMDs(inDir);
   const stats = await getStats(mdFiles);
   const files = [];
+  const searchData = [];
   let i = 0;
   for (let f of mdFiles) {
-    let parser = new MDArticleParser({ path: `${inDir}${f}`});
+    let parser = new MDArticle({ path: `${inDir}${f}`});
     parser.parse();
+    searchData.push(parser.genSearch());
     let file = {
       in: `${inDir}${f}`,
       out: `${outDir}${f.replace(/\.md$/, '.html')}`,
@@ -40,6 +43,8 @@ async function run() {
     await process(file);
   }
 
+  const grepHTML = makeGrep({ searchData });
+
   const lsHTML = makeLS({
     posts: files.sort((a, b) => {
       let aD = new Date(a.created);
@@ -48,7 +53,10 @@ async function run() {
     })
   });
   await writeFile(lsOut, lsHTML);
+  await writeFile('./docs/grep.html', grepHTML);
+
   await writeFile('./posts.json', JSON.stringify(files, null, 2));
+  await writeFile('./search.json', JSON.stringify(searchData, null, 2));
 }
 
 async function getStats(arr) {
