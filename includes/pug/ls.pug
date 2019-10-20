@@ -14,7 +14,7 @@ html
         each post in posts
           li.postListing
               a(href=post.out.replace('docs/', '') class="post") #{post.title}
-              span.postsDate #{post.created}
+              span.postsDate #{post.published}
     script. 
       const dateBut = document.querySelector('span.sortButton:first-child');
       const titlBut = document.querySelector('span.sortButton:last-child');

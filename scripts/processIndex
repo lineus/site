@@ -62,7 +62,7 @@ async function run() {
   const jsonString = await readFile('./posts.json', 'utf-8');
   const posts = JSON.parse(jsonString);
   const post = posts.sort((a,b) => {
-    return new Date(b.created) - new Date(a.created);
+    return new Date(b.published) - new Date(a.published);
   })[0];
 
   const mut_Top3 = top3.map(t => {

@@ -19,10 +19,8 @@ run();
 
 async function run() {
   const mdFiles = await getMDs(inDir);
-  const stats = await getStats(mdFiles);
   const files = [];
   const searchData = [];
-  let i = 0;
   for (let f of mdFiles) {
     let parser = new MDArticle({ path: `${inDir}${f}`});
     parser.parse();
@@ -32,8 +30,8 @@ async function run() {
       out: `${outDir}${f.replace(/\.md$/, '.html')}`,
       link: `${outDir.replace('./docs/', '')}${f.replace(/\.md$/, '.html')}`,
       title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`,
-      created: stats[i].created,
-      modified: stats[i].modified,
+      published: parser.data.published,
+      modified: parser.data.modified,
       synopsis: md(parser.data.synopsis)
     };
     files.push(file);
@@ -47,8 +45,8 @@ async function run() {
 
   const lsHTML = makeLS({
     posts: files.sort((a, b) => {
-      let aD = new Date(a.created);
-      let bD = new Date(b.created);
+      let aD = new Date(a.published);
+      let bD = new Date(b.published);
       return bD - aD;
     })
   });
@@ -57,19 +55,6 @@ async function run() {
 
   await writeFile('./posts.json', JSON.stringify(files, null, 2));
   await writeFile('./search.json', JSON.stringify(searchData, null, 2));
-}
-
-async function getStats(arr) {
-  let ret = [];
-  for (let file of arr) {
-    ret.push(await stat(`${inDir}${file}`));
-  }
-  return ret.map(s => {
-    return {
-      created: s.ctime.toDateString(),
-      modified: s.mtime.toDateString()
-    };
-  });
 }
 
 async function getMDs(dir) {

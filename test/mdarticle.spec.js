@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const { MDArticle } = require('../lib/MDArticle');
+const { MDArticle } = require('../lib/mdarticle');
 const { openSync, promises } = require('fs');
 const { readFile } = promises;
 
@@ -113,7 +113,7 @@ describe('mdParser', function() {
       parser.parse();
       assert.ok(parser.data);
       assert.strictEqual(typeof parser.data, 'object');
-      assert.strictEqual(parser.data.publish, 0);
+      assert.strictEqual(parser.data.published, 0);
       assert.strictEqual(parser.data.updated, 0);
       assert.strictEqual(parser.data.synopsis, eSynopsis);
       assert.strictEqual(parser.data.status, '');
@@ -134,11 +134,11 @@ describe('mdParser', function() {
       const { synopsis } = parser.data;
       assert.strictEqual(synopsis, expectedSynopsis);
     });
-    it('sets data.publish', function () {
+    it('sets data.published', function () {
       const parser = new MDArticle({ md: withData });
       parser.parse();
-      const { publish } = parser.data;
-      assert.strictEqual(publish, 1571409402365);
+      const { published } = parser.data;
+      assert.strictEqual(published, 1571409402365);
     });
     it('sets data.updated', function () {
       const parser = new MDArticle({ md: withData });
@@ -153,8 +153,8 @@ describe('mdParser', function() {
       `;
       const parser = new MDArticle({ md: noDates });
       parser.parse();
-      const { updated, publish } = parser.data;
-      assert.strictEqual(publish, 0);
+      const { updated, published } = parser.data;
+      assert.strictEqual(published, 0);
       assert.strictEqual(updated, 0);
     });
     it('ignores garbage in the pub/upd comments', function() {
@@ -164,8 +164,8 @@ describe('mdParser', function() {
       `;
       const parser = new MDArticle({ md: puGarb });
       parser.parse();
-      const { updated, publish } = parser.data;
-      assert.strictEqual(publish, 0);
+      const { updated, published } = parser.data;
+      assert.strictEqual(published, 0);
       assert.strictEqual(updated, 0);
     });
     it('handles forgotten spaces', function() {
@@ -175,8 +175,8 @@ describe('mdParser', function() {
       `;
       const parser = new MDArticle({ md: input });
       parser.parse();
-      const { updated, publish } = parser.data;
-      assert.strictEqual(publish, 1571409402365);
+      const { updated, published } = parser.data;
+      assert.strictEqual(published, 1571409402365);
       assert.strictEqual(updated, 1571419390214);
     });
     it('creates the search data structure', function () {
