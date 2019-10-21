@@ -25,16 +25,17 @@ async function run() {
     let article = new MDArticle({ path: `${inDir}${f}`});
     article.parse();
     searchData.push(article.genSearch());
-    let file = {
-      in: `${inDir}${f}`,
-      out: `${outDir}${f.replace(/\.md$/, '.html')}`,
-      link: `${outDir.replace('./docs/', '')}${f.replace(/\.md$/, '.html')}`,
-      title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`,
-      published: article.data.published,
-      updated: article.data.updated,
-      synopsis: md(article.data.synopsis)
-    };
     if (article.publishArticle()) {
+      article.markPublished();
+      let file = {
+        in: `${inDir}${f}`,
+        out: `${outDir}${f.replace(/\.md$/, '.html')}`,
+        link: `${outDir.replace('./docs/', '')}${f.replace(/\.md$/, '.html')}`,
+        title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`,
+        published: article.data.published,
+        updated: article.data.updated,
+        synopsis: md(article.data.synopsis)
+      };
       files.push(file);
     }
   }

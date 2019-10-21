@@ -265,11 +265,12 @@ describe('mdParser', function() {
         article.markPublished();
       }, /MethodRequiresPathError/);
     });
-    it('should update a timestamp', function() {
+    it('should update a timestamp and reparse', function() {
       const article = new MDArticle({ path: './test/stub/temp_mp.md' });
       article.parse();
       article.markPublished();
       assert.ok(/<!-- Published: [\d]+ -->/.test(article.mdString));
+      assert.ok(article.data.published !== 0);
     });
     it('throws if article is already published', function() {
       const article = new MDArticle({ path: './test/stub/temp_mp.md' });
