@@ -1,6 +1,7 @@
 # TEST
 
 <!-- Synopsis Start -->
+This is the best.
 <!-- Synopsis End -->
 
 this is a test.

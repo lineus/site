@@ -6,8 +6,9 @@
     "title": "This is Test 2",
     "published": "Mon Oct 21 2019",
     "updated": "",
-    "synopsis": "",
-    "rssPublished": "Mon, 21 Oct 2019 15:01:35 GMT"
+    "synopsis": "<p>This is the best.</p>\n",
+    "rssPublished": "Mon, 21 Oct 2019 15:01:35 GMT",
+    "rssSynopsis": "\nThis is the best.\n"
   },
   {
     "in": "./posts/",
@@ -17,6 +18,7 @@
     "published": "Mon Oct 21 2019",
     "updated": "",
     "synopsis": "<p>You can do it, ra ra ra.</p>\n",
-    "rssPublished": "Mon, 21 Oct 2019 12:14:59 GMT"
+    "rssPublished": "Mon, 21 Oct 2019 12:14:59 GMT",
+    "rssSynopsis": "\nYou can do it, ra ra ra.\n"
   }
 ]

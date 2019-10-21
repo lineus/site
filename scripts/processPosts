@@ -36,7 +36,8 @@ async function run() {
         published: new Date(article.data.published).toDateString(),
         updated: article.data.updated,
         synopsis: md(article.data.synopsis),
-        rssPublished: new Date(article.data.published).toUTCString()
+        rssPublished: new Date(article.data.published).toUTCString(),
+        rssSynopsis: article.data.synopsis
       };
       files.push(file);
     } else if (article.isPublished()) {
@@ -48,7 +49,8 @@ async function run() {
         published: article.publishedOn(),
         updated: article.updatedOn(),
         synopsis: md(article.data.synopsis),
-        rssPublished: new Date(article.data.published).toUTCString()
+        rssPublished: new Date(article.data.published).toUTCString(),
+        rssSynopsis: article.data.synopsis
       };
       existingFiles.push(file);
     }
