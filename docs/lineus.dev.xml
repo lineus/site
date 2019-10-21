@@ -6,17 +6,17 @@
 <description>Words</description>
 
 <item>
-<title>This is Test 2</title>
-<link>lineus.dev/posts/This_is_Test_2.html</link>
-<guid>lineus.dev/posts/This_is_Test_2.html</guid>
+<title>This is_Test_2</title>
+<link>./posts/This_is_Test_2.html</link>
+<guid>./posts/This_is_Test_2.html</guid>
 <pubDate>Mon Oct 21 2019 00:04:00 GMT</pubDate>
 <description></description>
 </item>
     
 <item>
 <title>test</title>
-<link>lineus.dev/./posts/test.html</link>
-<guid>lineus.dev/./posts/test.html</guid>
+<link>./posts/test.html</link>
+<guid>./posts/test.html</guid>
 <pubDate>Mon Oct 21 2019 00:04:00 GMT</pubDate>
 <description><p>You can do it, ra ra ra.</p>
 </description>
