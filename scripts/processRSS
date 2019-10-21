@@ -15,7 +15,7 @@ async function run() {
     x += `
 <item>
 <title>${post.title}</title>
-<link>${post.link.replace(/^\.\/posts/, '')}</link>
+<link>${post.link.replace(/^\.\/posts\//, '')}</link>
 <guid>${post.link.replace(/^\.\/posts/, '')}</guid>
 <pubDate>${post.published} 00:04:00 GMT</pubDate>
 <description>${post.synopsis}</description>
@@ -23,6 +23,6 @@ async function run() {
     `;
   }
 
-  await writeFile('./docs/lineus.dev.xml', t.replace(/\[POSTSGOHERE\]/, x));
+  await writeFile('./docs/posts.xml', t.replace(/\[POSTSGOHERE\]/, x));
   return process.exit(0);
 }
