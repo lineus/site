@@ -2,7 +2,14 @@
 
 const assert = require('assert');
 const { MDArticle } = require('../lib/mdarticle');
-const { openSync, promises } = require('fs');
+
+const {
+  readFileSync,
+  openSync,
+  writeFileSync,
+  unlinkSync,
+  promises } = require('fs');
+
 const { readFile } = promises;
 
 const expectedSynopsis = `
@@ -231,6 +238,80 @@ describe('mdParser', function() {
       const article = new MDArticle({ md: '<!-- Status: UPD -->' });
       article.parse();
       assert.strictEqual(article.publishArticle(), true);
+    });
+  });
+  describe('prototype.markPublished', function() {
+    before(function () {
+      writeFileSync('./test/stub/temp_mp.md', '<!-- Published: -->');
+    });
+    after(function () {
+      unlinkSync('./test/stub/temp_mp.md');
+    });
+    it('smoketest', function () {
+      const article = new MDArticle({ md: '' });
+      assert.ok(article.markPublished);
+      assert.ok(typeof article.markPublished === 'function');
+    });
+    it('should throw an error if called before parse', function() {
+      const article = MDArticle({ md: '' });
+      assert.throws(() => {
+        article.markPublished();
+      }, /NotParsedYetError/);
+    });
+    it('should throw an error if called on article sans path', function() {
+      const article = new MDArticle({ md: '# Test' });
+      article.parse();
+      assert.throws(() => {
+        article.markPublished();
+      }, /MethodRequiresPathError/);
+    });
+    it('should update a timestamp', function() {
+      const article = new MDArticle({ path: './test/stub/temp_mp.md' });
+      article.parse();
+      article.markPublished();
+      assert.ok(/<!-- Published: [\d]+ -->/.test(article.mdString));
+    });
+    it('throws if article is already published', function() {
+      const article = new MDArticle({ path: './test/stub/temp_mp.md' });
+      article.parse();
+      assert.throws(() => {
+        article.markPublished();
+      }, /AlreadyPublishedError/);
+    });
+  });
+  describe('prototype.writeBack', function() {
+    before(function() {
+      writeFileSync('./test/stub/temp_wb.md', '# WRITEBACK');
+    });
+    after(function() {
+      unlinkSync('./test/stub/temp_wb.md');
+    });
+    it('smoketest', function () {
+      const article = new MDArticle({ md: '' });
+      assert.ok(article.writeBack);
+      assert.ok(typeof article.writeBack === 'function');
+    });
+    it('should throw an error if called before parse', function () {
+      const article = MDArticle({ md: '' });
+      assert.throws(() => {
+        article.writeBack();
+      }, /NotParsedYetError/);
+    });
+    it('should throw an error if called on article sans path', function () {
+      const article = new MDArticle({ md: '# Test' });
+      article.parse();
+      assert.throws(() => {
+        article.writeBack();
+      }, /MethodRequiresPathError/);
+    });
+    it('writes changes back to path', function() {
+      const article = new MDArticle({ path: './test/stub/temp_wb.md' });
+      article.parse();
+      article.mdString += '\n# TEST123';
+      article.writeBack();
+      const actual = readFileSync('./test/stub/temp_wb.md', 'utf-8');
+      const expected = '# WRITEBACK\n# TEST123';
+      assert.strictEqual(actual, expected);
     });
   });
   describe('prototype.isPublished', function() {
