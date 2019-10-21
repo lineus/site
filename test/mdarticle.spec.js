@@ -475,7 +475,7 @@ describe('mdParser', function() {
   describe('file structure', function() {
     let article;
     before(function() {
-      article = new MDArticle({ path: './test/stub/test_icicle.md' });
+      article = new MDArticle({ path: './test/stub/test_icicle_mul.md' });
     });
     it('creates file data structure with path', function() {
       assert.ok(article.file);
@@ -494,12 +494,12 @@ describe('mdParser', function() {
     it('sets file.link', function() {
       assert.ok(article.file.link);
       assert.strictEqual(typeof article.file.link, 'string');
-      assert.strictEqual(article.file.link, './posts/test_icicle.html');
+      assert.strictEqual(article.file.link, './posts/test_icicle_mul.html');
     });
     it('sets file.title', function() {
       assert.ok(article.file.title);
       assert.strictEqual(typeof article.file.title, 'string');
-      assert.strictEqual(article.file.title, 'test icicle');
+      assert.strictEqual(article.file.title, 'test icicle mul');
     });
     it('accepts custom file options', function() {
       let article = new MDArticle({
