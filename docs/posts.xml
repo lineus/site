@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<atom:link href="https://lineus.dev/posts.xml" rel="self" type="application/rss+xml" />
 <channel>
 <title>lineus dot dev</title>
 <link>https://lineus.dev/</link>
@@ -7,18 +8,18 @@
 
 <item>
 <title>This is_Test_2</title>
+<link>https://lineus.dev/posts/This_is_Test_2.html</link>
 <guid>https://lineus.dev/posts/This_is_Test_2.html</guid>
-<pubDate>Mon Oct 19 2019 00:04:00 GMT</pubDate>
+<pubDate>Mon Oct 21 2019 00:04:00 GMT</pubDate>
 <description>fuck why isn't this working?</description>
 </item>
     
 <item>
 <title>test</title>
-<link>./posts/test.html</link>
-<guid>./posts/test.html</guid>
+<link>https://lineus.dev/posts/test.html</link>
+<guid>https://lineus.dev/posts/test.html</guid>
 <pubDate>Mon Oct 21 2019 00:04:00 GMT</pubDate>
-<description><p>You can do it, ra ra ra.</p>
-</description>
+<description>You can do it, ra ra ra.</description>
 </item>
     
 </channel>
