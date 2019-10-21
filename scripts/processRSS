@@ -15,8 +15,8 @@ async function run() {
     x += `
 <item>
 <title>${post.title}</title>
-<link>lineus.dev/${post.link}</link>
-<guid>lineus.dev/${post.link}</guid>
+<link>${post.link}</link>
+<guid>${post.link}</guid>
 <pubDate>${post.published} 00:04:00 GMT</pubDate>
 <description>${post.synopsis}</description>
 </item>
