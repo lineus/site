@@ -35,7 +35,8 @@ async function run() {
         title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`,
         published: new Date(article.data.published).toDateString(),
         updated: article.data.updated,
-        synopsis: md(article.data.synopsis)
+        synopsis: md(article.data.synopsis),
+        rssPublished: new Date(article.data.published).toUTCString()
       };
       files.push(file);
     } else if (article.isPublished()) {
@@ -46,7 +47,8 @@ async function run() {
         title: article.file.title,
         published: article.publishedOn(),
         updated: article.updatedOn(),
-        synopsis: md(article.data.synopsis)
+        synopsis: md(article.data.synopsis),
+        rssPublished: new Date(article.data.published).toUTCString()
       };
       existingFiles.push(file);
     }

@@ -7,19 +7,20 @@
 <description>Words</description>
 
 <item>
-<title>This is_Test_2</title>
+<title>This is Test 2</title>
 <link>https://lineus.dev/posts/This_is_Test_2.html</link>
-<guid>https://lineus.dev/posts/This_is_Test_2.html</guid>
-<pubDate>Mon, 21 Oct 2019 00:04:00 GMT</pubDate>
-<description>fuck why isn't this working?</description>
+<guid>https://lineus.dev./posts/This_is_Test_2.html</guid>
+<pubDate>Mon, 21 Oct 2019 15:01:35 GMT</pubDate>
+<description></description>
 </item>
     
 <item>
 <title>test</title>
 <link>https://lineus.dev/posts/test.html</link>
-<guid>https://lineus.dev/posts/test.html</guid>
-<pubDate>Mon, 21 Oct 2019 00:04:00 GMT</pubDate>
-<description>You can do it, ra ra ra.</description>
+<guid>https://lineus.dev./posts/test.html</guid>
+<pubDate>Mon, 21 Oct 2019 12:14:59 GMT</pubDate>
+<description><p>You can do it, ra ra ra.</p>
+</description>
 </item>
     
 </channel>

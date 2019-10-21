@@ -6,7 +6,8 @@
     "title": "This is Test 2",
     "published": "Mon Oct 21 2019",
     "updated": "",
-    "synopsis": ""
+    "synopsis": "",
+    "rssPublished": "Mon, 21 Oct 2019 15:01:35 GMT"
   },
   {
     "in": "./posts/",
@@ -15,6 +16,7 @@
     "title": "test",
     "published": "Mon Oct 21 2019",
     "updated": "",
-    "synopsis": "<p>You can do it, ra ra ra.</p>\n"
+    "synopsis": "<p>You can do it, ra ra ra.</p>\n",
+    "rssPublished": "Mon, 21 Oct 2019 12:14:59 GMT"
   }
 ]
