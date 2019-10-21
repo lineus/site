@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+'use strict';
+
+const { readFile, writeFile } = require('fs').promises;
+
+run();
+
+async function run() {
+  let x = '';
+  let t = await readFile('./lineus.dev.xml', 'utf-8');
+  let jsonString = await readFile('./posts.json', 'utf-8');
+  let posts = JSON.parse(jsonString);
+
+  for (let post of posts) {
+    x += `
+<item>
+<title>${post.title}</title>
+<link>lineus.dev/${post.link}</link>
+<guid>lineus.dev/${post.link}</guid>
+<pubDate>${post.published} 00:04:00 GMT</pubDate>
+<description>${post.synopsis}</description>
+</item>
+    `;
+  }
+
+  await writeFile('./docs/lineus.dev.xml', t.replace(/\[POSTSGOHERE\]/, x));
+  return process.exit(0);
+}

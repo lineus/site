@@ -20,6 +20,7 @@ run();
 async function run() {
   const mdFiles = await getMDs(inDir);
   const files = [];
+  const existingFiles = [];
   const searchData = [];
   for (let f of mdFiles) {
     let article = new MDArticle({ path: `${inDir}${f}`});
@@ -32,11 +33,22 @@ async function run() {
         out: `${outDir}${f.replace(/\.md$/, '.html')}`,
         link: `${outDir.replace('./docs/', '')}${f.replace(/\.md$/, '.html')}`,
         title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`,
-        published: article.data.published,
+        published: new Date(article.data.published).toDateString(),
         updated: article.data.updated,
         synopsis: md(article.data.synopsis)
       };
       files.push(file);
+    } else if (article.isPublished()) {
+      let file = {
+        in: article.file.in,
+        out: article.file.out,
+        link: article.file.link,
+        title: article.file.title,
+        published: article.publishedOn(),
+        updated: article.updatedOn(),
+        synopsis: md(article.data.synopsis)
+      };
+      existingFiles.push(file);
     }
   }
 
@@ -44,10 +56,12 @@ async function run() {
     await process(file);
   }
 
+  const allFiles = files.concat(existingFiles);
+
   const grepHTML = makeGrep({ searchData });
 
   const lsHTML = makeLS({
-    posts: files.sort((a, b) => {
+    posts: allFiles.sort((a, b) => {
       let aD = new Date(a.published);
       let bD = new Date(b.published);
       return bD - aD;
@@ -56,7 +70,7 @@ async function run() {
   await writeFile(lsOut, lsHTML);
   await writeFile('./docs/grep.html', grepHTML);
 
-  await writeFile('./posts.json', JSON.stringify(files, null, 2));
+  await writeFile('./posts.json', JSON.stringify(allFiles, null, 2));
   await writeFile('./search.json', JSON.stringify(searchData, null, 2));
 }
 

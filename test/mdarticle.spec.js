@@ -79,13 +79,17 @@ describe('mdParser', function() {
       assert.ok(i2 instanceof MDArticle);
       assert.notStrictEqual(i1, i2);
     });
+    it('instance isnt a function', function() {
+      const article = new MDArticle();
+      assert.strictEqual(typeof article, 'object');
+    });
   });
   describe('options', function() {
     before(async function() {
       md = await readFile('./test/stub/test_icicle.md', 'utf-8');
     });
     it('takes a file object', function() {
-      const parser = new MDArticle({ file: fh });
+      const parser = new MDArticle({ open: fh });
       assert.ok(parser.mdString);
       assert.equal(typeof parser.mdString, 'string');
     });
@@ -418,6 +422,97 @@ describe('mdParser', function() {
       assert.throws(() => {
         parser.futurePublish();
       }, /NotParsedYetError/);
+    });
+  });
+  describe('prototype.publishedOn', function() {
+    it('smoketest', function () {
+      assert.ok(yParser.publishedOn);
+      assert.ok(typeof yParser.publishedOn === 'function');
+    });
+    it('returns a date string of the published date', function() {
+      const md = `
+        <!-- Published: 1571664076613 -->
+      `;
+      const article = new MDArticle({ md });
+      article.parse();
+      let actual = article.publishedOn();
+      let expected = 'Mon Oct 21 2019';
+      assert.strictEqual(actual, expected);
+    });
+    it('returns an empty string without a published date', function() {
+      const md = '# Test';
+      const article = new MDArticle({ md });
+      article.parse();
+      let actual = article.publishedOn();
+      let expected = '';
+      assert.strictEqual(actual, expected);
+    });
+  });
+  describe('prototype.updatedOn', function() {
+    it('smoketest', function () {
+      assert.ok(yParser.updatedOn);
+      assert.ok(typeof yParser.updatedOn === 'function');
+    });
+    it('returns a date string of the updated date', function () {
+      const md = `
+      <!-- Updated: 1571664076613 -->
+      `;
+      const article = new MDArticle({ md });
+      article.parse();
+      let actual = article.updatedOn();
+      let expected = 'Mon Oct 21 2019';
+      assert.strictEqual(actual, expected);
+    });
+    it('returns an empty string without an updated date', function () {
+      const md = '# Test';
+      const article = new MDArticle({ md });
+      article.parse();
+      let actual = article.updatedOn();
+      let expected = '';
+      assert.strictEqual(actual, expected);
+    });
+  });
+  describe('file structure', function() {
+    let article;
+    before(function() {
+      article = new MDArticle({ path: './test/stub/test_icicle.md' });
+    });
+    it('creates file data structure with path', function() {
+      assert.ok(article.file);
+      assert.ok(typeof article.file === 'object');
+    });
+    it('sets default file.in', function() {
+      assert.ok(article.file.in);
+      assert.strictEqual(typeof article.file.in, 'string');
+      assert.strictEqual(article.file.in, './posts/');
+    });
+    it('sets default file.out', function () {
+      assert.ok(article.file.out);
+      assert.strictEqual(typeof article.file.out, 'string');
+      assert.strictEqual(article.file.out, './docs/posts/');
+    });
+    it('sets file.link', function() {
+      assert.ok(article.file.link);
+      assert.strictEqual(typeof article.file.link, 'string');
+      assert.strictEqual(article.file.link, './posts/test_icicle.html');
+    });
+    it('sets file.title', function() {
+      assert.ok(article.file.title);
+      assert.strictEqual(typeof article.file.title, 'string');
+      assert.strictEqual(article.file.title, 'test icicle');
+    });
+    it('accepts custom file options', function() {
+      let article = new MDArticle({
+        path: './test/stub/yet_another.md',
+        file: {
+          in: './test/stub/',
+          out: './test/stub/docs/'
+        }
+      });
+      assert.ok(article.file.in);
+      assert.ok(article.file.out);
+      assert.strictEqual(article.file.in, './test/stub/');
+      assert.strictEqual(article.file.out, './test/stub/docs/');
     });
   });
 });

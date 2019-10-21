@@ -19,6 +19,6 @@ Not me. Not my dogs, that's for sure. They don't know shit.
 
 <!-- Tags: dogs, wonder -->
 
-<!-- Published: -->
+<!-- Published: 1571660099876 -->
 <!-- Updated: -->
-<!-- Status: WIP-->
+<!-- Status: PUB-->

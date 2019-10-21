@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "in": "./posts/",
+    "out": "./docs/posts/",
+    "link": "./posts/This_is_Test_2.html",
+    "title": "This is_Test_2",
+    "published": "Mon Oct 21 2019",
+    "updated": "",
+    "synopsis": ""
+  },
+  {
+    "in": "./posts/",
+    "out": "./docs/posts/",
+    "link": "./posts/test.html",
+    "title": "test",
+    "published": "Mon Oct 21 2019",
+    "updated": "",
+    "synopsis": "<p>You can do it, ra ra ra.</p>\n"
+  }
+]
