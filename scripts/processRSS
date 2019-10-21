@@ -15,8 +15,8 @@ async function run() {
     x += `
 <item>
 <title>${post.title}</title>
-<link>${post.link.replace(/^\.\/posts\//, '')}</link>
-<guid>${post.link.replace(/^\.\/posts/, '')}</guid>
+<link>${post.link}</link>
+<guid>${post.link}</guid>
 <pubDate>${post.published} 00:04:00 GMT</pubDate>
 <description>${post.synopsis}</description>
 </item>
