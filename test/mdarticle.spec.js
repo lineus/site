@@ -238,10 +238,38 @@ describe('mdParser', function() {
       article.parse();
       assert.strictEqual(article.publishArticle(), true);
     });
-    it('returns true for UPD', function () {
+    it('returns false for UPD', function () {
       const article = new MDArticle({ md: '<!-- Status: UPD -->' });
       article.parse();
-      assert.strictEqual(article.publishArticle(), true);
+      assert.strictEqual(article.publishArticle(), false);
+    });
+  });
+  describe('prototype.updateArticle', function() {
+    it('smoketest', function () {
+      const article = new MDArticle({ md: '' });
+      assert.ok(article.updateArticle);
+      assert.ok(typeof article.updateArticle === 'function');
+    });
+    it('throws if called before parse', function() {
+      const article = new MDArticle({ md: '# test'});
+      assert.throws(() => {
+        article.updateArticle();
+      }, /NotParsedYetError/);
+    });
+    it('returns false for WIP', function() {
+      const article = new MDArticle({ md: '<!-- Status: WIP -->'});
+      article.parse();
+      assert.strictEqual(article.updateArticle(), false);
+    });
+    it('returns false for PUB', function() {
+      const article = new MDArticle({ md: '<!-- Status: PUB -->' });
+      article.parse();
+      assert.strictEqual(article.updateArticle(), false);
+    });
+    it('returns true for UPD', function() {
+      const article = new MDArticle({ md: '<!-- Status: UPD -->' });
+      article.parse();
+      assert.strictEqual(article.updateArticle(), true);
     });
   });
   describe('prototype.markPublished', function() {
@@ -282,6 +310,42 @@ describe('mdParser', function() {
       assert.throws(() => {
         article.markPublished();
       }, /AlreadyPublishedError/);
+    });
+  });
+  describe('prototype.markUpdated', function() {
+    it('smoketest', function () {
+      const article = new MDArticle({ md: '' });
+      assert.ok(article.markUpdated);
+      assert.ok(typeof article.markUpdated === 'function');
+    });
+    it('should throw on an article that hasnt been parsed', function() {
+      const article = new MDArticle({ md: '' });
+      assert.throws(() => {
+        article.markUpdated();
+      }, /NotParsedYetError/);
+    });
+    it('should throw on any status other than UPD', function() {
+      const article1 = new MDArticle({ md: '<!-- Status: -->' });
+      const article2 = new MDArticle({ md: '<!-- Status: WIP -->' });
+      const article3 = new MDArticle({ md: '<!-- Status: PUB -->' });
+      article1.parse();
+      article2.parse();
+      article3.parse();
+      assert.throws(() => {
+        article1.markUpdated();
+      });
+      assert.throws(() => {
+        article2.markUpdated();
+      });
+      assert.throws(() => {
+        article3.markUpdated();
+      });
+    });
+    it('should update the timestamp in Updated comment', function () {
+      const article = new MDArticle({ md: '' });
+    });
+    it('should return the status to PUB', function () {
+      const article = new MDArticle({ md: '' });
     });
   });
   describe('prototype.writeBack', function() {

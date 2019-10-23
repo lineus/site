@@ -22,12 +22,16 @@ async function run() {
   const files = [];
   const existingFiles = [];
   const searchData = [];
+  let markPublished = false;
   for (let f of mdFiles) {
     let article = new MDArticle({ path: `${inDir}${f}`});
     article.parse();
     searchData.push(article.genSearch());
-    if (article.publishArticle()) {
-      article.markPublished();
+    if (article.publishArticle() || article.updateArticle()) {
+      markPublished = article.publishArticle();
+      if (markPublished) {
+        article.markPublished();
+      }
       let file = {
         in: `${inDir}${f}`,
         out: `${outDir}${f.replace(/\.md$/, '.html')}`,

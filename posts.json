@@ -1,5 +1,16 @@
 [
   {
+    "in": "./posts/Third_Times_The_Charm.md",
+    "out": "./docs/posts/Third_Times_The_Charm.html",
+    "link": "posts/Third_Times_The_Charm.html",
+    "title": "Third Times The Charm",
+    "published": "Wed Oct 23 2019",
+    "updated": 0,
+    "synopsis": "<p>  Now with newly added SYNOPSIS!!!!!</p>\n",
+    "rssPublished": "Wed, 23 Oct 2019 12:05:18 GMT",
+    "rssSynopsis": "\n  Now with newly added SYNOPSIS!!!!!\n"
+  },
+  {
     "in": "./posts/",
     "out": "./docs/posts/",
     "link": "./posts/This_is_Test_2.html",

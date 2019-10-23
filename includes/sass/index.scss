@@ -71,6 +71,10 @@ body {
   float: right;
 }
 
+#footer>#rss {
+  float: left;
+}
+
 #container,#posts {
   background-color: $bgl;
   flex-grow: 30;

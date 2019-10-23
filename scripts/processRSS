@@ -7,7 +7,7 @@ run();
 
 async function run() {
   let x = '';
-  let t = await readFile('./lineus.dev.xml', 'utf-8');
+  let t = await readFile('./Template.xml', 'utf-8');
   let jsonString = await readFile('./posts.json', 'utf-8');
   let posts = JSON.parse(jsonString);
 

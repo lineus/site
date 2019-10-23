@@ -53,6 +53,9 @@ body {
 #footer > a {
   float: right; }
 
+#footer > #rss {
+  float: left; }
+
 #container, #posts {
   background-color: #BBF5FA;
   flex-grow: 30;
