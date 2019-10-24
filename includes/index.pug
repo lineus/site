@@ -15,9 +15,23 @@ html
             a(href=latestPost.link) !{latestPost.title}
         #latestSyn !{latestPost.synopsis}
       #top3Posts
-        h3 Top 3 Posts
+        h3 Top Articles
         each post in top3
           div.topPost
             a(href=post.path) #{post.display}
+      #tags
+        h3 Taggy Tag Tag
+    script. 
+      const jsonString = '!{JSON.stringify(search)}';
+      const json = JSON.parse(jsonString);
+      const cont = document.querySelector('#tags');
+      json.filter(p => p.tags.length > 0).map(p => {
+        return p.tags.map(q => {
+          let el = document.createElement('span');
+          el.innerHTML = `<h4>${q}</h4>`;
+          cont.appendChild(el);
+        })
+      })
+      console.log('test')
     #footer
       include pug/footer.pug

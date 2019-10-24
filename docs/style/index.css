@@ -171,7 +171,7 @@ body {
 .sortButton:hover {
   cursor: pointer; }
 
-#latestPost, #top3Posts {
+#latestPost, #top3Posts, #tags {
   margin-top: .5em;
   font-family: 'Cabin', sans-serif;
   width: 40vw;
@@ -181,16 +181,16 @@ body {
   border-radius: .6em;
   color: #212321; }
 
-#latestPost a:link, #top3Posts a:link {
+#latestPost a:link, #top3Posts a:link, #tags a:link {
   color: #212321; }
 
-#latestPost a:visited, #top3Posts a:visited {
+#latestPost a:visited, #top3Posts a:visited, #tags a:link {
   color: #43506E; }
 
 #latestPost > span > h3, #latestPost > span > p {
   display: inline-block; }
 
-#latestPost > span > h3, #top3Posts > h3 {
+#latestPost > span > h3, #top3Posts > h3, #tags > h3 {
   color: rgba(162, 142, 232, 0.5);
   padding-bottom: 1em; }
 

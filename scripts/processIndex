@@ -59,7 +59,16 @@ function getTop3() {
 async function run() {
   let top3 = await getTop3();
   const jsonString = await readFile('./posts.json', 'utf-8');
+  const searchString = await readFile('./search.json', 'utf-8');
   const posts = JSON.parse(jsonString);
+  const searchPre = JSON.parse(searchString);
+  const search = searchPre.map(s => {
+    let fName = s.path.replace(/.*\/([^/]+).html$/, '$1').split('_');
+    return {
+      path: s.path,
+      tags: s.level[0].tokens.filter(t => !fName.includes(t))
+    };
+  });
   let post = posts.sort((a,b) => {
     return new Date(b.published) - new Date(a.published);
   })[0];
@@ -77,7 +86,8 @@ async function run() {
 
   const indexHTML = fn({
     latestPost: post,
-    top3: mut_Top3
+    top3: mut_Top3,
+    search
   });
   await writeFile('./docs/index.html', indexHTML);
   await mongoose.disconnect();

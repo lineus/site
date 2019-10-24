@@ -6,7 +6,7 @@ if [ -e ./node_modules/.bin/nodemon ]; then
 
   if [[ $b -eq 0 ]]; then
     echo "starting server"
-    bash -c "./node_modules/.bin/browser-sync start --server --files "docs/*" --ss ./docs -- &"
+    bash -c "./node_modules/.bin/browser-sync start --server --files "./docs" --cwd "./docs" --ss ./docs -- &"
   else
     echo "server running."
   fi

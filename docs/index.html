@@ -1,5 +1,15 @@
 <!DOCTYPE html><html><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><a class="navlink" id="grep" href="/grep.html" title="search Articles">Search</a></div></div><div id="container"><div id="latestPost"><span><h3 class="lp">Latest Article</h3><p><a href="./posts/Third_Times_The_Charm.html">Third Times The Charm</a></p></span><div id="latestSyn"><p>  Now with newly added SYNOPSIS!!!!!</p>
-</div></div><div id="top3Posts"><h3>Top 3 Posts</h3></div></div><div id="footer"><span id="footer"><style>#rss {
+</div></div><div id="top3Posts"><h3>Top Articles</h3></div><div id="tags"><h3>Taggy Tag Tag</h3></div></div><script>const jsonString = '[{"path":"./posts/Johnny_5_is_Alive.html","tags":[]},{"path":"./posts/The_Sixth_Wonder_of_the_World.html","tags":[]},{"path":"./posts/Third_Times_The_Charm.html","tags":[]},{"path":"./posts/This_is_Test_2.html","tags":[]},{"path":"./posts/fourth_awesome_post.html","tags":[]},{"path":"./posts/test.html","tags":["dogs","wonder"]}]';
+const json = JSON.parse(jsonString);
+const cont = document.querySelector('#tags');
+json.filter(p => p.tags.length > 0).map(p => {
+  return p.tags.map(q => {
+    let el = document.createElement('span');
+    el.innerHTML = `<h4>${q}</h4>`;
+    cont.appendChild(el);
+  })
+})
+console.log('test')</script><div id="footer"><span id="footer"><style>#rss {
   background: #43506E;
   font-family: 'Raleway', sans-serif;
   font-weight: 600;

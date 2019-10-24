@@ -215,7 +215,7 @@ body {
   cursor: pointer;
 }
 
-#latestPost, #top3Posts {
+#latestPost, #top3Posts, #tags {
   margin-top: .5em;
   font-family: 'Cabin', sans-serif;
   width: 40vw;
@@ -226,11 +226,11 @@ body {
   color: $fg;
 }
 
-#latestPost a:link, #top3Posts a:link {
+#latestPost a:link, #top3Posts a:link, #tags a:link {
   color: $fg;
 }
 
-#latestPost a:visited, #top3Posts a:visited {
+#latestPost a:visited, #top3Posts a:visited, #tags a:link  {
   color: $fg_sup;
 }
 
@@ -238,7 +238,7 @@ body {
   display: inline-block;
 }
 
-#latestPost>span>h3, #top3Posts>h3 {
+#latestPost>span>h3, #top3Posts>h3, #tags>h3 {
   color: rgba($fg_ibt, .5);
   padding-bottom: 1em;
 }
