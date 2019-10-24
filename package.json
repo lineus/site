@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/lineus/site#readme",
   "dependencies": {
+    "browser-sync": "^2.26.7",
     "node-sass": "^4.12.0"
   },
   "devDependencies": {

@@ -31,6 +31,8 @@ async function run() {
       markPublished = article.publishArticle();
       if (markPublished) {
         article.markPublished();
+      } else {
+        article.markUpdated();
       }
       let file = {
         in: `${inDir}${f}`,

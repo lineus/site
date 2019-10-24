@@ -2,11 +2,11 @@
 
 if [ -e ./node_modules/.bin/nodemon ]; then
   n=$(ps auxwww | grep -i nodemon | grep -v grep | wc -l);
-  s=$(ps auxwww | grep scripts\/server | grep -v grep | wc -l);
+  b=$(ps auxwww | grep -i browser-sync | grep -v grep | wc -l);
 
-  if [[ $s -eq 0 ]]; then
+  if [[ $b -eq 0 ]]; then
     echo "starting server"
-    bash -c "/usr/bin/env node ./scripts/server.js &"
+    bash -c "./node_modules/.bin/browser-sync start --server --files "docs/*" --ss ./docs -- &"
   else
     echo "server running."
   fi
