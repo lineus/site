@@ -313,6 +313,14 @@ describe('mdParser', function() {
     });
   });
   describe('prototype.markUpdated', function() {
+    const p = './test/stub/for_updating.md';
+    let originalFileContents;
+    before(async function() {
+      originalFileContents = await readFile(p, 'utf-8');
+    });
+    after(function() {
+      writeFileSync(p, originalFileContents);
+    });
     it('smoketest', function () {
       const article = new MDArticle({ md: '' });
       assert.ok(article.markUpdated);
@@ -333,19 +341,28 @@ describe('mdParser', function() {
       article3.parse();
       assert.throws(() => {
         article1.markUpdated();
-      });
+      }, /ArticleNotUpdatable/);
       assert.throws(() => {
         article2.markUpdated();
-      });
+      }, /ArticleNotUpdatable/);
       assert.throws(() => {
         article3.markUpdated();
-      });
+      }, /ArticleNotUpdatable/);
     });
     it('should update the timestamp in Updated comment', function () {
-      const article = new MDArticle({ md: '' });
+      const article = new MDArticle({ path: p });
+      article.parse();
+      console.log(`article.data.status: ${article.data.status}`);
+      article.markUpdated();
+      assert.strictEqual(/Updated: [\d]+/.test(article.mdString), true);
     });
-    it('should return the status to PUB', function () {
-      const article = new MDArticle({ md: '' });
+    it('should have updated the file contents', async function() {
+      const contents = await readFile(p, 'utf-8');
+      assert.strictEqual(/Updated: [\d]+/.test(contents), true);
+    });
+    it('should return the status to PUB', async function () {
+      const contents = await readFile(p, 'utf-8');
+      assert.strictEqual(/Status: PUB/.test(contents), true);
     });
   });
   describe('prototype.writeBack', function() {
