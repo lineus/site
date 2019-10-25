@@ -7,9 +7,19 @@
 <description>Words</description>
 
 <item>
+<title>fourth awesome post</title>
+<link>https://lineus.devposts/fourth_awesome_post.html</link>
+<guid>https://lineus.devposts/fourth_awesome_post.html</guid>
+<pubDate>Fri, 25 Oct 2019 11:58:12 GMT</pubDate>
+<description>
+here's my super cool synopsis.
+</description>
+</item>
+    
+<item>
 <title>Third Times The Charm</title>
-<link>https://lineus.dev/posts/Third_Times_The_Charm.html</link>
-<guid>https://lineus.dev./posts/Third_Times_The_Charm.html</guid>
+<link>https://lineus.devposts/Third_Times_The_Charm.html</link>
+<guid>https://lineus.devposts/Third_Times_The_Charm.html</guid>
 <pubDate>Wed, 23 Oct 2019 12:05:18 GMT</pubDate>
 <description>
   Now with newly added SYNOPSIS!!!!!
@@ -18,8 +28,8 @@
     
 <item>
 <title>This is Test 2</title>
-<link>https://lineus.dev/posts/This_is_Test_2.html</link>
-<guid>https://lineus.dev./posts/This_is_Test_2.html</guid>
+<link>https://lineus.devposts/This_is_Test_2.html</link>
+<guid>https://lineus.devposts/This_is_Test_2.html</guid>
 <pubDate>Mon, 21 Oct 2019 22:41:35 GMT</pubDate>
 <description>
 This is the best.
@@ -28,8 +38,8 @@ This is the best.
     
 <item>
 <title>test</title>
-<link>https://lineus.dev/posts/test.html</link>
-<guid>https://lineus.dev./posts/test.html</guid>
+<link>https://lineus.devposts/test.html</link>
+<guid>https://lineus.devposts/test.html</guid>
 <pubDate>Mon, 21 Oct 2019 22:41:35 GMT</pubDate>
 <description>
 You can do it, ra ra ra.

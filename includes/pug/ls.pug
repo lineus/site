@@ -15,7 +15,8 @@ html
           li.postListing
               a(href=post.link class="post") #{post.title}
               span.postsDate #{post.published}
-    script. 
+    script.
+      console.log(`loc: ${window.location}`)
       const dateBut = document.querySelector('span.sortButton:first-child');
       const titlBut = document.querySelector('span.sortButton:last-child');
       const list = document.querySelector('#postList');

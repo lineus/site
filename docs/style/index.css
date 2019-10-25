@@ -191,8 +191,42 @@ body {
   display: inline-block; }
 
 #latestPost > span > h3, #top3Posts > h3, #tags > h3 {
-  color: rgba(162, 142, 232, 0.5);
+  color: rgba(33, 35, 33, 0.5);
   padding-bottom: 1em; }
+
+#cloud {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center; }
+
+#cloud > a {
+  text-decoration: none;
+  padding: .3em; }
+
+#cloud > a:link {
+  color: rgba(67, 80, 110, 0.5); }
+
+#cloud > a:visited {
+  color: rgba(162, 142, 232, 0.5); }
+
+.tag_xs {
+  font-size: .75em; }
+
+.tag_sm {
+  font-size: 1em; }
+
+.tag_md {
+  font-size: 1.25em; }
+
+.tag_lg {
+  font-size: 1.5em; }
+
+.tag_xl {
+  font-size: 1.75em; }
+
+.tag_xx {
+  font-size: 2em; }
 
 #latestPost > span > p {
   padding-left: 1em;
@@ -258,4 +292,6 @@ body {
     width: 90vw;
     margin-right: 1em; }
   #top3Posts a {
-    font-size: 1.1em; } }
+    font-size: 1.1em; }
+  #tags {
+    width: 90vw; } }

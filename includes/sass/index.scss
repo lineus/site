@@ -239,8 +239,53 @@ body {
 }
 
 #latestPost>span>h3, #top3Posts>h3, #tags>h3 {
-  color: rgba($fg_ibt, .5);
+  color: rgba($fg, .5);
   padding-bottom: 1em;
+}
+
+#cloud {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#cloud>a {
+  text-decoration: none;
+  padding: .3em;
+  // margin: 1em;
+}
+
+#cloud>a:link {
+  color: rgba($fg_sup, .5);
+}
+
+#cloud>a:visited {
+  color: rgba($fg_ibt, .5);
+}
+
+.tag_xs {
+  font-size: .75em;
+}
+
+.tag_sm {
+  font-size: 1em;
+}
+
+.tag_md {
+  font-size: 1.25em;
+}
+
+.tag_lg {
+  font-size: 1.5em;
+}
+
+.tag_xl {
+  font-size: 1.75em;
+}
+
+.tag_xx {
+  font-size: 2em;
 }
 
 #latestPost>span>p {
@@ -343,5 +388,9 @@ body {
 
   #top3Posts a {
     font-size: 1.1em;
+  }
+
+  #tags {
+    width: 90vw;
   }
 }

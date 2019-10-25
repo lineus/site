@@ -21,17 +21,48 @@ html
             a(href=post.path) #{post.display}
       #tags
         h3 Taggy Tag Tag
+        #cloud
     script. 
       const jsonString = '!{JSON.stringify(search)}';
       const json = JSON.parse(jsonString);
-      const cont = document.querySelector('#tags');
+      const cont = document.querySelector('#cloud');
+      const tags = [];
+
       json.filter(p => p.tags.length > 0).map(p => {
         return p.tags.map(q => {
-          let el = document.createElement('span');
-          el.innerHTML = `<h4>${q}</h4>`;
-          cont.appendChild(el);
+          let index = tags.findIndex(x => x.tag === q)
+          if (index < 0) {
+            tags.push({ tag: q, count: 1 });
+          } else {
+            tags[index].count++;
+          }
         })
       })
-      console.log('test')
+
+      const highCount = tags.sort((a, b) => b.count - a.count)[0].count;
+
+      tags.map(t => {
+        let percentage = t.count/highCount;
+        console.log(`p: ${percentage} ${typeof percentage}`)
+        let tag = '';
+        if (percentage === 1) {
+          tag = 'tag_xx';
+        } else if (percentage >= .75) {
+          tag = 'tag_xl';
+        } else if (percentage >= .5) {
+          tag = 'tag_lg';
+        } else if (percentage >= .25) {
+          tag = 'tag_md';
+        } else if (percentage > 0) {
+          tag = 'tag_sm';
+        } else {
+          tag = 'tag_xs';
+        }
+        let el = document.createElement('a');
+        el.setAttribute('href', '#');
+        el.classList.add(tag);
+        el.innerText = `${t.tag}`;
+        cont.appendChild(el);
+      })
     #footer
       include pug/footer.pug

@@ -1,15 +1,45 @@
-<!DOCTYPE html><html><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><a class="navlink" id="grep" href="/grep.html" title="search Articles">Search</a></div></div><div id="container"><div id="latestPost"><span><h3 class="lp">Latest Article</h3><p><a href="./posts/Third_Times_The_Charm.html">Third Times The Charm</a></p></span><div id="latestSyn"><p>  Now with newly added SYNOPSIS!!!!!</p>
-</div></div><div id="top3Posts"><h3>Top Articles</h3></div><div id="tags"><h3>Taggy Tag Tag</h3></div></div><script>const jsonString = '[{"path":"./posts/Johnny_5_is_Alive.html","tags":[]},{"path":"./posts/The_Sixth_Wonder_of_the_World.html","tags":[]},{"path":"./posts/Third_Times_The_Charm.html","tags":[]},{"path":"./posts/This_is_Test_2.html","tags":[]},{"path":"./posts/fourth_awesome_post.html","tags":[]},{"path":"./posts/test.html","tags":["dogs","wonder"]}]';
+<!DOCTYPE html><html><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><a class="navlink" id="grep" href="/grep.html" title="search Articles">Search</a></div></div><div id="container"><div id="latestPost"><span><h3 class="lp">Latest Article</h3><p><a href="posts/fourth_awesome_post.html">fourth awesome post</a></p></span><div id="latestSyn"><p>here&#39;s my super cool synopsis.</p>
+</div></div><div id="top3Posts"><h3>Top Articles</h3></div><div id="tags"><h3>Taggy Tag Tag</h3><div id="cloud"></div></div></div><script>const jsonString = '[{"path":"./posts/Johnny_5_is_Alive.html","tags":[]},{"path":"./posts/The_Sixth_Wonder_of_the_World.html","tags":[]},{"path":"./posts/Third_Times_The_Charm.html","tags":["Bill","Ted","Adventure"]},{"path":"./posts/This_is_Test_2.html","tags":["Ted","wonder"]},{"path":"./posts/blargh.html","tags":[""]},{"path":"./posts/fourth_awesome_post.html","tags":["Adventure","Ted"]},{"path":"./posts/test.html","tags":["dogs","wonder","Ted"]}]';
 const json = JSON.parse(jsonString);
-const cont = document.querySelector('#tags');
+const cont = document.querySelector('#cloud');
+const tags = [];
+
 json.filter(p => p.tags.length > 0).map(p => {
   return p.tags.map(q => {
-    let el = document.createElement('span');
-    el.innerHTML = `<h4>${q}</h4>`;
-    cont.appendChild(el);
+    let index = tags.findIndex(x => x.tag === q)
+    if (index < 0) {
+      tags.push({ tag: q, count: 1 });
+    } else {
+      tags[index].count++;
+    }
   })
 })
-console.log('test')</script><div id="footer"><span id="footer"><style>#rss {
+
+const highCount = tags.sort((a, b) => b.count - a.count)[0].count;
+
+tags.map(t => {
+  let percentage = t.count/highCount;
+  console.log(`p: ${percentage} ${typeof percentage}`)
+  let tag = '';
+  if (percentage === 1) {
+    tag = 'tag_xx';
+  } else if (percentage >= .75) {
+    tag = 'tag_xl';
+  } else if (percentage >= .5) {
+    tag = 'tag_lg';
+  } else if (percentage >= .25) {
+    tag = 'tag_md';
+  } else if (percentage > 0) {
+    tag = 'tag_sm';
+  } else {
+    tag = 'tag_xs';
+  }
+  let el = document.createElement('a');
+  el.setAttribute('href', '#');
+  el.classList.add(tag);
+  el.innerText = `${t.tag}`;
+  cont.appendChild(el);
+})</script><div id="footer"><span id="footer"><style>#rss {
   background: #43506E;
   font-family: 'Raleway', sans-serif;
   font-weight: 600;

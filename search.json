@@ -3,13 +3,17 @@
     "path": "./posts/Johnny_5_is_Alive.html",
     "level": [
       {
-        "name": "fileName/Tags",
+        "name": "fileName",
         "tokens": [
           "Johnny",
           "5",
           "is",
           "Alive"
         ]
+      },
+      {
+        "name": "tags",
+        "tokens": []
       },
       {
         "name": "header1",
@@ -41,7 +45,7 @@
     "path": "./posts/The_Sixth_Wonder_of_the_World.html",
     "level": [
       {
-        "name": "fileName/Tags",
+        "name": "fileName",
         "tokens": [
           "The",
           "Sixth",
@@ -50,6 +54,10 @@
           "the",
           "World"
         ]
+      },
+      {
+        "name": "tags",
+        "tokens": []
       },
       {
         "name": "header1",
@@ -77,12 +85,20 @@
     "path": "./posts/Third_Times_The_Charm.html",
     "level": [
       {
-        "name": "fileName/Tags",
+        "name": "fileName",
         "tokens": [
           "Third",
           "Times",
           "The",
           "Charm"
+        ]
+      },
+      {
+        "name": "tags",
+        "tokens": [
+          "Bill",
+          "Ted",
+          "Adventure"
         ]
       },
       {
@@ -114,12 +130,19 @@
     "path": "./posts/This_is_Test_2.html",
     "level": [
       {
-        "name": "fileName/Tags",
+        "name": "fileName",
         "tokens": [
           "This",
           "is",
           "Test",
           "2"
+        ]
+      },
+      {
+        "name": "tags",
+        "tokens": [
+          "Ted",
+          "wonder"
         ]
       },
       {
@@ -143,14 +166,56 @@
     ]
   },
   {
+    "path": "./posts/blargh.html",
+    "level": [
+      {
+        "name": "fileName",
+        "tokens": [
+          "blargh"
+        ]
+      },
+      {
+        "name": "tags",
+        "tokens": [
+          ""
+        ]
+      },
+      {
+        "name": "header1",
+        "tokens": [
+          "blargh"
+        ]
+      },
+      {
+        "name": "header2",
+        "tokens": []
+      },
+      {
+        "name": "header3-6",
+        "tokens": []
+      },
+      {
+        "name": "links",
+        "tokens": []
+      }
+    ]
+  },
+  {
     "path": "./posts/fourth_awesome_post.html",
     "level": [
       {
-        "name": "fileName/Tags",
+        "name": "fileName",
         "tokens": [
           "fourth",
           "awesome",
           "post"
+        ]
+      },
+      {
+        "name": "tags",
+        "tokens": [
+          "Adventure",
+          "Ted"
         ]
       },
       {
@@ -185,11 +250,17 @@
     "path": "./posts/test.html",
     "level": [
       {
-        "name": "fileName/Tags",
+        "name": "fileName",
         "tokens": [
-          "test",
+          "test"
+        ]
+      },
+      {
+        "name": "tags",
+        "tokens": [
           "dogs",
-          "wonder"
+          "wonder",
+          "Ted"
         ]
       },
       {

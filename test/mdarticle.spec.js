@@ -55,8 +55,8 @@ const f = `
 <!--Updated: 4725093192045-->
 `;
 
-const yParser = new MDArticle({ md: y });
-yParser.parse();
+const yArticle = new MDArticle({ md: y });
+yArticle.parse();
 const nParser = new MDArticle({ md: n });
 nParser.parse();
 const fParser = new MDArticle({ md: f });
@@ -402,11 +402,11 @@ describe('mdParser', function() {
   });
   describe('prototype.isPublished', function() {
     it('smoketest', function() {
-      assert.ok(yParser.isPublished);
-      assert.ok(typeof yParser.isPublished === 'function');
+      assert.ok(yArticle.isPublished);
+      assert.ok(typeof yArticle.isPublished === 'function');
     });
     it('returns true for a post with a past pub date', function() {
-      assert.strictEqual(yParser.isPublished(), true);
+      assert.strictEqual(yArticle.isPublished(), true);
     });
     it('returns false for a post with no date', function() {
       assert.strictEqual(nParser.isPublished(), false);
@@ -423,11 +423,11 @@ describe('mdParser', function() {
   });
   describe('prototype.isUpdated', function () {
     it('smoketest', function() {
-      assert.ok(yParser.isUpdated);
-      assert.ok(typeof yParser.isUpdated === 'function');
+      assert.ok(yArticle.isUpdated);
+      assert.ok(typeof yArticle.isUpdated === 'function');
     });
     it('returns true for a post with a past updated date', function () {
-      assert.strictEqual(yParser.isUpdated(), true);
+      assert.strictEqual(yArticle.isUpdated(), true);
     });
     it('returns false for a post with no updated date', function () {
       assert.strictEqual(nParser.isUpdated(), false);
@@ -444,11 +444,11 @@ describe('mdParser', function() {
   });
   describe('prototype.hasPublished', function() {
     it('smoketest', function() {
-      assert.ok(yParser.hasPublished);
-      assert.ok(typeof yParser.hasPublished === 'function');
+      assert.ok(yArticle.hasPublished);
+      assert.ok(typeof yArticle.hasPublished === 'function');
     });
     it('returns true for a post with a past pub date', function () {
-      assert.strictEqual(yParser.hasPublished(), true);
+      assert.strictEqual(yArticle.hasPublished(), true);
     });
     it('returns false for a post with no date', function () {
       assert.strictEqual(nParser.hasPublished(), false);
@@ -465,11 +465,11 @@ describe('mdParser', function() {
   });
   describe('prototype.hasUpdated', function () {
     it('smoketest', function() {
-      assert.ok(yParser.hasUpdated);
-      assert.ok(typeof yParser.hasUpdated === 'function');
+      assert.ok(yArticle.hasUpdated);
+      assert.ok(typeof yArticle.hasUpdated === 'function');
     });
     it('returns true for a post with a past upd date', function () {
-      assert.strictEqual(yParser.hasUpdated(), true);
+      assert.strictEqual(yArticle.hasUpdated(), true);
     });
     it('returns false for a post with no date', function () {
       assert.strictEqual(nParser.hasUpdated(), false);
@@ -486,11 +486,11 @@ describe('mdParser', function() {
   });
   describe('prototype.futurePublish', function() {
     it('smoketest', function() {
-      assert.ok(yParser.futurePublish);
-      assert.ok(typeof yParser.futurePublish === 'function');
+      assert.ok(yArticle.futurePublish);
+      assert.ok(typeof yArticle.futurePublish === 'function');
     });
     it('returns false for a post with a past pub date', function () {
-      assert.strictEqual(yParser.futurePublish(), false);
+      assert.strictEqual(yArticle.futurePublish(), false);
     });
     it('returns false for a post with no date', function () {
       assert.strictEqual(nParser.futurePublish(), false);
@@ -507,8 +507,8 @@ describe('mdParser', function() {
   });
   describe('prototype.publishedOn', function() {
     it('smoketest', function () {
-      assert.ok(yParser.publishedOn);
-      assert.ok(typeof yParser.publishedOn === 'function');
+      assert.ok(yArticle.publishedOn);
+      assert.ok(typeof yArticle.publishedOn === 'function');
     });
     it('returns a date string of the published date', function() {
       const md = `
@@ -531,8 +531,8 @@ describe('mdParser', function() {
   });
   describe('prototype.updatedOn', function() {
     it('smoketest', function () {
-      assert.ok(yParser.updatedOn);
-      assert.ok(typeof yParser.updatedOn === 'function');
+      assert.ok(yArticle.updatedOn);
+      assert.ok(typeof yArticle.updatedOn === 'function');
     });
     it('returns a date string of the updated date', function () {
       const md = `
@@ -551,6 +551,77 @@ describe('mdParser', function() {
       let actual = article.updatedOn();
       let expected = '';
       assert.strictEqual(actual, expected);
+    });
+  });
+  describe('prototype.genSearch', function() {
+    it('smoketest', function () {
+      assert.ok(yArticle.genSearch);
+      assert.ok(typeof yArticle.genSearch === 'function');
+    });
+    it('throws an error when called before parse', function () {
+      const article = new MDArticle({ md: '' });
+      assert.throws(() => {
+        article.genSearch();
+      }, /NotParsedYetError/);
+    });
+    it('returns the correct structure', function() {
+      const article = new MDArticle({ md: '# Test' });
+      article.parse();
+      const struct = article.genSearch();
+      assert.strictEqual(typeof struct, 'object');
+      assert.strictEqual(typeof struct.path, 'string');
+      assert.strictEqual(struct.path, '');
+      assert.ok(struct.level);
+      assert.strictEqual(Array.isArray(struct.level), true);
+    });
+    describe('levels', function() {
+      let article;
+      let search;
+      before(function() {
+        article = new MDArticle({ path: './test/stub/test_icicle.md' });
+        article.parse();
+        search = article.genSearch();
+      });
+      it('smoketest', function() {
+        assert.ok(search.level);
+        assert.strictEqual(Array.isArray(search.level), true);
+        assert.strictEqual(search.level.length, 6);
+        const expected = [
+          'fileName',
+          'tags',
+          'header1',
+          'header2',
+          'header3-6',
+          'links'
+        ];
+        assert.deepEqual(search.level.map(l => l.name), expected);
+      });
+      it('correct fileName level', function() {
+        const expected = [ 'test', 'icicle' ];
+        assert.deepEqual(search.level[0].tokens, expected);
+      });
+      it('correct tags level', function () {
+        const expected = [ 'mongoose', 'javascript', 'node', 'mongodb' ];
+        assert.deepEqual(search.level[1].tokens, expected);
+      });
+      it('correct header1 level', function () {
+        const expected = [ 'arduino', 'raspberry', 'napster' ];
+        assert.deepEqual(search.level[2].tokens, expected);
+      });
+      it('correct header2 level', function () {
+        const expected = [ 'solar', 'blackhole', 'wind' ];
+        assert.deepEqual(search.level[3].tokens, expected);
+      });
+      it('correct header3 level', function () {
+        const expected = [ 'glarp', 'gindle', 'mandrel', 'yankee' ];
+        assert.deepEqual(search.level[4].tokens, expected);
+      });
+      it('correct link level', function() {
+        const expected = [ 'yay!', 'who?', 'yahoo',
+          'newline', 'evil', 'people', 'google',
+          'wasted', 'time', 'reddit' ];
+        assert.deepEqual(search.level[5].tokens, expected);
+      });
     });
   });
   describe('file structure', function() {

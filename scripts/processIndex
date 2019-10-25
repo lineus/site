@@ -63,10 +63,9 @@ async function run() {
   const posts = JSON.parse(jsonString);
   const searchPre = JSON.parse(searchString);
   const search = searchPre.map(s => {
-    let fName = s.path.replace(/.*\/([^/]+).html$/, '$1').split('_');
     return {
       path: s.path,
-      tags: s.level[0].tokens.filter(t => !fName.includes(t))
+      tags: s.level[1].tokens
     };
   });
   let post = posts.sort((a,b) => {
