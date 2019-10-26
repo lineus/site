@@ -1,10 +1,10 @@
-#!/usr/bin/env node --no-deprecation
+#!/usr/bin/env -S node --no-deprecation
 'use strict';
 
 const pug = require('pug');
 const fn = pug.compileFile('./includes/index.pug');
 const { stat, readFile, writeFile } = require('fs').promises;
-const { ATLASSRV } = require('/Users/lineus/.env');
+const { ATLASSRV } = require(`${process.env.HOME}/.env`);
 const url = ATLASSRV.replace(/\/[^/]+$/, '/SiteMetrics');
 const mongoose = require('mongoose');
 const { Schema } = mongoose;

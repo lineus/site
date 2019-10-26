@@ -8,7 +8,7 @@ const makeGrep = pug.compileFile('./includes/grep.pug');
 const md = require('marked');
 const { existsSync, promises } = require('fs');
 const { readdir, readFile, writeFile } = promises;
-const { MDArticle } = require('../lib/MDArticle');
+const { MDArticle } = require('../lib/mdarticle');
 
 const inDir = './posts/';
 const outDir = './docs/posts/';
