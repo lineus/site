@@ -1,5 +1,5 @@
 doctype html
-html
+html(lang="en")
   head
     title lineus.dev
     include pug/headCommon.pug
@@ -9,10 +9,9 @@ html
       include pug/nav.pug
     #container
       #latestPost
-        span
-          h3.lp Latest Article
-          p
-            a(href=latestPost.link) !{latestPost.title}
+        h3.lp Latest Article
+        p
+          a(href=latestPost.link) !{latestPost.title}
         #latestSyn !{latestPost.synopsis}
       #top3Posts
         h3 Top Articles

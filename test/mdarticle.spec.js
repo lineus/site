@@ -352,7 +352,6 @@ describe('mdParser', function() {
     it('should update the timestamp in Updated comment', function () {
       const article = new MDArticle({ path: p });
       article.parse();
-      console.log(`article.data.status: ${article.data.status}`);
       article.markUpdated();
       assert.strictEqual(/Updated: [\d]+/.test(article.mdString), true);
     });
@@ -637,6 +636,17 @@ describe('mdParser', function() {
       assert.ok(article.file.in);
       assert.strictEqual(typeof article.file.in, 'string');
       assert.strictEqual(article.file.in, './posts/');
+    });
+    it('sets file.fullPathIn', function() {
+      assert.ok(article.file.fullPathIn);
+      assert.strictEqual(typeof article.file.fullPathIn, 'string');
+      assert.strictEqual(article.file.fullPathIn, './posts/test_icicle_mul.md');
+    });
+    it('sets file.fullPathOut', function () {
+      assert.ok(article.file.fullPathOut);
+      assert.strictEqual(typeof article.file.fullPathOut, 'string');
+      const expected = './docs/posts/test_icicle_mul.html';
+      assert.strictEqual(article.file.fullPathOut, expected);
     });
     it('sets default file.out', function () {
       assert.ok(article.file.out);

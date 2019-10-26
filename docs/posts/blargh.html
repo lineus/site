@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="en"><head><title>lineus.dev blargh</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><a class="navlink" id="grep" href="/grep.html" title="search Articles">Search</a></div></div><div id="container"><h1 id="blargh">blargh</h1>
+
+
+
+
+
+
+
+
+</div><script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.4.0/stitch.js"></script><script>const link = './docs/posts/blargh.html';
+const client = stitch.Stitch.initializeDefaultAppClient('blog-iydtx');
+const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('SiteMetrics');
+client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(function(user) {
+  db.collection('visitors').insertOne({ path: link }).catch(console.dir);
+}).catch(console.dir);</script><div id="footer"><div id="rss"><a href="https://lineus.dev/posts.xml">Subscribe</a></div><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a></div></body></html>

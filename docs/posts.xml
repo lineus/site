@@ -8,8 +8,8 @@
 
 <item>
 <title>fourth awesome post</title>
-<link>https://lineus.devposts/fourth_awesome_post.html</link>
-<guid>https://lineus.devposts/fourth_awesome_post.html</guid>
+<link>https://lineus.dev/posts/fourth_awesome_post.html</link>
+<guid>https://lineus.dev./posts/fourth_awesome_post.html</guid>
 <pubDate>Fri, 25 Oct 2019 11:58:12 GMT</pubDate>
 <description>
 here's my super cool synopsis.
@@ -18,21 +18,11 @@ here's my super cool synopsis.
     
 <item>
 <title>Third Times The Charm</title>
-<link>https://lineus.devposts/Third_Times_The_Charm.html</link>
-<guid>https://lineus.devposts/Third_Times_The_Charm.html</guid>
+<link>https://lineus.dev/posts/Third_Times_The_Charm.html</link>
+<guid>https://lineus.dev./posts/Third_Times_The_Charm.html</guid>
 <pubDate>Wed, 23 Oct 2019 12:05:18 GMT</pubDate>
 <description>
   Now with newly added SYNOPSIS!!!!!
-</description>
-</item>
-    
-<item>
-<title>This is Test 2</title>
-<link>https://lineus.devposts/This_is_Test_2.html</link>
-<guid>https://lineus.devposts/This_is_Test_2.html</guid>
-<pubDate>Mon, 21 Oct 2019 22:41:35 GMT</pubDate>
-<description>
-This is the best.
 </description>
 </item>
     
@@ -43,6 +33,46 @@ This is the best.
 <pubDate>Mon, 21 Oct 2019 22:41:35 GMT</pubDate>
 <description>
 You can do it, ra ra ra.
+</description>
+</item>
+    
+<item>
+<title>This is Test 2</title>
+<link>https://lineus.dev/posts/This_is_Test_2.html</link>
+<guid>https://lineus.dev./posts/This_is_Test_2.html</guid>
+<pubDate>Mon, 21 Oct 2019 22:41:35 GMT</pubDate>
+<description>
+This is the best.
+</description>
+</item>
+    
+<item>
+<title>Johnny 5 is Alive</title>
+<link>https://lineus.devposts/Johnny_5_is_Alive.html</link>
+<guid>https://lineus.devposts/Johnny_5_is_Alive.html</guid>
+<pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
+<description>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed arcu non odio euismod lacinia. Bibendum enim facilisis gravida neque convallis a. Sed viverra ipsum nunc aliquet bibendum enim facilisis. Metus dictum at tempor commodo ullamcorper a lacus. Habitant morbi tristique senectus et netus et malesuada fames ac. Vitae nunc sed velit dignissim sodales ut eu. A iaculis at erat pellentesque. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Ut sem nulla pharetra diam sit amet nisl. Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing. Est ultricies integer quis auctor elit sed vulputate mi. Turpis tincidunt id aliquet risus feugiat in ante metus. Aenean pharetra magna ac placerat. Vestibulum lorem sed risus ultricies tristique nulla aliquet enim.
+</description>
+</item>
+    
+<item>
+<title>The Sixth Wonder of the World</title>
+<link>https://lineus.devposts/The_Sixth_Wonder_of_the_World.html</link>
+<guid>https://lineus.devposts/The_Sixth_Wonder_of_the_World.html</guid>
+<pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
+<description>
+The Colossus of Rhodes *was* a statue of the god Helios in the greek city of Rhodes on the island of the same name. It was bigly, and the best. Everyone Knows it. He knows it, and they know it. I'm a genius, so I know it. 
+</description>
+</item>
+    
+<item>
+<title>blargh</title>
+<link>https://lineus.devposts/blargh.html</link>
+<guid>https://lineus.devposts/blargh.html</guid>
+<pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
+<description>
+
 </description>
 </item>
     
