@@ -314,12 +314,16 @@ describe('mdParser', function() {
   });
   describe('prototype.markUpdated', function() {
     const p = './test/stub/for_updating.md';
+    const p2 = './test/stub/for_updating2.md';
     let originalFileContents;
+    let originalFileContents2;
     before(async function() {
       originalFileContents = await readFile(p, 'utf-8');
+      originalFileContents2 = await readFile(p, 'utf-8');
     });
     after(function() {
       writeFileSync(p, originalFileContents);
+      writeFileSync(p2, originalFileContents2)
     });
     it('smoketest', function () {
       const article = new MDArticle({ md: '' });
@@ -363,6 +367,16 @@ describe('mdParser', function() {
       const contents = await readFile(p, 'utf-8');
       assert.strictEqual(/Status: PUB/.test(contents), true);
     });
+    it('should successfully reset UPD to PUB sans spaces', function() {
+      const article = new MDArticle({ path: './test/stub/for_updating2.md' });
+      article.parse();
+      article.markUpdated();
+      assert.strictEqual(article.data.status, 'PUB');
+      const str = readFileSync('./test/stub/for_updating2.md', 'utf-8');
+      const updatedArticle = new MDArticle({ md: str });
+      updatedArticle.parse()
+      assert.strictEqual(updatedArticle.data.status, 'PUB');
+    })
   });
   describe('prototype.writeBack', function() {
     before(function() {

@@ -24,19 +24,16 @@ async function run() {
   const existingFiles = [];
   const searchData = [];
   let markPublished = false;
-  let markUpdated = false;
   for (let f of mdFiles) {
     let article = new MDArticle({ path: `${inDir}${f}`});
     article.parse();
     searchData.push(article.genSearch());
     const e_p = !existsSync(article.file.fullPathOut) && article.isPublished();
-    console.log(`e: ${article.file.fullPathOut} -> ${e_p}`);
     if (article.publishArticle() || article.updateArticle() || !e_p) {
       markPublished = article.publishArticle();
-      markUpdated = article.updateArticle();
       if (markPublished) {
         article.markPublished();
-      } else if (markUpdated) {
+      } else {
         article.markUpdated();
       }
       let file = {

@@ -56,7 +56,6 @@ describe('HTML', function() {
         .replace(/\.html/, '')
         .replace(/_/g, ' ');
 
-      console.log(`${f}:${fTitle}`);
       const title = /\/posts\//.test(f) ? `lineus.dev ${fTitle}`:'lineus.dev';
       assert.strictEqual(window.document.title, title);
       assert.strictEqual(eLen, 0, `There are ${eLen} Errors`);
