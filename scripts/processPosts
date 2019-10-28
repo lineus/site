@@ -27,13 +27,14 @@ async function run() {
   for (let f of mdFiles) {
     let article = new MDArticle({ path: `${inDir}${f}`});
     article.parse();
+    console.log(`${article.path}: ${article.isPublished()}`);
     searchData.push(article.genSearch());
     const e_p = !existsSync(article.file.fullPathOut) && article.isPublished();
-    if (article.publishArticle() || article.updateArticle() || !e_p) {
+    if (article.publishArticle() || article.updateArticle() || e_p) {
       markPublished = article.publishArticle();
       if (markPublished) {
         article.markPublished();
-      } else {
+      } else if (article.updateArticle()){
         article.markUpdated();
       }
       let file = {
