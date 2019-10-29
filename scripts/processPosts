@@ -28,8 +28,12 @@ async function run() {
     let article = new MDArticle({ path: `${inDir}${f}`});
     article.parse();
     const e_p = !existsSync(article.file.fullPathOut) && article.isPublished();
-    if (article.publishArticle() || article.updateArticle() || e_p) {
+
+    if (article.isPublished()) {
       searchData.push(article.genSearch());
+    }
+
+    if (article.publishArticle() || article.updateArticle() || e_p) {
       markPublished = article.publishArticle();
       if (markPublished) {
         article.markPublished();

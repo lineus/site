@@ -68,6 +68,7 @@ async function run() {
       tags: s.level[1].tokens
     };
   });
+
   let post = posts.sort((a,b) => {
     return new Date(b.published) - new Date(a.published);
   })[0];
