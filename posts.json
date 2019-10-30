@@ -8,7 +8,11 @@
     "updated": "Fri Oct 25 2019",
     "synopsis": "<p>here&#39;s my super cool synopsis.</p>\n",
     "rssPublished": "Fri, 25 Oct 2019 11:58:12 GMT",
-    "rssSynopsis": "\nhere's my super cool synopsis.\n"
+    "rssSynopsis": "\nhere's my super cool synopsis.\n",
+    "tags": [
+      "Adventure",
+      "Ted"
+    ]
   },
   {
     "in": "./posts/",
@@ -19,7 +23,12 @@
     "updated": "Fri Oct 25 2019",
     "synopsis": "<p>  Now with newly added SYNOPSIS!!!!!</p>\n",
     "rssPublished": "Wed, 23 Oct 2019 12:05:18 GMT",
-    "rssSynopsis": "\n  Now with newly added SYNOPSIS!!!!!\n"
+    "rssSynopsis": "\n  Now with newly added SYNOPSIS!!!!!\n",
+    "tags": [
+      "Bill",
+      "Ted",
+      "Adventure"
+    ]
   },
   {
     "in": "./posts/",
@@ -30,7 +39,11 @@
     "updated": "Fri Oct 25 2019",
     "synopsis": "<p>This is the best.</p>\n",
     "rssPublished": "Mon, 21 Oct 2019 22:41:35 GMT",
-    "rssSynopsis": "\nThis is the best.\n"
+    "rssSynopsis": "\nThis is the best.\n",
+    "tags": [
+      "Ted",
+      "wonder"
+    ]
   },
   {
     "in": "./posts/",
@@ -41,6 +54,11 @@
     "updated": "Sat Oct 26 2019",
     "synopsis": "<p>You can do it, ra ra ra.</p>\n",
     "rssPublished": "Mon, 21 Oct 2019 22:41:35 GMT",
-    "rssSynopsis": "\nYou can do it, ra ra ra.\n"
+    "rssSynopsis": "\nYou can do it, ra ra ra.\n",
+    "tags": [
+      "dogs",
+      "wonder",
+      "Ted"
+    ]
   }
 ]

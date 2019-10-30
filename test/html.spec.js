@@ -38,6 +38,7 @@ describe('HTML', function() {
   before(buildIsh);
   testFiles.forEach(f => {
     it(`${f}`, async function() {
+      this.timeout(5000);
       const options = {
         data: readFileSync(f, 'utf-8')
       };

@@ -13,15 +13,39 @@ html(lang="en")
     #posts
       ul#postList
         each post in posts
-          li.postListing
+          li.postListing(class=post.tags.map(t => `tag-${t}`).join(' '))
               a(href=post.link class="post") #{post.title}
+              each tag in post.tags
+                a(href=`/ls.html?tagged=${tag}`) #{tag}
               span.postsDate #{post.published}
+              
     script.
-      console.log(`loc: ${window.location}`)
+      const isTagged = /tagged/.test(window.location);
+      let tags = [];
       const dateBut = document.querySelector('span.sortButton:first-child');
       const titlBut = document.querySelector('span.sortButton:last-child');
       const list = document.querySelector('#postList');
       const posts = Array.from(list.childNodes);
+
+      if (isTagged) {
+        tags = `${window.location}`.split("=")[1].split(",");
+        clearAllPosts()
+        tags.map(setVisibleByTag)
+      }
+
+      function clearAllPosts() {
+        posts.map(post => {
+          post.style.display = 'none';
+        })
+      }
+
+      function setVisibleByTag(t) {
+        posts.map(post => {
+          if(post.classList.contains(`tag-${t}`)) {
+            post.style.display = 'flex';
+          }
+        })
+      }
 
       function replacePosts(arr) {
         while (list.firstChild) {
