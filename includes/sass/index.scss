@@ -29,38 +29,6 @@ body {
   flex-direction: row;
 }
 
-#search {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background-color: $fg;
-  width: 100vw;
-  height: 3em;
-  flex-grow: 0;
-}
-
-#query {
-  border-radius: .5em;
-  align-self: center;
-  background-color: $bgl;
-  height: 2em;
-  color: $fg;
-  width: 60vw;
-  padding: .3em;
-}
-
-#results {
-  flex-grow: 30;
-  background-color: $bgl;
-}
-
-.searchLink {
-  font-size: 2em;
-  color: $fg;
-  background: $bg;
-  margin-left: 2em;
-}
-
 #footer {
   padding: .25em;
   flex-grow: 0;
@@ -106,14 +74,72 @@ body {
   align-self: flex-end;
 }
 
-.navlink {
-  // background-color: $bgd;
+.navlink, #searchBut {
   font-family: 'Nanum Gothic', sans-serif;
   font-weight: 600;
   text-decoration: none;
   color: $fg_sup;
   padding: 1em;
   margin-right: 2em;
+}
+
+#searchBut {
+  cursor: pointer;
+}
+
+#searchBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 0px;
+  background: $fg;
+  transition: height .5s;
+}
+
+span.qbef, span.qaft, span.qaf2 {
+  opacity: 0;
+  color: $bgl;
+  transition: opacity .5s;
+}
+
+span.qaft {
+  padding-left: 1em;
+}
+
+span.qaf2 {
+  padding-left: .5em;
+  transform: rotate(90deg);
+}
+
+span.query {
+  border-radius: .5em;
+  align-self: center;
+  background-color: $bgl;
+  height: 0px;
+  color: $fg;
+  width: 100vw;
+  transition: height .5s, padding .5s, width .5s;
+}
+
+#results {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  // min-height: 1em;
+  height: 0px;
+  background-color: $bg;
+  padding-left: 2em;
+  transition: height .2s, padding .2s, width .2s;
+}
+
+#results > a {
+  text-decoration: none;
+  color: $bgl;
+  font-size: 1.5em;
+  margin: .25em;
 }
 
 #logo, #name {

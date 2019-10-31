@@ -7,6 +7,7 @@ html(lang="en")
     #header
       include pug/logo.pug
       include pug/nav.pug
+    include pug/search.pug
     #container
       #latestPost
         h3.lp Latest Article
@@ -19,7 +20,7 @@ html(lang="en")
           div.topPost
             a(href=post.path) #{post.display}
       #tags
-        h3 Taggy Tag Tag
+        h3 Articles By Tag:
         #cloud
     script. 
       const jsonString = '!{JSON.stringify(search)}';
@@ -42,7 +43,6 @@ html(lang="en")
 
       tags.map(t => {
         let percentage = t.count/highCount;
-        console.log(`p: ${percentage} ${typeof percentage}`)
         let tag = '';
         if (percentage === 1) {
           tag = 'tag_xx';
@@ -58,7 +58,7 @@ html(lang="en")
           tag = 'tag_xs';
         }
         let el = document.createElement('a');
-        el.setAttribute('href', '#');
+        el.setAttribute('href', `/ls.html?tagged=${t.tag}`);
         el.classList.add(tag);
         el.innerText = `${t.tag}`;
         cont.appendChild(el);

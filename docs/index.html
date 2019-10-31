@@ -1,5 +1,219 @@
-<!DOCTYPE html><html lang="en"><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><a class="navlink" id="grep" href="/grep.html" title="search Articles">Search</a></div></div><div id="container"><div id="latestPost"><h3 class="lp">Latest Article</h3><p><a href="./posts/fourth_awesome_post.html">fourth awesome post</a></p><div id="latestSyn"><p>here&#39;s my super cool synopsis.</p>
-</div></div><div id="top3Posts"><h3>Top Articles</h3></div><div id="tags"><h3>Taggy Tag Tag</h3><div id="cloud"></div></div></div><script>const jsonString = '[{"path":"./posts/Third_Times_The_Charm.html","tags":["Bill","Ted","Adventure"]},{"path":"./posts/This_is_Test_2.html","tags":["Ted","wonder"]},{"path":"./posts/fourth_awesome_post.html","tags":["Adventure","Ted"]},{"path":"./posts/test.html","tags":["dogs","wonder","Ted"]}]';
+<!DOCTYPE html><html lang="en"><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><span id="searchBut">Search</span></div></div><div id="searchBox"><span class="qbef">Query &#10145; &nbsp;</span><span class="query" contentEditable="true"></span><span class="qaft">Results</span><span class="qaf2">&#10145;</span></div><div id="results"><script>'use strict';
+
+if (typeof exports !== 'undefined') {
+  module.exports = {
+    searchFactory
+  };
+}
+
+function searchFactory(searchData) {
+  if (!searchData) {
+    throw new Error('SearchFactoryRequiresDataError');
+  }
+
+  return new go();
+
+  function go() {
+    this.data = searchData;
+    this.result = [];
+    const search = (query) => {
+      if (!query) {
+        return this.data.map(f => f.path);
+      }
+      const hasLevelSpecifier = /[\w]+:[\w]+/.test(query);
+      const queryTokens = query.split(' ');
+      const forThese = [];
+      if (hasLevelSpecifier) {
+        const validLS = ['filename', 'tags', 'headers', 'links'];
+        queryTokens.map(q => {
+          if (/[\w]+:[\w]+/.test(q)) {
+            const [token, qString] = q.split(':');
+            if (!validLS.includes(token)) {
+              throw new Error(`InvalidQueryTokenError: ${token}`);
+            }
+            forThese.push({ token, qString });
+          } else {
+            forThese.push({ token: 'all', qString: q });
+          }
+        });
+      } else {
+        queryTokens.map(q => {
+          forThese.push({ token: 'all', qString: q });
+        });
+      }
+
+      const allSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
+        this.data.map(f => {
+          for (let i = 0; i < 6; i++) {
+            let index = f.level[i].tokens.findIndex(matches);
+            if (index > -1) {
+              this.result.push({ level: i, path: f.path });
+            }
+          }
+        });
+        function matches(el) {
+          return re.test(el);
+        }
+      };
+
+      const fSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
+        this.data.map(f => {
+          let index = f.level[0].tokens.findIndex(matches);
+          if (index > -1) {
+            this.result.push({ level: 0, path: f.path });
+          }
+        });
+        function matches(el) {
+          return re.test(el);
+        }
+      };
+
+      const tSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
+        this.data.map(f => {
+          let index = f.level[1].tokens.findIndex(matches);
+          if (index > -1) {
+            this.result.push({ level: 1, path: f.path });
+          }
+        });
+        function matches(el) {
+          return re.test(el);
+        }
+      };
+
+      const hSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
+        this.data.map(f => {
+          for (let i = 2; i < 5; i++) {
+            let index = f.level[i].tokens.findIndex(matches);
+            if (index > -1) {
+              this.result.push({ level: i, path: f.path });
+            }
+          }
+        });
+        function matches(el) {
+          return re.test(el);
+        }
+      };
+
+      const lSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
+        this.data.map(f => {
+          let index = f.level[5].tokens.findIndex(matches);
+          if (index > -1) {
+            this.result.push({ level: 5, path: f.path });
+          }
+        });
+        function matches(el) {
+          return re.test(el);
+        }
+      };
+
+      forThese.map(o => {
+        switch (o.token) {
+          case 'all':
+            allSearch(o.qString);
+            break;
+          case 'filename':
+            fSearch(o.qString);
+            break;
+          case 'tags':
+            tSearch(o.qString);
+            break;
+          case 'headers':
+            hSearch(o.qString);
+            break;
+          case 'links':
+            lSearch(o.qString);
+            break;
+          default:
+            throw new Error('InvalidQueryTokenError');
+        }
+      });
+
+      let temp = [...this.result];
+      this.result = [];
+      return temp;
+
+    };
+
+    return search;
+  }
+}
+
+
+
+</script><script>const searchButton = document.querySelector('#searchBut');
+const query = document.querySelector('span.query');
+const searchBox = document.querySelector('#searchBox');
+const results = document.querySelector('#results');
+const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2'));
+let searchFN;
+window.fetch('/search.json').then(res => {
+    return res.json()
+  }).then(json => {
+    searchFN = searchFactory(json);
+    function handler(e) {
+      results.innerHTML = '';
+      let searchRes = [];
+      searchRes = searchFN(query.innerText.trim())
+      results.innerHTML = searchRes.map(r => {
+        if (typeof r === 'string') {
+          return `<a href=${r}>${r.replace(/.*\/([^/]+)$/, '$1').replace(/_/g, ' ').replace(/\.html$/, '')}</a>`
+        } else {
+          return `<a href=${r.path}>${r.path.replace(/.*\/([^/]+)$/, '$1').replace(/_/g, ' ').replace(/\.html$/, '')}</a>`
+        }
+      }).join('\n')
+    }
+    const search = debounce(handler, 500)
+    query.addEventListener('keyup', search);
+    searchButton.addEventListener('click', function() {
+      if (searchBox.style.height !== '3em') {
+        queryLogos.map(l => l.style.opacity = '1');
+        query.style.height = '2em';
+        query.style.width = '60vw';
+        query.style.padding = '.2em';
+        searchBox.style.height = '3em';
+        results.innerHTML = searchFN().map(r => {
+          return `
+            <a href=${r}>
+              ${
+                r.replace(/.*\/([^/]+)$/, '$1')
+                  .replace(/_/g, ' ')
+                  .replace(/\.html$/, '')
+                  }
+            </a>`;
+        }).join('\n')
+        results.style.height = `85vh`;
+      } else {
+        queryLogos.map(l => l.style.opacity = '0');
+        searchBox.style.height = '0px';
+        query.style.height = '0px';
+        query.style.width = '100vw';
+        query.style.padding = '0px';
+        results.innerHTML = '';
+        results.style.height = '0px';
+      }
+    });
+}).catch(console.error)
+
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};</script></div><div id="container"><div id="latestPost"><h3 class="lp">Latest Article</h3><p><a href="./posts/fourth_awesome_post.html">fourth awesome post</a></p><div id="latestSyn"><p>here&#39;s my super cool synopsis.</p>
+</div></div><div id="top3Posts"><h3>Top Articles</h3></div><div id="tags"><h3>Articles By Tag:</h3><div id="cloud"></div></div></div><script>const jsonString = '[{"path":"./posts/Third_Times_The_Charm.html","tags":["Bill","Ted","Adventure"]},{"path":"./posts/This_is_Test_2.html","tags":["Ted","wonder"]},{"path":"./posts/fourth_awesome_post.html","tags":["Adventure","Ted"]},{"path":"./posts/test.html","tags":["dogs","wonder","Ted"]}]';
 const json = JSON.parse(jsonString);
 const cont = document.querySelector('#cloud');
 const tags = [];
@@ -19,7 +233,6 @@ const highCount = tags.sort((a, b) => b.count - a.count)[0].count;
 
 tags.map(t => {
   let percentage = t.count/highCount;
-  console.log(`p: ${percentage} ${typeof percentage}`)
   let tag = '';
   if (percentage === 1) {
     tag = 'tag_xx';
@@ -35,7 +248,7 @@ tags.map(t => {
     tag = 'tag_xs';
   }
   let el = document.createElement('a');
-  el.setAttribute('href', '#');
+  el.setAttribute('href', `/ls.html?tagged=${t.tag}`);
   el.classList.add(tag);
   el.innerText = `${t.tag}`;
   cont.appendChild(el);

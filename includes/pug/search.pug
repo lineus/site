@@ -1,0 +1,77 @@
+#searchBox
+  span.qbef Query &#10145; &nbsp;
+  span.query(contentEditable="true")
+  span.qaft Results
+  span.qaf2 &#10145;
+#results
+  script
+    include ../js/search.js
+  script.
+    const searchButton = document.querySelector('#searchBut');
+    const query = document.querySelector('span.query');
+    const searchBox = document.querySelector('#searchBox');
+    const results = document.querySelector('#results');
+    const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2'));
+    let searchFN;
+    window.fetch('/search.json').then(res => {
+        return res.json()
+      }).then(json => {
+        searchFN = searchFactory(json);
+        function handler(e) {
+          results.innerHTML = '';
+          let searchRes = [];
+          searchRes = searchFN(query.innerText.trim())
+          results.innerHTML = searchRes.map(r => {
+            if (typeof r === 'string') {
+              return `<a href=${r}>${r.replace(/.*\/([^/]+)$/, '$1').replace(/_/g, ' ').replace(/\.html$/, '')}</a>`
+            } else {
+              return `<a href=${r.path}>${r.path.replace(/.*\/([^/]+)$/, '$1').replace(/_/g, ' ').replace(/\.html$/, '')}</a>`
+            }
+          }).join('\n')
+        }
+        const search = debounce(handler, 500)
+        query.addEventListener('keyup', search);
+        searchButton.addEventListener('click', function() {
+          if (searchBox.style.height !== '3em') {
+            queryLogos.map(l => l.style.opacity = '1');
+            query.style.height = '2em';
+            query.style.width = '60vw';
+            query.style.padding = '.2em';
+            searchBox.style.height = '3em';
+            results.innerHTML = searchFN().map(r => {
+              return `
+                <a href=${r}>
+                  ${
+                    r.replace(/.*\/([^/]+)$/, '$1')
+                      .replace(/_/g, ' ')
+                      .replace(/\.html$/, '')
+                      }
+                </a>`;
+            }).join('\n')
+            results.style.height = `85vh`;
+          } else {
+            queryLogos.map(l => l.style.opacity = '0');
+            searchBox.style.height = '0px';
+            query.style.height = '0px';
+            query.style.width = '100vw';
+            query.style.padding = '0px';
+            results.innerHTML = '';
+            results.style.height = '0px';
+          }
+        });
+    }).catch(console.error)
+
+    function debounce(func, wait, immediate) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        var later = function() {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
+    };
