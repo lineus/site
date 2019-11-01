@@ -16,9 +16,9 @@ html(lang="en")
         #latestSyn !{latestArticle.synopsis}
       #top3Articles
         h3 Top Articles
-        each post in top3
+        each article in top3
           div.topPost
-            a(href=post.path) #{post.display}
+            a(href=article.path) #{article.display}
       #tags
         h3 Articles By Tag:
         #cloud
