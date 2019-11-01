@@ -9,12 +9,12 @@ html(lang="en")
       include pug/nav.pug
     include pug/search.pug
     #container
-      #latestPost
+      #latestArticle
         h3.lp Latest Article
         p
-          a(href=latestPost.link) !{latestPost.title}
-        #latestSyn !{latestPost.synopsis}
-      #top3Posts
+          a(href=latestArticle.link) !{latestArticle.title}
+        #latestSyn !{latestArticle.synopsis}
+      #top3Articles
         h3 Top Articles
         each post in top3
           div.topPost

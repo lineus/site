@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+'use strict';
+
+const { readdirSync, openSync, readFileSync, writeSync } = require('fs');
+const source = './includes/js/';
+const target = './docs/';
+
+run();
+
+async function run() {
+  const files = readdirSync(source);
+  files.map(file => {
+    if (/\.js$/.test(file)){
+      let s = openSync(`${source}${file}`);
+      let t = openSync(`${target}${file}`, 'w');
+      writeSync(t, readFileSync(s));
+    }
+  });
+}

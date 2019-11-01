@@ -28,7 +28,7 @@ body {
 #footer > #rss {
   float: left; }
 
-#container, #posts {
+#container, #articles {
   background-color: #BBF5FA;
   flex-grow: 30;
   font-family: 'Nanum Gothic', sans-serif;
@@ -140,32 +140,32 @@ span.query {
   padding-bottom: .3em;
   transform: translateY(-0.2em); }
 
-#posts > ul {
+#articles > ul {
   list-style: none; }
 
-#posts a.post {
+#articles a.article {
   font-size: 1.5em;
   padding-top: .5em;
   padding-left: .5em;
   padding-right: .5em; }
 
-#posts a.post:link {
+#articles a.article:link {
   color: #212321;
   text-decoration: none;
   width: 100%;
   height: 100%; }
 
-#posts a.post:visited {
+#articles a.article:visited {
   color: #43506E; }
 
-#postList {
+#articleList {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap; }
 
-.postListing {
+.articleListing {
   background-color: #8EAAE8;
   display: flex;
   flex-direction: column;
@@ -176,7 +176,7 @@ span.query {
   width: 10em;
   height: 10em; }
 
-.postsDate {
+.articlesDate {
   color: #BBF5FA;
   font-style: italic;
   font-size: .75em;
@@ -193,7 +193,7 @@ span.query {
 .sortButton:hover {
   cursor: pointer; }
 
-#latestPost, #top3Posts, #tags {
+#latestArticle, #top3Articles, #tags {
   margin-top: .5em;
   font-family: 'Cabin', sans-serif;
   width: 40vw;
@@ -203,16 +203,16 @@ span.query {
   border-radius: .6em;
   color: #212321; }
 
-#latestPost a:link, #top3Posts a:link, #tags a:link {
+#latestArticle a:link, #top3Articles a:link, #tags a:link {
   color: #212321; }
 
-#latestPost a:visited, #top3Posts a:visited, #tags a:link {
+#latestArticle a:visited, #top3Articles a:visited, #tags a:link {
   color: #43506E; }
 
-#latestPost > h3, #latestPost > p {
+#latestArticle > h3, #latestArticle > p {
   display: inline-block; }
 
-#latestPost > h3, #top3Posts > h3, #tags > h3 {
+#latestArticle > h3, #top3Articles > h3, #tags > h3 {
   color: rgba(33, 35, 33, 0.5);
   padding-bottom: 1em; }
 
@@ -250,16 +250,16 @@ span.query {
 .tag_xx {
   font-size: 2em; }
 
-#latestPost > p {
+#latestArticle > p {
   padding-left: 1em;
   font-size: 2.5em; }
 
-#top3Posts {
+#top3Articles {
   display: flex;
   flex-direction: column;
   align-items: flex-end; }
 
-#top3Posts a {
+#top3Articles a {
   font-size: 2em; }
 
 #rss {
@@ -329,15 +329,15 @@ span.query {
     padding: 0;
     margin: 0;
     padding-left: 1em; }
-  #posts {
+  #articles {
     padding-top: .1em; }
-  #postList {
+  #articleList {
     overflow: hidden;
     flex-direction: column;
     width: 100vw; }
-  #postList > li {
+  #articleList > li {
     width: 100vw; }
-  .postListing {
+  .articleListing {
     width: 100vw;
     height: 4em;
     margin: 0;
@@ -349,7 +349,7 @@ span.query {
     align-content: space-around; }
   .navlink {
     margin: 0; }
-  #posts a.post {
+  #articles a.article {
     font-size: 1em; }
   #sort {
     height: 2em;
@@ -357,13 +357,13 @@ span.query {
   .searchLink {
     font-size: 1em;
     margin-left: .5em; }
-  #latestPost {
+  #latestArticle {
     width: 90vw;
     margin-right: 1em; }
-  #top3Posts {
+  #top3Articles {
     width: 90vw;
     margin-right: 1em; }
-  #top3Posts a {
+  #top3Articles a {
     font-size: 1.1em; }
   #tags {
     width: 90vw; } }

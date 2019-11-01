@@ -1,6 +1,6 @@
 [
   {
-    "path": "./posts/Third_Times_The_Charm.html",
+    "path": "./articles/Third_Times_The_Charm.html",
     "level": [
       {
         "name": "fileName",
@@ -24,7 +24,7 @@
         "tokens": [
           "my",
           "third",
-          "post"
+          "article"
         ]
       },
       {
@@ -45,7 +45,7 @@
     ]
   },
   {
-    "path": "./posts/This_is_Test_2.html",
+    "path": "./articles/This_is_Test_2.html",
     "level": [
       {
         "name": "fileName",
@@ -85,14 +85,14 @@
     ]
   },
   {
-    "path": "./posts/fourth_awesome_post.html",
+    "path": "./articles/fourth_awesome_article.html",
     "level": [
       {
         "name": "fileName",
         "tokens": [
           "fourth",
           "awesome",
-          "post"
+          "article"
         ]
       },
       {
@@ -108,7 +108,7 @@
           "this",
           "is",
           "my",
-          "post"
+          "article"
         ]
       },
       {
@@ -131,7 +131,7 @@
     ]
   },
   {
-    "path": "./posts/test.html",
+    "path": "./articles/test.html",
     "level": [
       {
         "name": "fileName",
@@ -153,7 +153,7 @@
           "my",
           "first",
           "test",
-          "post"
+          "article"
         ]
       },
       {

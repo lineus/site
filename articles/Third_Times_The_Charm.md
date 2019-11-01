@@ -1,4 +1,4 @@
-# My Third Post
+# My Third article
 <!-- Synopsis Start -->
   Now with newly added SYNOPSIS!!!!!
 <!-- Synopsis End -->

@@ -11,44 +11,44 @@ html(lang="en")
     #sort
       span.sortButton(onclick="bydate()") Oldest First
       span.sortButton(onclick="bytitle()") Alphabetical
-    #posts
-      ul#postList
-        each post in posts
-          li.postListing(class=post.tags.map(t => `tag-${t}`).join(' '))
-              a(href=post.link class="post") #{post.title}
-              each tag in post.tags
+    #articles
+      ul#articleList
+        each article in articles
+          li.articleListing(class=article.tags.map(t => `tag-${t}`).join(' '))
+              a(href=article.link class="article") #{article.title}
+              each tag in article.tags
                 a(href=`/ls.html?tagged=${tag}`) #{tag}
-              span.postsDate #{post.published}
+              span.articlesDate #{article.published}
               
     script.
       const isTagged = /tagged/.test(window.location);
       let tags = [];
       const dateBut = document.querySelector('span.sortButton:first-child');
       const titlBut = document.querySelector('span.sortButton:last-child');
-      const list = document.querySelector('#postList');
-      const posts = Array.from(list.childNodes);
+      const list = document.querySelector('#articleList');
+      const articles = Array.from(list.childNodes);
 
       if (isTagged) {
         tags = `${window.location}`.split("=")[1].split(",");
-        clearAllPosts()
+        clearAllarticles()
         tags.map(setVisibleByTag)
       }
 
-      function clearAllPosts() {
-        posts.map(post => {
-          post.style.display = 'none';
+      function clearAllarticles() {
+        articles.map(article => {
+          article.style.display = 'none';
         })
       }
 
       function setVisibleByTag(t) {
-        posts.map(post => {
-          if(post.classList.contains(`tag-${t}`)) {
-            post.style.display = 'flex';
+        articles.map(article => {
+          if(article.classList.contains(`tag-${t}`)) {
+            article.style.display = 'flex';
           }
         })
       }
 
-      function replacePosts(arr) {
+      function replacearticles(arr) {
         while (list.firstChild) {
           list.removeChild(list.firstChild);
         }
@@ -58,7 +58,7 @@ html(lang="en")
       }
 
       function bydate() {
-        let nodeList = [].concat(posts);
+        let nodeList = [].concat(articles);
         if (dateBut.innerText === 'Oldest First') {
           dateBut.innerText = 'Newest First';
           nodeList.sort(oldestFirst);
@@ -66,11 +66,11 @@ html(lang="en")
           dateBut.innerText = 'Oldest First';
           nodeList.sort(newestFirst);
         }
-        replacePosts(nodeList);
+        replacearticles(nodeList);
       }
 
       function bytitle() {
-        let nodeList = [].concat(posts);
+        let nodeList = [].concat(articles);
         if (titlBut.innerText === 'Alphabetical') {
           titlBut.innerText = 'Reverse Alpha';
           nodeList.sort(alpha);
@@ -78,20 +78,20 @@ html(lang="en")
           titlBut.innerText = 'Alphabetical';
           nodeList.sort(revAlpha);
         }
-        replacePosts(nodeList);
+        replacearticles(nodeList);
       }
 
       function oldestFirst(a,b) {
-        let aEl = a.querySelector('span.postsDate');
-        let bEl = b.querySelector('span.postsDate');
+        let aEl = a.querySelector('span.articlesDate');
+        let bEl = b.querySelector('span.articlesDate');
         let aD = new Date(aEl.innerText);
         let bD = new Date(bEl.innerText);
         return aD - bD;
       }
 
       function newestFirst(a,b) {
-        let aEl = a.querySelector('span.postsDate');
-        let bEl = b.querySelector('span.postsDate');
+        let aEl = a.querySelector('span.articlesDate');
+        let bEl = b.querySelector('span.articlesDate');
         let aD = new Date(aEl.innerText);
         let bD = new Date(bEl.innerText);
         return bD - aD;

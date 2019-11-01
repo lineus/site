@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-<atom:link href="https://lineus.dev/posts.xml" rel="self" type="application/rss+xml" />
+<atom:link href="https://lineus.dev/articles.xml" rel="self" type="application/rss+xml" />
 <title>lineus dot dev</title>
 <link>https://lineus.dev/</link>
 <description>Words</description>
-[POSTSGOHERE]
+[articleSGOHERE]
 </channel>
 </rss>

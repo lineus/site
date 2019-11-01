@@ -1,4 +1,4 @@
-# This is my post
+# This is my article
 <!-- Synopsis Start -->
 here's my super cool synopsis.
 <!-- Synopsis End -->

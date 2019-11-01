@@ -11,6 +11,7 @@
     const query = document.querySelector('span.query');
     const searchBox = document.querySelector('#searchBox');
     const results = document.querySelector('#results');
+    const header = document.querySelector('#header');
     const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2'));
     let searchFN;
     window.fetch('/search.json').then(res => {
@@ -48,7 +49,7 @@
                       }
                 </a>`;
             }).join('\n')
-            results.style.height = `85vh`;
+            results.style.height = `80vh`;
           } else {
             queryLogos.map(l => l.style.opacity = '0');
             searchBox.style.height = '0px';

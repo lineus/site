@@ -149,6 +149,7 @@ function searchFactory(searchData) {
 const query = document.querySelector('span.query');
 const searchBox = document.querySelector('#searchBox');
 const results = document.querySelector('#results');
+const header = document.querySelector('#header');
 const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2'));
 let searchFN;
 window.fetch('/search.json').then(res => {
@@ -186,7 +187,7 @@ window.fetch('/search.json').then(res => {
                   }
             </a>`;
         }).join('\n')
-        results.style.height = `85vh`;
+        results.style.height = `80vh`;
       } else {
         queryLogos.map(l => l.style.opacity = '0');
         searchBox.style.height = '0px';
@@ -212,4 +213,4 @@ function debounce(func, wait, immediate) {
     timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
-};</script></div><div id="container"></div><div id="footer"><div id="rss"><a href="https://lineus.dev/posts.xml">Subscribe</a></div><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a></div></body></html>
+};</script></div><div id="container"></div><div id="footer"><div id="rss"><a href="https://lineus.dev/articles.xml">Subscribe</a></div><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a></div></body></html>

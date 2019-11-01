@@ -2,7 +2,7 @@
 'use strict';
 
 const pug = require('pug');
-const fn = pug.compileFile('includes/pug/postTemplate.pug');
+const fn = pug.compileFile('includes/pug/articleTemplate.pug');
 const makeLS = pug.compileFile('includes/pug/ls.pug');
 const makeGrep = pug.compileFile('./includes/grep.pug');
 const md = require('marked');
@@ -10,8 +10,8 @@ const { existsSync, promises } = require('fs');
 const { readdir, readFile, writeFile } = promises;
 const { MDArticle } = require('../lib/mdarticle');
 
-const inDir = './posts/';
-const outDir = './docs/posts/';
+const inDir = './articles/';
+const outDir = './docs/articles/';
 const lsOut = './docs/ls.html';
 
 const ignoreIf = ['untitled', 'wip'];
@@ -83,7 +83,7 @@ async function run() {
   const grepHTML = makeGrep({ searchData });
 
   const lsHTML = makeLS({
-    posts: allFiles.sort((a, b) => {
+    articles: allFiles.sort((a, b) => {
       let aD = new Date(a.published);
       let bD = new Date(b.published);
       return bD - aD;
@@ -92,8 +92,8 @@ async function run() {
   await writeFile(lsOut, lsHTML);
   await writeFile('./docs/grep.html', grepHTML);
 
-  await writeFile('./posts.json', JSON.stringify(allFiles, null, 2));
-  await writeFile('./search.json', JSON.stringify(searchData, null, 2));
+  await writeFile('./articles.json', JSON.stringify(allFiles, null, 2));
+  await writeFile('./docs/search.json', JSON.stringify(searchData, null, 2));
 }
 
 async function getMDs(dir) {
@@ -118,9 +118,9 @@ async function process(file) {
   let contents = await readFile(file.in, 'utf-8');
   let blargh = fn({
     title: file.title,
-    post: md(contents),
-    postLink: file.out
+    article: md(contents),
+    articleLink: file.out
   });
-  let post = blargh.replace(/<!--.*-->/g, '');
-  await writeFile(file.out, post);
+  let article = blargh.replace(/<!--.*-->/g, '');
+  await writeFile(file.out, article);
 }

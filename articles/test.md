@@ -1,4 +1,4 @@
-# My First Test Post
+# My First Test article
 
 <!-- Synopsis Start -->
 You can do it, ra ra ra.

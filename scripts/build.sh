@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-./scripts/processPosts &&\
+./scripts/processArticles &&\
 ./scripts/processPugs &&\
 ./scripts/processSCSS &&\
 ./scripts/processRSS &&\

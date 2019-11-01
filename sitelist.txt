@@ -1,4 +1,4 @@
-280 28 4 ) add the interface to display posts by tag
+280 28 4 ) add the interface to display articles by tag
 284 28 4 ) move js code in pug files to includes
 285 28 4 ) test newly moved code from task 284
 286 28 4 ) write a function that removes html comments better than the generic replace function
@@ -9,13 +9,13 @@
 296 28 4 ) consider a cron like script that updates things every once in a while, ie the top3 info
 302 28 4 ) add a next article form that lets readers suggest a topic for the next article
 304 28 4 ) come up with a novel way of stepping through the updates to an article, like a movable timeline that...
-305 28 4 ) point a link on each post to the markdown on github for that post, people can comment there if they want
+305 28 4 ) point a link on each article to the markdown on github for that article, people can comment there if they want
 306 28 4 ) write a tool that analyzes the text layout of an element and tells you if it conforms to one of a...
 311 28 4 ) gishdo task 310 would be low hanging fruit for starting to test the generated html
 312 28 4 ) improve rss link & infrastructure
 314 28 4 ) make the subscribe height match the coffee height
 319 28 4 ) write a script that prints out the top10 page views
-323 28 4 ) codify what a project is - ala article/post
+323 28 4 ) codify what a project is - ala article/article
 324 28 4 ) add published date to latest article element on homepage
 325 28 4 ) add some kind of visual cue to nav buttons
 333 28 4 ) make it so that when you click on a link in search, and hit your back button, your search query is...

@@ -149,6 +149,7 @@ function searchFactory(searchData) {
 const query = document.querySelector('span.query');
 const searchBox = document.querySelector('#searchBox');
 const results = document.querySelector('#results');
+const header = document.querySelector('#header');
 const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2'));
 let searchFN;
 window.fetch('/search.json').then(res => {
@@ -186,7 +187,7 @@ window.fetch('/search.json').then(res => {
                   }
             </a>`;
         }).join('\n')
-        results.style.height = `85vh`;
+        results.style.height = `80vh`;
       } else {
         queryLogos.map(l => l.style.opacity = '0');
         searchBox.style.height = '0px';
@@ -212,8 +213,8 @@ function debounce(func, wait, immediate) {
     timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
-};</script></div><div id="container"><div id="latestPost"><h3 class="lp">Latest Article</h3><p><a href="./posts/fourth_awesome_post.html">fourth awesome post</a></p><div id="latestSyn"><p>here&#39;s my super cool synopsis.</p>
-</div></div><div id="top3Posts"><h3>Top Articles</h3></div><div id="tags"><h3>Articles By Tag:</h3><div id="cloud"></div></div></div><script>const jsonString = '[{"path":"./posts/Third_Times_The_Charm.html","tags":["Bill","Ted","Adventure"]},{"path":"./posts/This_is_Test_2.html","tags":["Ted","wonder"]},{"path":"./posts/fourth_awesome_post.html","tags":["Adventure","Ted"]},{"path":"./posts/test.html","tags":["dogs","wonder","Ted"]}]';
+};</script></div><div id="container"><div id="latestArticle"><h3 class="lp">Latest Article</h3><p><a href="./articles/fourth_awesome_article.html">fourth awesome article</a></p><div id="latestSyn"><p>here&#39;s my super cool synopsis.</p>
+</div></div><div id="top3Articles"><h3>Top Articles</h3></div><div id="tags"><h3>Articles By Tag:</h3><div id="cloud"></div></div></div><script>const jsonString = '[{"path":"./articles/Third_Times_The_Charm.html","tags":["Bill","Ted","Adventure"]},{"path":"./articles/This_is_Test_2.html","tags":["Ted","wonder"]},{"path":"./articles/fourth_awesome_article.html","tags":["Adventure","Ted"]},{"path":"./articles/test.html","tags":["dogs","wonder","Ted"]}]';
 const json = JSON.parse(jsonString);
 const cont = document.querySelector('#cloud');
 const tags = [];
@@ -252,4 +253,4 @@ tags.map(t => {
   el.classList.add(tag);
   el.innerText = `${t.tag}`;
   cont.appendChild(el);
-})</script><div id="footer"><div id="rss"><a href="https://lineus.dev/posts.xml">Subscribe</a></div><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a></div></body></html>
+})</script><div id="footer"><div id="rss"><a href="https://lineus.dev/articles.xml">Subscribe</a></div><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a></div></body></html>

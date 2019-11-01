@@ -8,7 +8,7 @@ const { spawn } = require('child_process');
 const { readFileSync, readdirSync } = require('fs');
 let testFiles = [];
 
-getHTMLFiles(['./docs/', './docs/posts/']);
+getHTMLFiles(['./docs/', './docs/articles/']);
 
 function getHTMLFiles(paths) {
   for (let path of paths) {
@@ -57,7 +57,8 @@ describe('HTML', function() {
         .replace(/\.html/, '')
         .replace(/_/g, ' ');
 
-      const title = /\/posts\//.test(f) ? `lineus.dev ${fTitle}`:'lineus.dev';
+      const title = /\/articles\//.test(f) ?
+        `lineus.dev ${fTitle}`:'lineus.dev';
       assert.strictEqual(window.document.title, title);
       assert.strictEqual(eLen, 0, `There are ${eLen} Errors`);
       assert.strictEqual(iLen, 0, `There are ${iLen} Info Messages`);

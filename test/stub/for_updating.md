@@ -1,9 +1,9 @@
 # withStatus 
 <!-- Synopsis Start -->
-This Post has a status.
+This article has a status.
 <!-- Synopsis End -->
 
-## this really cool post has a status
+## this really cool article has a status
 
 And some *text* ~too~ !
 

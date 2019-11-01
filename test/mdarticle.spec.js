@@ -323,7 +323,7 @@ describe('mdParser', function() {
     });
     after(function() {
       writeFileSync(p, originalFileContents);
-      writeFileSync(p2, originalFileContents2)
+      writeFileSync(p2, originalFileContents2);
     });
     it('smoketest', function () {
       const article = new MDArticle({ md: '' });
@@ -374,9 +374,9 @@ describe('mdParser', function() {
       assert.strictEqual(article.data.status, 'PUB');
       const str = readFileSync('./test/stub/for_updating2.md', 'utf-8');
       const updatedArticle = new MDArticle({ md: str });
-      updatedArticle.parse()
+      updatedArticle.parse();
       assert.strictEqual(updatedArticle.data.status, 'PUB');
-    })
+    });
   });
   describe('prototype.writeBack', function() {
     before(function() {
@@ -418,13 +418,13 @@ describe('mdParser', function() {
       assert.ok(yArticle.isPublished);
       assert.ok(typeof yArticle.isPublished === 'function');
     });
-    it('returns true for a post with a past pub date', function() {
+    it('returns true for a article with a past pub date', function() {
       assert.strictEqual(yArticle.isPublished(), true);
     });
-    it('returns false for a post with no date', function() {
+    it('returns false for a article with no date', function() {
       assert.strictEqual(nParser.isPublished(), false);
     });
-    it('returns false for a post with a future date', function() {
+    it('returns false for a article with a future date', function() {
       assert.strictEqual(fParser.isPublished(), false);
     });
     it('throws an error when calling a method before parse', function () {
@@ -439,13 +439,13 @@ describe('mdParser', function() {
       assert.ok(yArticle.isUpdated);
       assert.ok(typeof yArticle.isUpdated === 'function');
     });
-    it('returns true for a post with a past updated date', function () {
+    it('returns true for a article with a past updated date', function () {
       assert.strictEqual(yArticle.isUpdated(), true);
     });
-    it('returns false for a post with no updated date', function () {
+    it('returns false for a article with no updated date', function () {
       assert.strictEqual(nParser.isUpdated(), false);
     });
-    it('returns false for a post with a future updated date', function () {
+    it('returns false for a article with a future updated date', function () {
       assert.strictEqual(fParser.isUpdated(), false);
     });
     it('throws an error when calling a method before parse', function () {
@@ -460,13 +460,13 @@ describe('mdParser', function() {
       assert.ok(yArticle.hasPublished);
       assert.ok(typeof yArticle.hasPublished === 'function');
     });
-    it('returns true for a post with a past pub date', function () {
+    it('returns true for a article with a past pub date', function () {
       assert.strictEqual(yArticle.hasPublished(), true);
     });
-    it('returns false for a post with no date', function () {
+    it('returns false for a article with no date', function () {
       assert.strictEqual(nParser.hasPublished(), false);
     });
-    it('returns true for a post with a future date', function () {
+    it('returns true for a article with a future date', function () {
       assert.strictEqual(fParser.hasPublished(), true);
     });
     it('throws an error when calling a method before parse', function () {
@@ -481,13 +481,13 @@ describe('mdParser', function() {
       assert.ok(yArticle.hasUpdated);
       assert.ok(typeof yArticle.hasUpdated === 'function');
     });
-    it('returns true for a post with a past upd date', function () {
+    it('returns true for a article with a past upd date', function () {
       assert.strictEqual(yArticle.hasUpdated(), true);
     });
-    it('returns false for a post with no date', function () {
+    it('returns false for a article with no date', function () {
       assert.strictEqual(nParser.hasUpdated(), false);
     });
-    it('returns true for a post with a future upd date', function () {
+    it('returns true for a article with a future upd date', function () {
       assert.strictEqual(fParser.hasUpdated(), true);
     });
     it('throws an error when calling a method before parse', function () {
@@ -502,13 +502,13 @@ describe('mdParser', function() {
       assert.ok(yArticle.futurePublish);
       assert.ok(typeof yArticle.futurePublish === 'function');
     });
-    it('returns false for a post with a past pub date', function () {
+    it('returns false for a article with a past pub date', function () {
       assert.strictEqual(yArticle.futurePublish(), false);
     });
-    it('returns false for a post with no date', function () {
+    it('returns false for a article with no date', function () {
       assert.strictEqual(nParser.futurePublish(), false);
     });
-    it('returns true for a post with a future date', function () {
+    it('returns true for a article with a future date', function () {
       assert.strictEqual(fParser.futurePublish(), true);
     });
     it('throws an error when calling a method before parse', function () {
@@ -649,28 +649,31 @@ describe('mdParser', function() {
     it('sets default file.in', function() {
       assert.ok(article.file.in);
       assert.strictEqual(typeof article.file.in, 'string');
-      assert.strictEqual(article.file.in, './posts/');
+      assert.strictEqual(article.file.in, './articles/');
     });
     it('sets file.fullPathIn', function() {
       assert.ok(article.file.fullPathIn);
       assert.strictEqual(typeof article.file.fullPathIn, 'string');
-      assert.strictEqual(article.file.fullPathIn, './posts/test_icicle_mul.md');
+      assert.strictEqual(
+        article.file.fullPathIn,
+        './articles/test_icicle_mul.md'
+      );
     });
     it('sets file.fullPathOut', function () {
       assert.ok(article.file.fullPathOut);
       assert.strictEqual(typeof article.file.fullPathOut, 'string');
-      const expected = './docs/posts/test_icicle_mul.html';
+      const expected = './docs/articles/test_icicle_mul.html';
       assert.strictEqual(article.file.fullPathOut, expected);
     });
     it('sets default file.out', function () {
       assert.ok(article.file.out);
       assert.strictEqual(typeof article.file.out, 'string');
-      assert.strictEqual(article.file.out, './docs/posts/');
+      assert.strictEqual(article.file.out, './docs/articles/');
     });
     it('sets file.link', function() {
       assert.ok(article.file.link);
       assert.strictEqual(typeof article.file.link, 'string');
-      assert.strictEqual(article.file.link, './posts/test_icicle_mul.html');
+      assert.strictEqual(article.file.link, './articles/test_icicle_mul.html');
     });
     it('sets file.title', function() {
       assert.ok(article.file.title);

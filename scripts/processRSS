@@ -8,21 +8,21 @@ run();
 async function run() {
   let x = '';
   let t = await readFile('./Template.xml', 'utf-8');
-  let jsonString = await readFile('./posts.json', 'utf-8');
-  let posts = JSON.parse(jsonString);
+  let jsonString = await readFile('./articles.json', 'utf-8');
+  let articles = JSON.parse(jsonString);
 
-  for (let post of posts) {
+  for (let article of articles) {
     x += `
 <item>
-<title>${post.title}</title>
-<link>https://lineus.dev${post.link.replace(/^\./, '')}</link>
-<guid>https://lineus.dev${post.link.replace(/^\//, '')}</guid>
-<pubDate>${post.rssPublished}</pubDate>
-<description>${post.rssSynopsis}</description>
+<title>${article.title}</title>
+<link>https://lineus.dev${article.link.replace(/^\./, '')}</link>
+<guid>https://lineus.dev${article.link.replace(/^\//, '')}</guid>
+<pubDate>${article.rssPublished}</pubDate>
+<description>${article.rssSynopsis}</description>
 </item>
     `;
   }
 
-  await writeFile('./docs/posts.xml', t.replace(/\[POSTSGOHERE\]/, x));
+  await writeFile('./docs/articles.xml', t.replace(/\[articleSGOHERE\]/, x));
   return process.exit(0);
 }

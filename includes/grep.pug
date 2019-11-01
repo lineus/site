@@ -98,7 +98,7 @@ html(lang="en")
               return re.test(e);
             });
             if (index > -1) {
-              let dName = fileData.path.replace('./posts/', '').replace('.html', '');
+              let dName = fileData.path.replace('./articles/', '').replace('.html', '');
               results.push(`<li><a class="searchLink" href="${fileData.path}">${dName}</a></li>`);
             }
           }

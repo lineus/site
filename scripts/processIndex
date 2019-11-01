@@ -58,9 +58,9 @@ function getTop3() {
 
 async function run() {
   let top3 = await getTop3();
-  const jsonString = await readFile('./posts.json', 'utf-8');
-  const searchString = await readFile('./search.json', 'utf-8');
-  const posts = JSON.parse(jsonString);
+  const jsonString = await readFile('./articles.json', 'utf-8');
+  const searchString = await readFile('./docs/search.json', 'utf-8');
+  const articles = JSON.parse(jsonString);
   const searchPre = JSON.parse(searchString);
   const search = searchPre.map(s => {
     return {
@@ -69,23 +69,23 @@ async function run() {
     };
   });
 
-  let post = posts.sort((a,b) => {
+  let article = articles.sort((a,b) => {
     return new Date(b.published) - new Date(a.published);
   })[0];
 
-  post = post ? post: { link: '', title: '' };
+  article = article ? article: { link: '', title: '' };
 
   const mut_Top3 = top3.map(t => {
     t.path = t._id.replace('./docs/', '');
     t.display = t.path
-      .replace('posts/', '')
+      .replace('articles/', '')
       .replace('.html', '')
       .replace('_', ' ');
     return t;
   });
 
   const indexHTML = fn({
-    latestPost: post,
+    latestArticle: article,
     top3: mut_Top3,
     search
   });

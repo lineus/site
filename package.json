@@ -12,7 +12,7 @@
     "dev": "./scripts/dev.sh",
     "undev": "./scripts/undev.sh",
     "deploy": "npm run build && bash -lc \"shirley 'deploying site'\"",
-    "new": "./scripts/newPost.sh $TITLE"
+    "new": "./scripts/newarticle.sh $TITLE"
   },
   "repository": {
     "type": "git",

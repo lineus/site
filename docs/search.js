@@ -1,8 +1,10 @@
 'use strict';
 
-module.exports = {
-  searchFactory
-};
+if (typeof exports !== 'undefined') {
+  module.exports = {
+    searchFactory
+  };
+}
 
 function searchFactory(searchData) {
   if (!searchData) {
@@ -41,44 +43,74 @@ function searchFactory(searchData) {
       }
 
       const allSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
         this.data.map(f => {
           for (let i = 0; i < 6; i++) {
-            if (f.level[i].tokens.includes(q)) {
+            let index = f.level[i].tokens.findIndex(matches);
+            if (index > -1) {
               this.result.push({ level: i, path: f.path });
             }
           }
         });
+        function matches(el) {
+          return re.test(el);
+        }
       };
+
       const fSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
         this.data.map(f => {
-          if (f.level[0].tokens.includes(q)) {
+          let index = f.level[0].tokens.findIndex(matches);
+          if (index > -1) {
             this.result.push({ level: 0, path: f.path });
           }
         });
+        function matches(el) {
+          return re.test(el);
+        }
       };
+
       const tSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
         this.data.map(f => {
-          if (f.level[1].tokens.includes(q)) {
+          let index = f.level[1].tokens.findIndex(matches);
+          if (index > -1) {
             this.result.push({ level: 1, path: f.path });
           }
         });
+        function matches(el) {
+          return re.test(el);
+        }
       };
+
       const hSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
         this.data.map(f => {
           for (let i = 2; i < 5; i++) {
-            if (f.level[i].tokens.includes(q)) {
+            let index = f.level[i].tokens.findIndex(matches);
+            if (index > -1) {
               this.result.push({ level: i, path: f.path });
             }
           }
         });
+        function matches(el) {
+          return re.test(el);
+        }
       };
+
       const lSearch = (q) => {
+        let re = new RegExp(`.*${q}.*`);
         this.data.map(f => {
-          if (f.level[5].tokens.includes(q)) {
+          let index = f.level[5].tokens.findIndex(matches);
+          if (index > -1) {
             this.result.push({ level: 5, path: f.path });
           }
         });
+        function matches(el) {
+          return re.test(el);
+        }
       };
+
       forThese.map(o => {
         switch (o.token) {
           case 'all':
@@ -101,7 +133,9 @@ function searchFactory(searchData) {
         }
       });
 
-      return this.result;
+      let temp = [...this.result];
+      this.result = [];
+      return temp;
 
     };
 
