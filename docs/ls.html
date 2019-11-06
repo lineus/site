@@ -10,7 +10,7 @@
     navs[active].classList.add('active')
   }
 })()
-//- a#grep(href="/grep.html" class="navlink" title="search Articles") Search</script></div><div id="searchBox"><div class="qbef">Query</div><div class="arrow rt270"></div><input class="query" type="text" autocorrect="off" autocapitalize="none"><div class="qaft">Results</div><div class="arrow downByHalf"></div></div><div id="results"><script>'use strict';
+//- a#grep(href="/grep.html" class="navlink" title="search Articles") Search</script></div><div id="searchBox"><div class="qbef">Query</div><div class="arrow rt270"></div><input class="query" type="text" autocapitalize="none"><div class="qaft">Results</div><div class="arrow downByHalf"></div></div><div id="results"><script>'use strict';
 
 if (typeof exports !== 'undefined') {
   module.exports = {
@@ -202,7 +202,6 @@ window.fetch('/search.json').then(res => {
         queryLogos.map(l => l.style.opacity = '1');
         query.style.height = '2em';
         query.style.width = '60vw';
-        query.style.padding = '.2em';
         searchBox.style.height = '3em';
         results.innerHTML = searchFN().map(r => {
           return `
@@ -220,7 +219,6 @@ window.fetch('/search.json').then(res => {
         searchBox.style.height = '0px';
         query.style.height = '0px';
         query.style.width = '100vw';
-        query.style.padding = '0px';
         results.innerHTML = '';
         results.style.height = '0px';
       }

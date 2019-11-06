@@ -72,7 +72,7 @@ body {
   align-self: flex-end;
 }
 
-#nav > a {
+#nav > a, #searchBut {
   line-height: .75em;
   border-bottom-width: 10px;
   border-bottom-color: $bg;
@@ -136,6 +136,7 @@ div.qaft {
 }
 
 .query {
+  padding-left: 1em;
   border-width: 0px;
   display: inline-block;
   border-radius: .5em;

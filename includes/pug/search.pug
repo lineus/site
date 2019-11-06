@@ -1,7 +1,7 @@
 #searchBox
   div.qbef Query
   div.arrow.rt270
-  input.query(type="text" autocorrect="off" autocapitalize="none")
+  input.query(type="text" autocapitalize="none")
   div.qaft Results
   div.arrow.downByHalf
 #results
@@ -53,7 +53,6 @@
             queryLogos.map(l => l.style.opacity = '1');
             query.style.height = '2em';
             query.style.width = '60vw';
-            query.style.padding = '.2em';
             searchBox.style.height = '3em';
             results.innerHTML = searchFN().map(r => {
               return `
@@ -71,7 +70,6 @@
             searchBox.style.height = '0px';
             query.style.height = '0px';
             query.style.width = '100vw';
-            query.style.padding = '0px';
             results.innerHTML = '';
             results.style.height = '0px';
           }
