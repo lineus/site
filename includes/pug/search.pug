@@ -1,7 +1,7 @@
 #searchBox
   div.qbef Query
   div.arrow.rt270
-  div.query(contentEditable="true")
+  input.query(type="text" autocorrect="off" autocapitalize="none")
   div.qaft Results
   div.arrow.downByHalf
 #results
@@ -9,7 +9,8 @@
     include ../js/search.js
   script.
     const searchButton = document.querySelector('#searchBut');
-    const query = document.querySelector('div.query');
+    const query = document.querySelector('input.query');
+    console.log(query)
     const searchBox = document.querySelector('#searchBox');
     const results = document.querySelector('#results');
     const header = document.querySelector('#header');
@@ -22,12 +23,26 @@
         function handler(e) {
           results.innerHTML = '';
           let searchRes = [];
-          searchRes = searchFN(query.innerText.trim())
+          searchRes = searchFN(query.value.trim())
           results.innerHTML = searchRes.map(r => {
             if (typeof r === 'string') {
-              return `<a href=${r}>${r.replace(/.*\/([^/]+)$/, '$1').replace(/_/g, ' ').replace(/\.html$/, '')}</a>`
+              return `
+                <a href=${r}>
+                ${
+                  r.replace(/.*\/([^/]+)$/, '$1')
+                   .replace(/_/g, ' ')
+                   .replace(/\.html$/, '')
+                   }
+                </a>`
             } else {
-              return `<a href=${r.path}>${r.path.replace(/.*\/([^/]+)$/, '$1').replace(/_/g, ' ').replace(/\.html$/, '')}</a>`
+              return `
+                <a href=${r.path}>
+                ${
+                  r.path.replace(/.*\/([^/]+)$/, '$1')
+                    .replace(/_/g, ' ')
+                    .replace(/\.html$/, '')
+                 }
+                </a>`
             }
           }).join('\n')
         }

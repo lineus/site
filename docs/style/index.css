@@ -103,7 +103,8 @@ div.qaft {
 .downByHalf {
   transform: translateY(10px); }
 
-div.query {
+.query {
+  border-width: 0px;
   display: inline-block;
   border-radius: .5em;
   align-self: center;

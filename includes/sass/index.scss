@@ -135,7 +135,8 @@ div.qaft {
    transform: translateY($arrow_seed/2);
 }
 
-div.query {
+.query {
+  border-width: 0px;
   display: inline-block;
   border-radius: .5em;
   align-self: center;
