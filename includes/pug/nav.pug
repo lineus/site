@@ -4,4 +4,17 @@
   a#projects(href="/projects.html" class="navlink" title="projects") Projects
   span#searchBut Search
 
+script.
+  (function () {
+    const { location } = window;
+    const path = `${location}`.split('/');
+    const file = path[path.length - 1];
+    console.log(`file: ...${file}...`)
+    const navs = Array.from(document.querySelectorAll('#nav a'));
+    let active = navs.findIndex(el => el.getAttribute('href') === `/${file}`);
+    navs.map(n => n.classList.remove('active'));
+    if (active >= 0) {
+      navs[active].classList.add('active')
+    }
+  })()
   //- a#grep(href="/grep.html" class="navlink" title="search Articles") Search

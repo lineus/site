@@ -1,4 +1,16 @@
-<!DOCTYPE html><html lang="en"><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><span id="searchBut">Search</span></div></div><div id="searchBox"><span class="qbef">Query &#10145; &nbsp;</span><span class="query" contentEditable="true"></span><span class="qaft">Results</span><span class="qaf2">&#10145;</span></div><div id="results"><script>'use strict';
+<!DOCTYPE html><html lang="en"><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><span id="searchBut">Search</span></div><script>(function () {
+  const { location } = window;
+  const path = `${location}`.split('/');
+  const file = path[path.length - 1];
+  console.log(`file: ...${file}...`)
+  const navs = Array.from(document.querySelectorAll('#nav a'));
+  let active = navs.findIndex(el => el.getAttribute('href') === `/${file}`);
+  navs.map(n => n.classList.remove('active'));
+  if (active >= 0) {
+    navs[active].classList.add('active')
+  }
+})()
+//- a#grep(href="/grep.html" class="navlink" title="search Articles") Search</script></div><div id="searchBox"><div class="qbef">Query</div><div class="arrow rt270"></div><div class="query" contentEditable="true"></div><div class="qaft">Results</div><div class="arrow downByHalf"></div></div><div id="results"><script>'use strict';
 
 if (typeof exports !== 'undefined') {
   module.exports = {
@@ -146,11 +158,11 @@ function searchFactory(searchData) {
 
 
 </script><script>const searchButton = document.querySelector('#searchBut');
-const query = document.querySelector('span.query');
+const query = document.querySelector('div.query');
 const searchBox = document.querySelector('#searchBox');
 const results = document.querySelector('#results');
 const header = document.querySelector('#header');
-const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2'));
+const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2, .arrow'));
 let searchFN;
 window.fetch('/search.json').then(res => {
     return res.json()
@@ -214,7 +226,7 @@ function debounce(func, wait, immediate) {
     if (callNow) func.apply(context, args);
   };
 };</script></div><div id="container"><div id="latestArticle"><h3 class="lp">Latest Article</h3><p><a href="./articles/fourth_awesome_article.html">fourth awesome article</a></p><div id="latestSyn"><p>here&#39;s my super cool synopsis.</p>
-</div></div><div id="top3Articles"><h3>Top Articles</h3><div class="topPost"><a href="articles/Third_Times_The_Charm.html">Third Times The Charm</a></div><div class="topPost"><a href="articles/fourth_awesome_article.html">fourth awesome article</a></div><div class="topPost"><a href="articles/This_is_Test_2.html">This is Test 2</a></div></div><div id="tags"><h3>Articles By Tag:</h3><div id="cloud"></div></div></div><script>const jsonString = '[{"path":"./articles/Third_Times_The_Charm.html","tags":["Bill","Ted","Adventure"]},{"path":"./articles/This_is_Test_2.html","tags":["Ted","wonder"]},{"path":"./articles/fourth_awesome_article.html","tags":["Adventure","Ted"]},{"path":"./articles/test.html","tags":["dogs","wonder","Ted"]}]';
+</div></div><div id="top3Articles"><h3>Top Articles</h3><div class="topPost"><a href="articles/Third_Times_The_Charm.html">Third Times The Charm</a></div><div class="topPost"><a href="articles/This_is_Test_2.html">This is Test 2</a></div><div class="topPost"><a href="articles/fourth_awesome_article.html">fourth awesome article</a></div></div><div id="tags"><h3>Articles By Tag:</h3><div id="cloud"></div></div></div><script>const jsonString = '[{"path":"./articles/Third_Times_The_Charm.html","tags":["Bill","Ted","Adventure"]},{"path":"./articles/This_is_Test_2.html","tags":["Ted","wonder"]},{"path":"./articles/fourth_awesome_article.html","tags":["Adventure","Ted"]},{"path":"./articles/test.html","tags":["dogs","wonder","Ted"]}]';
 const json = JSON.parse(jsonString);
 const cont = document.querySelector('#cloud');
 const tags = [];

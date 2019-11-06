@@ -1,18 +1,19 @@
 #searchBox
-  span.qbef Query &#10145; &nbsp;
-  span.query(contentEditable="true")
-  span.qaft Results
-  span.qaf2 &#10145;
+  div.qbef Query
+  div.arrow.rt270
+  div.query(contentEditable="true")
+  div.qaft Results
+  div.arrow.downByHalf
 #results
   script
     include ../js/search.js
   script.
     const searchButton = document.querySelector('#searchBut');
-    const query = document.querySelector('span.query');
+    const query = document.querySelector('div.query');
     const searchBox = document.querySelector('#searchBox');
     const results = document.querySelector('#results');
     const header = document.querySelector('#header');
-    const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2'));
+    const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2, .arrow'));
     let searchFN;
     window.fetch('/search.json').then(res => {
         return res.json()
