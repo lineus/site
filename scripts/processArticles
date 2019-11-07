@@ -11,7 +11,6 @@ const { readdir, readFile, writeFile } = promises;
 const { MDArticle } = require('../lib/mdarticle');
 
 const inDir = './articles/';
-const outDir = './docs/articles/';
 const lsOut = './docs/ls.html';
 
 const ignoreIf = ['untitled', 'wip'];
@@ -23,53 +22,27 @@ async function run() {
   const files = [];
   const existingFiles = [];
   const searchData = [];
-  let markPublished = false;
   for (let f of mdFiles) {
     let article = new MDArticle({ path: `${inDir}${f}`});
-    let tags;
     article.parse();
     const e_p = !existsSync(article.file.fullPathOut) && article.isPublished();
 
     if (article.isPublished()) {
       let obj = article.genSearch();
       searchData.push(obj);
-      tags = obj && obj.level && obj.level[1].tokens;
     }
 
+    let file = article.generateFile();
+
     if (article.publishArticle() || article.updateArticle() || e_p) {
-      markPublished = article.publishArticle();
-      if (markPublished) {
+      if (article.publishArticle()) {
         article.markPublished();
       } else if (article.updateArticle()){
         article.markUpdated();
       }
-      // this is all the noise site task 363
-      let file = {
-        in: `${inDir}${f}`,
-        out: `${outDir}${f.replace(/\.md$/, '.html')}`,
-        link: `${outDir.replace('./docs/', '')}${f.replace(/\.md$/, '.html')}`,
-        title: `${f.replace(/\.md$/, '').replace(/_/g, ' ')}`,
-        published: new Date(article.data.published).toDateString(),
-        updated: article.data.updated,
-        synopsis: md(article.data.synopsis),
-        rssPublished: new Date(article.data.published).toUTCString(),
-        rssSynopsis: article.data.synopsis,
-        tags
-      };
+
       files.push(file);
     } else if (article.isPublished()) {
-      let file = {
-        in: article.file.in,
-        out: article.file.out,
-        link: article.file.link,
-        title: article.file.title,
-        published: article.publishedOn(),
-        updated: article.updatedOn(),
-        synopsis: md(article.data.synopsis),
-        rssPublished: new Date(article.data.published).toUTCString(),
-        rssSynopsis: article.data.synopsis,
-        tags
-      };
       existingFiles.push(file);
     }
   }
@@ -89,9 +62,9 @@ async function run() {
       return bD - aD;
     })
   });
+
   await writeFile(lsOut, lsHTML);
   await writeFile('./docs/grep.html', grepHTML);
-
   await writeFile('./articles.json', JSON.stringify(allFiles, null, 2));
   await writeFile('./docs/search.json', JSON.stringify(searchData, null, 2));
 }
@@ -115,12 +88,12 @@ function ignored(fileName) {
 }
 
 async function process(file) {
-  let contents = await readFile(file.in, 'utf-8');
+  let contents = await readFile(file.fullPathIn, 'utf-8');
   let blargh = fn({
     title: file.title,
     article: md(contents),
-    articleLink: file.out
+    articleLink: file.fullPathOut
   });
   let article = blargh.replace(/<!--.*-->/g, '');
-  await writeFile(file.out, article);
+  await writeFile(file.fullPathOut, article);
 }

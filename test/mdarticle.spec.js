@@ -62,7 +62,7 @@ nParser.parse();
 const fParser = new MDArticle({ md: f });
 fParser.parse();
 
-describe('mdParser', function() {
+describe('MDArticle', function() {
   let md;
   const fh = openSync('./test/stub/no_synopsis.md');
   const pt = './test/stub/yet_another.md';
@@ -124,10 +124,10 @@ describe('mdParser', function() {
       parser.parse();
       assert.ok(parser.data);
       assert.strictEqual(typeof parser.data, 'object');
-      assert.strictEqual(parser.data.published, 0);
+      assert.strictEqual(parser.data.published, 1573129309342);
       assert.strictEqual(parser.data.updated, 0);
       assert.strictEqual(parser.data.synopsis, eSynopsis);
-      assert.strictEqual(parser.data.status, '');
+      assert.strictEqual(parser.data.status, 'PUB');
     });
     it('sets data.status', function() {
       const withStatus = `
@@ -692,6 +692,35 @@ describe('mdParser', function() {
       assert.ok(article.file.out);
       assert.strictEqual(article.file.in, './test/stub/');
       assert.strictEqual(article.file.out, './test/stub/docs/');
+    });
+  });
+  describe('generateFile', function() {
+    it('smoketest', function () {
+      assert.ok(yArticle.generateFile);
+      assert.ok(typeof yArticle.generateFile === 'function');
+    });
+    it('throws an error when called before parse', function () {
+      const article = new MDArticle({ md: '' });
+      assert.throws(() => {
+        article.generateFile();
+      }, /NotParsedYetError/);
+    });
+    it('returns the correct data structure shape', function() {
+      const article = new MDArticle({ path: './test/stub/test_icicle.md' });
+      article.parse();
+      const f = article.generateFile();
+      assert.ok(f);
+      assert.ok(typeof f === 'object');
+      assert.strictEqual(f.in, './articles/');
+      assert.strictEqual(f.out, './docs/articles/');
+      assert.strictEqual(f.link, './articles/test_icicle.html');
+      assert.strictEqual(f.title, 'test icicle');
+      assert.strictEqual(f.published, 'Thu Nov 07 2019');
+      assert.strictEqual(f.updated, 0);
+      assert.strictEqual(f.synopsis, '\nThis is the *Synopsis* text.\n');
+      assert.strictEqual(f.rssPublished, 'Thu, 07 Nov 2019 12:21:49 GMT');
+      assert.strictEqual(f.rssSynopsis, '\nThis is the *Synopsis* text.\n');
+      assert.deepEqual(f.tags, ['mongoose', 'javascript', 'node', 'mongodb']);
     });
   });
 });

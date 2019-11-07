@@ -1,64 +1,112 @@
 [
   {
+    "name": "The_Sixth_Wonder_of_the_World.md",
+    "title": "The Sixth Wonder of the World",
     "in": "./articles/",
+    "link": "./articles/The_Sixth_Wonder_of_the_World.html",
+    "fullPathIn": "./articles/The_Sixth_Wonder_of_the_World.md",
     "out": "./docs/articles/",
-    "link": "./articles/fourth_awesome_article.html",
+    "fullPathOut": "./docs/articles/The_Sixth_Wonder_of_the_World.html",
+    "published": "Thu Nov 07 2019",
+    "rssPublished": "Thu, 07 Nov 2019 15:30:42 GMT",
+    "rssSynopsis": "\nThe Colossus of Rhodes *was* a statue of the god Helios in the greek city of Rhodes on the island of the same name. It was bigly, and the best. Everyone Knows it. He knows it, and they know it. I'm a genius, so I know it. \n",
+    "tags": [],
+    "updated": 0,
+    "synopsis": "\nThe Colossus of Rhodes *was* a statue of the god Helios in the greek city of Rhodes on the island of the same name. It was bigly, and the best. Everyone Knows it. He knows it, and they know it. I'm a genius, so I know it. \n",
+    "status": "PUB"
+  },
+  {
+    "name": "Johnny_5_is_Alive.md",
+    "title": "Johnny 5 is Alive",
+    "in": "./articles/",
+    "link": "./articles/Johnny_5_is_Alive.html",
+    "fullPathIn": "./articles/Johnny_5_is_Alive.md",
+    "out": "./docs/articles/",
+    "fullPathOut": "./docs/articles/Johnny_5_is_Alive.html",
+    "published": "Wed Nov 06 2019",
+    "rssPublished": "Wed, 06 Nov 2019 21:53:23 GMT",
+    "rssSynopsis": "\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed arcu non odio euismod lacinia. Bibendum enim facilisis gravida neque convallis a. Sed viverra ipsum nunc aliquet bibendum enim facilisis. Metus dictum at tempor commodo ullamcorper a lacus. Habitant morbi tristique senectus et netus et malesuada fames ac. Vitae nunc sed velit dignissim sodales ut eu. A iaculis at erat pellentesque. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Ut sem nulla pharetra diam sit amet nisl. Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing. Est ultricies integer quis auctor elit sed vulputate mi. Turpis tincidunt id aliquet risus feugiat in ante metus. Aenean pharetra magna ac placerat. Vestibulum lorem sed risus ultricies tristique nulla aliquet enim.\n",
+    "tags": [],
+    "updated": 0,
+    "synopsis": "\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed arcu non odio euismod lacinia. Bibendum enim facilisis gravida neque convallis a. Sed viverra ipsum nunc aliquet bibendum enim facilisis. Metus dictum at tempor commodo ullamcorper a lacus. Habitant morbi tristique senectus et netus et malesuada fames ac. Vitae nunc sed velit dignissim sodales ut eu. A iaculis at erat pellentesque. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Ut sem nulla pharetra diam sit amet nisl. Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing. Est ultricies integer quis auctor elit sed vulputate mi. Turpis tincidunt id aliquet risus feugiat in ante metus. Aenean pharetra magna ac placerat. Vestibulum lorem sed risus ultricies tristique nulla aliquet enim.\n",
+    "status": "PUB"
+  },
+  {
+    "name": "fourth_awesome_article.md",
     "title": "fourth awesome article",
+    "in": "./articles/",
+    "link": "./articles/fourth_awesome_article.html",
+    "fullPathIn": "./articles/fourth_awesome_article.md",
+    "out": "./docs/articles/",
+    "fullPathOut": "./docs/articles/fourth_awesome_article.html",
     "published": "Fri Oct 25 2019",
-    "updated": "Fri Oct 25 2019",
-    "synopsis": "<p>here&#39;s my super cool synopsis.</p>\n",
     "rssPublished": "Fri, 25 Oct 2019 11:58:12 GMT",
     "rssSynopsis": "\nhere's my super cool synopsis.\n",
     "tags": [
       "Adventure",
       "Ted"
-    ]
+    ],
+    "updated": 1572031717866,
+    "synopsis": "\nhere's my super cool synopsis.\n",
+    "status": "PUB"
   },
   {
-    "in": "./articles/",
-    "out": "./docs/articles/",
-    "link": "./articles/Third_Times_The_Charm.html",
+    "name": "Third_Times_The_Charm.md",
     "title": "Third Times The Charm",
+    "in": "./articles/",
+    "link": "./articles/Third_Times_The_Charm.html",
+    "fullPathIn": "./articles/Third_Times_The_Charm.md",
+    "out": "./docs/articles/",
+    "fullPathOut": "./docs/articles/Third_Times_The_Charm.html",
     "published": "Wed Oct 23 2019",
-    "updated": "Fri Oct 25 2019",
-    "synopsis": "<p>  Now with newly added SYNOPSIS!!!!!</p>\n",
     "rssPublished": "Wed, 23 Oct 2019 12:05:18 GMT",
     "rssSynopsis": "\n  Now with newly added SYNOPSIS!!!!!\n",
     "tags": [
       "Bill",
       "Ted",
       "Adventure"
-    ]
+    ],
+    "updated": 1572031717834,
+    "synopsis": "\n  Now with newly added SYNOPSIS!!!!!\n",
+    "status": "PUB"
   },
   {
-    "in": "./articles/",
-    "out": "./docs/articles/",
-    "link": "./articles/This_is_Test_2.html",
+    "name": "This_is_Test_2.md",
     "title": "This is Test 2",
+    "in": "./articles/",
+    "link": "./articles/This_is_Test_2.html",
+    "fullPathIn": "./articles/This_is_Test_2.md",
+    "out": "./docs/articles/",
+    "fullPathOut": "./docs/articles/This_is_Test_2.html",
     "published": "Mon Oct 21 2019",
-    "updated": "Fri Oct 25 2019",
-    "synopsis": "<p>This is the best.</p>\n",
     "rssPublished": "Mon, 21 Oct 2019 22:41:35 GMT",
     "rssSynopsis": "\nThis is the best.\n",
     "tags": [
       "Ted",
       "wonder"
-    ]
+    ],
+    "updated": 1572031717864,
+    "synopsis": "\nThis is the best.\n",
+    "status": "PUB"
   },
   {
-    "in": "./articles/",
-    "out": "./docs/articles/",
-    "link": "./articles/test.html",
+    "name": "test.md",
     "title": "test",
+    "in": "./articles/",
+    "link": "./articles/test.html",
+    "fullPathIn": "./articles/test.md",
+    "out": "./docs/articles/",
+    "fullPathOut": "./docs/articles/test.html",
     "published": "Mon Oct 21 2019",
-    "updated": "Sat Oct 26 2019",
-    "synopsis": "<p>You can do it, ra ra ra.</p>\n",
     "rssPublished": "Mon, 21 Oct 2019 22:41:35 GMT",
     "rssSynopsis": "\nYou can do it, ra ra ra.\n",
     "tags": [
       "dogs",
       "wonder",
       "Ted"
-    ]
+    ],
+    "updated": 1572117477058,
+    "synopsis": "\nYou can do it, ra ra ra.\n",
+    "status": "PUB"
   }
 ]

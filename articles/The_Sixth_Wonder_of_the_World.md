@@ -4,6 +4,6 @@ The Colossus of Rhodes *was* a statue of the god Helios in the greek city of Rho
 <!-- Synopsis End -->
 This is not a part of the synopsis and should not be seen on the front page.
 
-<!-- Published: -->
+<!-- Published: 1573140642026 -->
 <!-- Updated: -->
-<!-- Status: WIP-->
+<!-- Status: PUB -->
