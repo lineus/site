@@ -2,6 +2,7 @@
 'use strict';
 
 const pug = require('pug');
+const pretty = require('pretty');
 const fn = pug.compileFile('./includes/index.pug');
 const { stat, readFile, writeFile } = require('fs').promises;
 const { ATLASSRV } = require(`${process.env.HOME}/.env`);
@@ -86,7 +87,7 @@ async function run() {
     top3: mut_Top3,
     search
   });
-  await writeFile('./docs/index.html', indexHTML);
+  await writeFile('./docs/index.html', pretty(indexHTML));
   await mongoose.disconnect();
   process.exit(0);
 }

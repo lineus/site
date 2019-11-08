@@ -1,180 +1,237 @@
-<!DOCTYPE html><html lang="en"><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><span id="searchBut">Search</span></div><script>(function () {
-  const { location } = window;
-  const path = `${location}`.split('/');
-  const file = path[path.length - 1];
-  console.log(`file: ...${file}...`)
-  const navs = Array.from(document.querySelectorAll('#nav a'));
-  let active = navs.findIndex(el => el.getAttribute('href') === `/${file}`);
-  navs.map(n => n.classList.remove('active'));
-  if (active >= 0) {
-    navs[active].classList.add('active')
-  }
-})()
-//- a#grep(href="/grep.html" class="navlink" title="search Articles") Search</script></div><div id="searchBox"><div class="qbef">Query</div><div class="arrow rt270"></div><input class="query" type="text" autocapitalize="none"><div class="qaft">Results</div><div class="arrow downByHalf"></div></div><div id="results"><script>'use strict';
+<!DOCTYPE html>
+<html lang="en">
 
-if (typeof exports !== 'undefined') {
-  module.exports = {
-    searchFactory
-  };
-}
+  <head>
+    <title>lineus.dev</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/index.css">
+  </head>
 
-function searchFactory(searchData) {
-  if (!searchData) {
-    throw new Error('SearchFactoryRequiresDataError');
-  }
-
-  return new go();
-
-  function go() {
-    this.data = searchData;
-    this.result = [];
-    const search = (query) => {
-      if (!query) {
-        return this.data.map(f => f.path);
-      }
-      const hasLevelSpecifier = /[\w]+:[\w]+/.test(query);
-      const queryTokens = query.split(' ');
-      const forThese = [];
-      if (hasLevelSpecifier) {
-        const validLS = ['filename', 'tags', 'headers', 'links'];
-        queryTokens.map(q => {
-          if (/[\w]+:[\w]+/.test(q)) {
-            const [token, qString] = q.split(':');
-            if (!validLS.includes(token)) {
-              throw new Error(`InvalidQueryTokenError: ${token}`);
-            }
-            forThese.push({ token, qString });
-          } else {
-            forThese.push({ token: 'all', qString: q });
+  <body>
+    <div id="header">
+      <div id="logo"><a id="name" href="/">lineus</a></div>
+      <div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><span id="searchBut">Search</span></div>
+      <script>
+        (function() {
+          const {
+            location
+          } = window;
+          const path = `${location}`.split('/');
+          const file = path[path.length - 1];
+          console.log(`file: ...${file}...`)
+          const navs = Array.from(document.querySelectorAll('#nav a'));
+          let active = navs.findIndex(el => el.getAttribute('href') === `/${file}`);
+          navs.map(n => n.classList.remove('active'));
+          if (active >= 0) {
+            navs[active].classList.add('active')
           }
-        });
-      } else {
-        queryTokens.map(q => {
-          forThese.push({ token: 'all', qString: q });
-        });
-      }
+        })()
+        //- a#grep(href="/grep.html" class="navlink" title="search Articles") Search
+      </script>
+    </div>
+    <div id="searchBox">
+      <div class="qbef">Query</div>
+      <div class="arrow rt270"></div><input class="query" type="text" autocapitalize="none">
+      <div class="qaft">Results</div>
+      <div class="arrow downByHalf"></div>
+    </div>
+    <div id="results">
+      <script>
+        'use strict';
 
-      const allSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          for (let i = 0; i < 6; i++) {
-            let index = f.level[i].tokens.findIndex(matches);
-            if (index > -1) {
-              this.result.push({ level: i, path: f.path });
-            }
+        if (typeof exports !== 'undefined') {
+          module.exports = {
+            searchFactory
+          };
+        }
+
+        function searchFactory(searchData) {
+          if (!searchData) {
+            throw new Error('SearchFactoryRequiresDataError');
           }
-        });
-        function matches(el) {
-          return re.test(el);
-        }
-      };
 
-      const fSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          let index = f.level[0].tokens.findIndex(matches);
-          if (index > -1) {
-            this.result.push({ level: 0, path: f.path });
+          return new go();
+
+          function go() {
+            this.data = searchData;
+            this.result = [];
+            const search = (query) => {
+              if (!query) {
+                return this.data.map(f => f.path);
+              }
+              const hasLevelSpecifier = /[\w]+:[\w]+/.test(query);
+              const queryTokens = query.split(' ');
+              const forThese = [];
+              if (hasLevelSpecifier) {
+                const validLS = ['filename', 'tags', 'headers', 'links'];
+                queryTokens.map(q => {
+                  if (/[\w]+:[\w]+/.test(q)) {
+                    const [token, qString] = q.split(':');
+                    if (!validLS.includes(token)) {
+                      throw new Error(`InvalidQueryTokenError: ${token}`);
+                    }
+                    forThese.push({
+                      token,
+                      qString
+                    });
+                  } else {
+                    forThese.push({
+                      token: 'all',
+                      qString: q
+                    });
+                  }
+                });
+              } else {
+                queryTokens.map(q => {
+                  forThese.push({
+                    token: 'all',
+                    qString: q
+                  });
+                });
+              }
+
+              const allSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  for (let i = 0; i < 6; i++) {
+                    let index = f.level[i].tokens.findIndex(matches);
+                    if (index > -1) {
+                      this.result.push({
+                        level: i,
+                        path: f.path
+                      });
+                    }
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              const fSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  let index = f.level[0].tokens.findIndex(matches);
+                  if (index > -1) {
+                    this.result.push({
+                      level: 0,
+                      path: f.path
+                    });
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              const tSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  let index = f.level[1].tokens.findIndex(matches);
+                  if (index > -1) {
+                    this.result.push({
+                      level: 1,
+                      path: f.path
+                    });
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              const hSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  for (let i = 2; i < 5; i++) {
+                    let index = f.level[i].tokens.findIndex(matches);
+                    if (index > -1) {
+                      this.result.push({
+                        level: i,
+                        path: f.path
+                      });
+                    }
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              const lSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  let index = f.level[5].tokens.findIndex(matches);
+                  if (index > -1) {
+                    this.result.push({
+                      level: 5,
+                      path: f.path
+                    });
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              forThese.map(o => {
+                switch (o.token) {
+                  case 'all':
+                    allSearch(o.qString);
+                    break;
+                  case 'filename':
+                    fSearch(o.qString);
+                    break;
+                  case 'tags':
+                    tSearch(o.qString);
+                    break;
+                  case 'headers':
+                    hSearch(o.qString);
+                    break;
+                  case 'links':
+                    lSearch(o.qString);
+                    break;
+                  default:
+                    throw new Error('InvalidQueryTokenError');
+                }
+              });
+
+              let temp = [...this.result];
+              this.result = [];
+              return temp;
+
+            };
+
+            return search;
           }
-        });
-        function matches(el) {
-          return re.test(el);
         }
-      };
+      </script>
+      <script>
+        const searchButton = document.querySelector('#searchBut');
+        const query = document.querySelector('input.query');
+        const searchBox = document.querySelector('#searchBox');
+        const results = document.querySelector('#results');
+        const header = document.querySelector('#header');
+        const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2, .arrow'));
+        let searchFN;
+        window.fetch('/search.json').then(res => {
+          return res.json()
+        }).then(json => {
+          searchFN = searchFactory(json);
 
-      const tSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          let index = f.level[1].tokens.findIndex(matches);
-          if (index > -1) {
-            this.result.push({ level: 1, path: f.path });
-          }
-        });
-        function matches(el) {
-          return re.test(el);
-        }
-      };
-
-      const hSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          for (let i = 2; i < 5; i++) {
-            let index = f.level[i].tokens.findIndex(matches);
-            if (index > -1) {
-              this.result.push({ level: i, path: f.path });
-            }
-          }
-        });
-        function matches(el) {
-          return re.test(el);
-        }
-      };
-
-      const lSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          let index = f.level[5].tokens.findIndex(matches);
-          if (index > -1) {
-            this.result.push({ level: 5, path: f.path });
-          }
-        });
-        function matches(el) {
-          return re.test(el);
-        }
-      };
-
-      forThese.map(o => {
-        switch (o.token) {
-          case 'all':
-            allSearch(o.qString);
-            break;
-          case 'filename':
-            fSearch(o.qString);
-            break;
-          case 'tags':
-            tSearch(o.qString);
-            break;
-          case 'headers':
-            hSearch(o.qString);
-            break;
-          case 'links':
-            lSearch(o.qString);
-            break;
-          default:
-            throw new Error('InvalidQueryTokenError');
-        }
-      });
-
-      let temp = [...this.result];
-      this.result = [];
-      return temp;
-
-    };
-
-    return search;
-  }
-}
-
-
-
-</script><script>const searchButton = document.querySelector('#searchBut');
-const query = document.querySelector('input.query');
-const searchBox = document.querySelector('#searchBox');
-const results = document.querySelector('#results');
-const header = document.querySelector('#header');
-const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2, .arrow'));
-let searchFN;
-window.fetch('/search.json').then(res => {
-    return res.json()
-  }).then(json => {
-    searchFN = searchFactory(json);
-    function handler(e) {
-      results.innerHTML = '';
-      let searchRes = [];
-      searchRes = searchFN(query.value.trim())
-      results.innerHTML = searchRes.map(r => {
-        if (typeof r === 'string') {
-          return `
+          function handler(e) {
+            results.innerHTML = '';
+            let searchRes = [];
+            searchRes = searchFN(query.value.trim())
+            results.innerHTML = searchRes.map(r => {
+              if (typeof r === 'string') {
+                return `
             <a href=${r}>
             ${
               r.replace(/.*\/([^/]+)$/, '$1')
@@ -182,8 +239,8 @@ window.fetch('/search.json').then(res => {
                .replace(/\.html$/, '')
                }
             </a>`
-        } else {
-          return `
+              } else {
+                return `
             <a href=${r.path}>
             ${
               r.path.replace(/.*\/([^/]+)$/, '$1')
@@ -191,19 +248,19 @@ window.fetch('/search.json').then(res => {
                 .replace(/\.html$/, '')
              }
             </a>`
-        }
-      }).join('\n')
-    }
-    const search = debounce(handler, 500)
-    query.addEventListener('keyup', search);
-    searchButton.addEventListener('click', function() {
-      if (searchBox.style.height !== '3em') {
-        queryLogos.map(l => l.style.opacity = '1');
-        query.style.height = '2em';
-        query.style.width = '60vw';
-        searchBox.style.height = '3em';
-        results.innerHTML = searchFN().map(r => {
-          return `
+              }
+            }).join('\n')
+          }
+          const search = debounce(handler, 500)
+          query.addEventListener('keyup', search);
+          searchButton.addEventListener('click', function() {
+            if (searchBox.style.height !== '3em') {
+              queryLogos.map(l => l.style.opacity = '1');
+              query.style.height = '2em';
+              query.style.width = '60vw';
+              searchBox.style.height = '3em';
+              results.innerHTML = searchFN().map(r => {
+                return `
             <a href=${r}>
               ${
                 r.replace(/.*\/([^/]+)$/, '$1')
@@ -211,122 +268,146 @@ window.fetch('/search.json').then(res => {
                   .replace(/\.html$/, '')
                   }
             </a>`;
-        }).join('\n')
-        results.style.height = `80vh`;
-      } else {
-        queryLogos.map(l => l.style.opacity = '0');
-        searchBox.style.height = '0px';
-        query.style.height = '0px';
-        query.style.width = '100vw';
-        results.innerHTML = '';
-        results.style.height = '0px';
+              }).join('\n')
+              results.style.height = `80vh`;
+            } else {
+              queryLogos.map(l => l.style.opacity = '0');
+              searchBox.style.height = '0px';
+              query.style.height = '0px';
+              query.style.width = '100vw';
+              results.innerHTML = '';
+              results.style.height = '0px';
+            }
+          });
+        }).catch(console.error)
+
+        function debounce(func, wait, immediate) {
+          var timeout;
+          return function() {
+            var context = this,
+              args = arguments;
+            var later = function() {
+              timeout = null;
+              if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+          };
+        };
+      </script>
+    </div>
+    <div id="sort"><span class="sortButton" onclick="bydate()">Oldest First</span><span class="sortButton" onclick="bytitle()">Alphabetical</span></div>
+    <div id="articles">
+      <ul id="articleList">
+        <li class="articleListing tag-pyramids tag-darpa tag-fire"><a class="article" href="./articles/The_Sixth_Wonder_of_the_World.html">The Sixth Wonder of the World</a><a href="/ls.html?tagged=pyramids">pyramids</a><a href="/ls.html?tagged=darpa">darpa</a><a href="/ls.html?tagged=fire">fire</a><span class="articlesDate">Thu Nov 07 2019</span></li>
+        <li class="articleListing"><a class="article" href="./articles/Johnny_5_is_Alive.html">Johnny 5 is Alive</a><span class="articlesDate">Wed Nov 06 2019</span></li>
+        <li class="articleListing tag-Adventure tag-Ted"><a class="article" href="./articles/fourth_awesome_article.html">fourth awesome article</a><a href="/ls.html?tagged=Adventure">Adventure</a><a href="/ls.html?tagged=Ted">Ted</a><span class="articlesDate">Fri Oct 25 2019</span></li>
+        <li class="articleListing tag-Bill tag-Ted tag-Adventure"><a class="article" href="./articles/Third_Times_The_Charm.html">Third Times The Charm</a><a href="/ls.html?tagged=Bill">Bill</a><a href="/ls.html?tagged=Ted">Ted</a><a href="/ls.html?tagged=Adventure">Adventure</a><span class="articlesDate">Wed Oct 23 2019</span></li>
+        <li class="articleListing tag-Ted tag-wonder"><a class="article" href="./articles/This_is_Test_2.html">This is Test 2</a><a href="/ls.html?tagged=Ted">Ted</a><a href="/ls.html?tagged=wonder">wonder</a><span class="articlesDate">Mon Oct 21 2019</span></li>
+        <li class="articleListing tag-dogs tag-wonder tag-Ted"><a class="article" href="./articles/test.html">test</a><a href="/ls.html?tagged=dogs">dogs</a><a href="/ls.html?tagged=wonder">wonder</a><a href="/ls.html?tagged=Ted">Ted</a><span class="articlesDate">Mon Oct 21 2019</span></li>
+      </ul>
+    </div>
+    <script>
+      const isTagged = /tagged/.test(window.location);
+      let tags = [];
+      const dateBut = document.querySelector('span.sortButton:first-child');
+      const titlBut = document.querySelector('span.sortButton:last-child');
+      const list = document.querySelector('#articleList');
+      const articles = Array.from(list.childNodes);
+
+      if (isTagged) {
+        tags = `${window.location}`.split("=")[1].split(",");
+        clearAllarticles()
+        tags.map(setVisibleByTag)
       }
-    });
-}).catch(console.error)
 
-function debounce(func, wait, immediate) {
-  var timeout;
-  return function() {
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-};</script></div><div id="sort"><span class="sortButton" onclick="bydate()">Oldest First</span><span class="sortButton" onclick="bytitle()">Alphabetical</span></div><div id="articles"><ul id="articleList"><li class="articleListing"><a class="article" href="./articles/The_Sixth_Wonder_of_the_World.html">The Sixth Wonder of the World</a><span class="articlesDate">Thu Nov 07 2019</span></li><li class="articleListing"><a class="article" href="./articles/Johnny_5_is_Alive.html">Johnny 5 is Alive</a><span class="articlesDate">Wed Nov 06 2019</span></li><li class="articleListing tag-Adventure tag-Ted"><a class="article" href="./articles/fourth_awesome_article.html">fourth awesome article</a><a href="/ls.html?tagged=Adventure">Adventure</a><a href="/ls.html?tagged=Ted">Ted</a><span class="articlesDate">Fri Oct 25 2019</span></li><li class="articleListing tag-Bill tag-Ted tag-Adventure"><a class="article" href="./articles/Third_Times_The_Charm.html">Third Times The Charm</a><a href="/ls.html?tagged=Bill">Bill</a><a href="/ls.html?tagged=Ted">Ted</a><a href="/ls.html?tagged=Adventure">Adventure</a><span class="articlesDate">Wed Oct 23 2019</span></li><li class="articleListing tag-Ted tag-wonder"><a class="article" href="./articles/This_is_Test_2.html">This is Test 2</a><a href="/ls.html?tagged=Ted">Ted</a><a href="/ls.html?tagged=wonder">wonder</a><span class="articlesDate">Mon Oct 21 2019</span></li><li class="articleListing tag-dogs tag-wonder tag-Ted"><a class="article" href="./articles/test.html">test</a><a href="/ls.html?tagged=dogs">dogs</a><a href="/ls.html?tagged=wonder">wonder</a><a href="/ls.html?tagged=Ted">Ted</a><span class="articlesDate">Mon Oct 21 2019</span></li></ul></div><script>const isTagged = /tagged/.test(window.location);
-let tags = [];
-const dateBut = document.querySelector('span.sortButton:first-child');
-const titlBut = document.querySelector('span.sortButton:last-child');
-const list = document.querySelector('#articleList');
-const articles = Array.from(list.childNodes);
+      function clearAllarticles() {
+        articles.map(article => {
+          article.style.display = 'none';
+        })
+      }
 
-if (isTagged) {
-  tags = `${window.location}`.split("=")[1].split(",");
-  clearAllarticles()
-  tags.map(setVisibleByTag)
-}
+      function setVisibleByTag(t) {
+        articles.map(article => {
+          if (article.classList.contains(`tag-${t}`)) {
+            article.style.display = 'flex';
+          }
+        })
+      }
 
-function clearAllarticles() {
-  articles.map(article => {
-    article.style.display = 'none';
-  })
-}
+      function replacearticles(arr) {
+        while (list.firstChild) {
+          list.removeChild(list.firstChild);
+        }
+        for (let child of arr) {
+          list.appendChild(child);
+        }
+      }
 
-function setVisibleByTag(t) {
-  articles.map(article => {
-    if(article.classList.contains(`tag-${t}`)) {
-      article.style.display = 'flex';
-    }
-  })
-}
+      function bydate() {
+        let nodeList = [].concat(articles);
+        if (dateBut.innerText === 'Oldest First') {
+          dateBut.innerText = 'Newest First';
+          nodeList.sort(oldestFirst);
+        } else {
+          dateBut.innerText = 'Oldest First';
+          nodeList.sort(newestFirst);
+        }
+        replacearticles(nodeList);
+      }
 
-function replacearticles(arr) {
-  while (list.firstChild) {
-    list.removeChild(list.firstChild);
-  }
-  for (let child of arr) {
-    list.appendChild(child);
-  }
-}
+      function bytitle() {
+        let nodeList = [].concat(articles);
+        if (titlBut.innerText === 'Alphabetical') {
+          titlBut.innerText = 'Reverse Alpha';
+          nodeList.sort(alpha);
+        } else {
+          titlBut.innerText = 'Alphabetical';
+          nodeList.sort(revAlpha);
+        }
+        replacearticles(nodeList);
+      }
 
-function bydate() {
-  let nodeList = [].concat(articles);
-  if (dateBut.innerText === 'Oldest First') {
-    dateBut.innerText = 'Newest First';
-    nodeList.sort(oldestFirst);
-  } else {
-    dateBut.innerText = 'Oldest First';
-    nodeList.sort(newestFirst);
-  }
-  replacearticles(nodeList);
-}
+      function oldestFirst(a, b) {
+        let aEl = a.querySelector('span.articlesDate');
+        let bEl = b.querySelector('span.articlesDate');
+        let aD = new Date(aEl.innerText);
+        let bD = new Date(bEl.innerText);
+        return aD - bD;
+      }
 
-function bytitle() {
-  let nodeList = [].concat(articles);
-  if (titlBut.innerText === 'Alphabetical') {
-    titlBut.innerText = 'Reverse Alpha';
-    nodeList.sort(alpha);
-  } else {
-    titlBut.innerText = 'Alphabetical';
-    nodeList.sort(revAlpha);
-  }
-  replacearticles(nodeList);
-}
+      function newestFirst(a, b) {
+        let aEl = a.querySelector('span.articlesDate');
+        let bEl = b.querySelector('span.articlesDate');
+        let aD = new Date(aEl.innerText);
+        let bD = new Date(bEl.innerText);
+        return bD - aD;
+      }
 
-function oldestFirst(a,b) {
-  let aEl = a.querySelector('span.articlesDate');
-  let bEl = b.querySelector('span.articlesDate');
-  let aD = new Date(aEl.innerText);
-  let bD = new Date(bEl.innerText);
-  return aD - bD;
-}
+      function alpha(a, b) {
+        let aT = a.querySelector('a').innerText;
+        let bT = b.querySelector('a').innerText;
+        if (aT > bT) {
+          return 1;
+        }
+        return -1
+      }
 
-function newestFirst(a,b) {
-  let aEl = a.querySelector('span.articlesDate');
-  let bEl = b.querySelector('span.articlesDate');
-  let aD = new Date(aEl.innerText);
-  let bD = new Date(bEl.innerText);
-  return bD - aD;
-}
+      function revAlpha(a, b) {
+        let aT = a.querySelector('a').innerText;
+        let bT = b.querySelector('a').innerText;
+        if (aT < bT) {
+          return 1;
+        }
+        return -1
+      }
+    </script>
+    <div id="footer">
+      <div id="rss"><a href="https://lineus.dev/articles.xml">Subscribe</a></div>
+      <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
+    </div>
+  </body>
 
-function alpha(a,b) {
-  let aT = a.querySelector('a').innerText;
-  let bT = b.querySelector('a').innerText;
-  if (aT > bT) {
-    return 1;
-  }
-  return -1
-}
-
-function revAlpha(a,b) {
-  let aT = a.querySelector('a').innerText;
-  let bT = b.querySelector('a').innerText;
-  if (aT < bT) {
-    return 1;
-  }
-  return -1
-}</script><div id="footer"><div id="rss"><a href="https://lineus.dev/articles.xml">Subscribe</a></div><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a></div></body></html>
+</html>

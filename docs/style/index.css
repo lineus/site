@@ -182,7 +182,7 @@ div.qaft {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap; }
 
 .articleListing {
@@ -193,13 +193,16 @@ div.qaft {
   align-items: flex-end;
   border-radius: .5em;
   margin: .5em;
-  width: 10em;
-  height: 10em; }
+  min-width: 10em;
+  max-width: 15em;
+  min-height: 10em;
+  padding: 1em; }
 
 .articlesDate {
   color: #BBF5FA;
   font-style: italic;
   font-size: .75em;
+  padding-top: .5em;
   padding-right: 1em;
   padding-bottom: .3em; }
 
@@ -384,6 +387,9 @@ div.arrow {
   #articleList > li {
     width: 100vw; }
   .articleListing {
+    max-width: none;
+    min-height: 0;
+    max-height: none;
     width: 100vw;
     height: 4em;
     margin: 0;

@@ -39,8 +39,9 @@ describe('HTML', function() {
   testFiles.forEach(f => {
     it(`${f}`, async function() {
       this.timeout(5000);
+      let data = readFileSync(f, 'utf-8');
       const options = {
-        data: readFileSync(f, 'utf-8')
+        data
       };
       const { window } = new JSDOM(options.data);
       const result = await validator(options);

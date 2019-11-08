@@ -2,6 +2,7 @@
 'use strict';
 
 const pug = require('pug');
+const pretty = require('pretty');
 const fn = pug.compileFile('includes/pug/articleTemplate.pug');
 const makeLS = pug.compileFile('includes/pug/ls.pug');
 const makeGrep = pug.compileFile('./includes/grep.pug');
@@ -63,8 +64,8 @@ async function run() {
     })
   });
 
-  await writeFile(lsOut, lsHTML);
-  await writeFile('./docs/grep.html', grepHTML);
+  await writeFile(lsOut, pretty(lsHTML));
+  await writeFile('./docs/grep.html', pretty(grepHTML));
   await writeFile('./articles.json', JSON.stringify(allFiles, null, 2));
   await writeFile('./docs/search.json', JSON.stringify(searchData, null, 2));
 }
@@ -95,5 +96,5 @@ async function process(file) {
     articleLink: file.fullPathOut
   });
   let article = blargh.replace(/<!--.*-->/g, '');
-  await writeFile(file.fullPathOut, article);
+  await writeFile(file.fullPathOut, pretty(article));
 }

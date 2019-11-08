@@ -57,7 +57,11 @@
       },
       {
         "name": "tags",
-        "tokens": []
+        "tokens": [
+          "pyramids",
+          "darpa",
+          "fire"
+        ]
       },
       {
         "name": "header1",
