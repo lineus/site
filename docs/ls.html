@@ -19,7 +19,6 @@
           } = window;
           const path = `${location}`.split('/');
           const file = path[path.length - 1];
-          console.log(`file: ...${file}...`)
           const navs = Array.from(document.querySelectorAll('#nav a'));
           let active = navs.findIndex(el => el.getAttribute('href') === `/${file}`);
           navs.map(n => n.classList.remove('active'));
@@ -325,12 +324,18 @@
 
       function clearAllarticles() {
         articles.map(article => {
+          if (!article.style) {
+            return;
+          }
           article.style.display = 'none';
         })
       }
 
       function setVisibleByTag(t) {
         articles.map(article => {
+          if (!article.classList) {
+            return;
+          }
           if (article.classList.contains(`tag-${t}`)) {
             article.style.display = 'flex';
           }

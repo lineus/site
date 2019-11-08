@@ -36,12 +36,18 @@ html(lang="en")
 
       function clearAllarticles() {
         articles.map(article => {
+          if (!article.style) {
+            return;
+          }
           article.style.display = 'none';
         })
       }
 
       function setVisibleByTag(t) {
         articles.map(article => {
+          if (!article.classList) {
+            return;
+          }
           if(article.classList.contains(`tag-${t}`)) {
             article.style.display = 'flex';
           }
