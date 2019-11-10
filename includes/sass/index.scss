@@ -51,7 +51,7 @@ body {
 }
 
 #container {
-  padding-left: 1em;
+  padding-left: 4em;
   padding-bottom: 1em;
 }
 
@@ -61,6 +61,14 @@ body {
 
 #container > p {
   color: $fg_sup;
+}
+
+code {
+  background: $fg;
+  color: $w;
+  padding: .2em;
+  padding-left: .5em;
+  padding-right: .5em;
 }
 
 #nav {
@@ -133,6 +141,16 @@ div.qaft {
 
 .downByHalf {
    transform: translateY($arrow_seed/2);
+}
+
+p.abt {
+  margin: 2em;
+  max-width: 600px;
+}
+
+ul.abtList {
+  list-style: none;
+  margin: 2em;
 }
 
 .query {
@@ -436,7 +454,7 @@ div.arrow {
   margin-left: .5em;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   body {
     display: flex;
     flex-direction: column;

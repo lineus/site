@@ -1,179 +1,236 @@
-<!DOCTYPE html><html lang="en"><head><title>lineus.dev</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/index.css"></head><body><div id="header"><div id="logo"><a id="name" href="/">lineus</a></div><div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><span id="searchBut">Search</span></div><script>(function () {
-  const { location } = window;
-  const path = `${location}`.split('/');
-  const file = path[path.length - 1];
-  const navs = Array.from(document.querySelectorAll('#nav a'));
-  let active = navs.findIndex(el => el.getAttribute('href') === `/${file}`);
-  navs.map(n => n.classList.remove('active'));
-  if (active >= 0) {
-    navs[active].classList.add('active')
-  }
-})()
-//- a#grep(href="/grep.html" class="navlink" title="search Articles") Search</script></div><div id="searchBox"><div class="qbef">Query</div><div class="arrow rt270"></div><input class="query" type="text" autocapitalize="none"><div class="qaft">Results</div><div class="arrow downByHalf"></div></div><div id="results"><script>'use strict';
+<!DOCTYPE html>
+<html lang="en">
 
-if (typeof exports !== 'undefined') {
-  module.exports = {
-    searchFactory
-  };
-}
+  <head>
+    <title>lineus.dev</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/index.css">
+  </head>
 
-function searchFactory(searchData) {
-  if (!searchData) {
-    throw new Error('SearchFactoryRequiresDataError');
-  }
-
-  return new go();
-
-  function go() {
-    this.data = searchData;
-    this.result = [];
-    const search = (query) => {
-      if (!query) {
-        return this.data.map(f => f.path);
-      }
-      const hasLevelSpecifier = /[\w]+:[\w]+/.test(query);
-      const queryTokens = query.split(' ');
-      const forThese = [];
-      if (hasLevelSpecifier) {
-        const validLS = ['filename', 'tags', 'headers', 'links'];
-        queryTokens.map(q => {
-          if (/[\w]+:[\w]+/.test(q)) {
-            const [token, qString] = q.split(':');
-            if (!validLS.includes(token)) {
-              throw new Error(`InvalidQueryTokenError: ${token}`);
-            }
-            forThese.push({ token, qString });
-          } else {
-            forThese.push({ token: 'all', qString: q });
+  <body>
+    <div id="header">
+      <div id="logo"><a id="name" href="/">lineus</a></div>
+      <div id="nav"><a class="navlink" id="whoami" href="/whoami.html" title="about">About</a><a class="navlink" id="ls" href="/ls.html" title="list articles">Articles</a><a class="navlink" id="projects" href="/projects.html" title="projects">Projects</a><span id="searchBut">Search</span></div>
+      <script>
+        (function() {
+          const {
+            location
+          } = window;
+          const path = `${location}`.split('/');
+          const file = path[path.length - 1];
+          const navs = Array.from(document.querySelectorAll('#nav a'));
+          let active = navs.findIndex(el => el.getAttribute('href') === `/${file}`);
+          navs.map(n => n.classList.remove('active'));
+          if (active >= 0) {
+            navs[active].classList.add('active')
           }
-        });
-      } else {
-        queryTokens.map(q => {
-          forThese.push({ token: 'all', qString: q });
-        });
-      }
+        })()
+        //- a#grep(href="/grep.html" class="navlink" title="search Articles") Search
+      </script>
+    </div>
+    <div id="searchBox">
+      <div class="qbef">Query</div>
+      <div class="arrow rt270"></div><input class="query" type="text" autocapitalize="none">
+      <div class="qaft">Results</div>
+      <div class="arrow downByHalf"></div>
+    </div>
+    <div id="results">
+      <script>
+        'use strict';
 
-      const allSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          for (let i = 0; i < 6; i++) {
-            let index = f.level[i].tokens.findIndex(matches);
-            if (index > -1) {
-              this.result.push({ level: i, path: f.path });
-            }
+        if (typeof exports !== 'undefined') {
+          module.exports = {
+            searchFactory
+          };
+        }
+
+        function searchFactory(searchData) {
+          if (!searchData) {
+            throw new Error('SearchFactoryRequiresDataError');
           }
-        });
-        function matches(el) {
-          return re.test(el);
-        }
-      };
 
-      const fSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          let index = f.level[0].tokens.findIndex(matches);
-          if (index > -1) {
-            this.result.push({ level: 0, path: f.path });
+          return new go();
+
+          function go() {
+            this.data = searchData;
+            this.result = [];
+            const search = (query) => {
+              if (!query) {
+                return this.data.map(f => f.path);
+              }
+              const hasLevelSpecifier = /[\w]+:[\w]+/.test(query);
+              const queryTokens = query.split(' ');
+              const forThese = [];
+              if (hasLevelSpecifier) {
+                const validLS = ['filename', 'tags', 'headers', 'links'];
+                queryTokens.map(q => {
+                  if (/[\w]+:[\w]+/.test(q)) {
+                    const [token, qString] = q.split(':');
+                    if (!validLS.includes(token)) {
+                      throw new Error(`InvalidQueryTokenError: ${token}`);
+                    }
+                    forThese.push({
+                      token,
+                      qString
+                    });
+                  } else {
+                    forThese.push({
+                      token: 'all',
+                      qString: q
+                    });
+                  }
+                });
+              } else {
+                queryTokens.map(q => {
+                  forThese.push({
+                    token: 'all',
+                    qString: q
+                  });
+                });
+              }
+
+              const allSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  for (let i = 0; i < 6; i++) {
+                    let index = f.level[i].tokens.findIndex(matches);
+                    if (index > -1) {
+                      this.result.push({
+                        level: i,
+                        path: f.path
+                      });
+                    }
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              const fSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  let index = f.level[0].tokens.findIndex(matches);
+                  if (index > -1) {
+                    this.result.push({
+                      level: 0,
+                      path: f.path
+                    });
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              const tSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  let index = f.level[1].tokens.findIndex(matches);
+                  if (index > -1) {
+                    this.result.push({
+                      level: 1,
+                      path: f.path
+                    });
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              const hSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  for (let i = 2; i < 5; i++) {
+                    let index = f.level[i].tokens.findIndex(matches);
+                    if (index > -1) {
+                      this.result.push({
+                        level: i,
+                        path: f.path
+                      });
+                    }
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              const lSearch = (q) => {
+                let re = new RegExp(`.*${q}.*`);
+                this.data.map(f => {
+                  let index = f.level[5].tokens.findIndex(matches);
+                  if (index > -1) {
+                    this.result.push({
+                      level: 5,
+                      path: f.path
+                    });
+                  }
+                });
+
+                function matches(el) {
+                  return re.test(el);
+                }
+              };
+
+              forThese.map(o => {
+                switch (o.token) {
+                  case 'all':
+                    allSearch(o.qString);
+                    break;
+                  case 'filename':
+                    fSearch(o.qString);
+                    break;
+                  case 'tags':
+                    tSearch(o.qString);
+                    break;
+                  case 'headers':
+                    hSearch(o.qString);
+                    break;
+                  case 'links':
+                    lSearch(o.qString);
+                    break;
+                  default:
+                    throw new Error('InvalidQueryTokenError');
+                }
+              });
+
+              let temp = [...this.result];
+              this.result = [];
+              return temp;
+
+            };
+
+            return search;
           }
-        });
-        function matches(el) {
-          return re.test(el);
         }
-      };
+      </script>
+      <script>
+        const searchButton = document.querySelector('#searchBut');
+        const query = document.querySelector('input.query');
+        const searchBox = document.querySelector('#searchBox');
+        const results = document.querySelector('#results');
+        const header = document.querySelector('#header');
+        const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2, .arrow'));
+        let searchFN;
+        window.fetch('/search.json').then(res => {
+          return res.json()
+        }).then(json => {
+          searchFN = searchFactory(json);
 
-      const tSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          let index = f.level[1].tokens.findIndex(matches);
-          if (index > -1) {
-            this.result.push({ level: 1, path: f.path });
-          }
-        });
-        function matches(el) {
-          return re.test(el);
-        }
-      };
-
-      const hSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          for (let i = 2; i < 5; i++) {
-            let index = f.level[i].tokens.findIndex(matches);
-            if (index > -1) {
-              this.result.push({ level: i, path: f.path });
-            }
-          }
-        });
-        function matches(el) {
-          return re.test(el);
-        }
-      };
-
-      const lSearch = (q) => {
-        let re = new RegExp(`.*${q}.*`);
-        this.data.map(f => {
-          let index = f.level[5].tokens.findIndex(matches);
-          if (index > -1) {
-            this.result.push({ level: 5, path: f.path });
-          }
-        });
-        function matches(el) {
-          return re.test(el);
-        }
-      };
-
-      forThese.map(o => {
-        switch (o.token) {
-          case 'all':
-            allSearch(o.qString);
-            break;
-          case 'filename':
-            fSearch(o.qString);
-            break;
-          case 'tags':
-            tSearch(o.qString);
-            break;
-          case 'headers':
-            hSearch(o.qString);
-            break;
-          case 'links':
-            lSearch(o.qString);
-            break;
-          default:
-            throw new Error('InvalidQueryTokenError');
-        }
-      });
-
-      let temp = [...this.result];
-      this.result = [];
-      return temp;
-
-    };
-
-    return search;
-  }
-}
-
-
-
-</script><script>const searchButton = document.querySelector('#searchBut');
-const query = document.querySelector('input.query');
-const searchBox = document.querySelector('#searchBox');
-const results = document.querySelector('#results');
-const header = document.querySelector('#header');
-const queryLogos = Array.from(document.querySelectorAll('.qbef, .qaft, .qaf2, .arrow'));
-let searchFN;
-window.fetch('/search.json').then(res => {
-    return res.json()
-  }).then(json => {
-    searchFN = searchFactory(json);
-    function handler(e) {
-      results.innerHTML = '';
-      let searchRes = [];
-      searchRes = searchFN(query.value.trim())
-      results.innerHTML = searchRes.map(r => {
-        if (typeof r === 'string') {
-          return `
+          function handler(e) {
+            results.innerHTML = '';
+            let searchRes = [];
+            searchRes = searchFN(query.value.trim())
+            results.innerHTML = searchRes.map(r => {
+              if (typeof r === 'string') {
+                return `
             <a href=${r}>
             ${
               r.replace(/.*\/([^/]+)$/, '$1')
@@ -181,8 +238,8 @@ window.fetch('/search.json').then(res => {
                .replace(/\.html$/, '')
                }
             </a>`
-        } else {
-          return `
+              } else {
+                return `
             <a href=${r.path}>
             ${
               r.path.replace(/.*\/([^/]+)$/, '$1')
@@ -190,19 +247,19 @@ window.fetch('/search.json').then(res => {
                 .replace(/\.html$/, '')
              }
             </a>`
-        }
-      }).join('\n')
-    }
-    const search = debounce(handler, 500)
-    query.addEventListener('keyup', search);
-    searchButton.addEventListener('click', function() {
-      if (searchBox.style.height !== '3em') {
-        queryLogos.map(l => l.style.opacity = '1');
-        query.style.height = '2em';
-        query.style.width = '60vw';
-        searchBox.style.height = '3em';
-        results.innerHTML = searchFN().map(r => {
-          return `
+              }
+            }).join('\n')
+          }
+          const search = debounce(handler, 500)
+          query.addEventListener('keyup', search);
+          searchButton.addEventListener('click', function() {
+            if (searchBox.style.height !== '3em') {
+              queryLogos.map(l => l.style.opacity = '1');
+              query.style.height = '2em';
+              query.style.width = '60vw';
+              searchBox.style.height = '3em';
+              results.innerHTML = searchFN().map(r => {
+                return `
             <a href=${r}>
               ${
                 r.replace(/.*\/([^/]+)$/, '$1')
@@ -210,30 +267,124 @@ window.fetch('/search.json').then(res => {
                   .replace(/\.html$/, '')
                   }
             </a>`;
-        }).join('\n')
-        results.style.height = `80vh`;
-      } else {
-        queryLogos.map(l => l.style.opacity = '0');
-        searchBox.style.height = '0px';
-        query.style.height = '0px';
-        query.style.width = '100vw';
-        results.innerHTML = '';
-        results.style.height = '0px';
-      }
-    });
-}).catch(console.error)
+              }).join('\n')
+              results.style.height = `80vh`;
+            } else {
+              queryLogos.map(l => l.style.opacity = '0');
+              searchBox.style.height = '0px';
+              query.style.height = '0px';
+              query.style.width = '100vw';
+              results.innerHTML = '';
+              results.style.height = '0px';
+            }
+          });
+        }).catch(console.error)
 
-function debounce(func, wait, immediate) {
-  var timeout;
-  return function() {
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-};</script></div><div id="container"></div><div id="footer"><div id="rss"><a href="https://lineus.dev/articles.xml">Subscribe</a></div><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a></div></body></html>
+        function debounce(func, wait, immediate) {
+          var timeout;
+          return function() {
+            var context = this,
+              args = arguments;
+            var later = function() {
+              timeout = null;
+              if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+          };
+        };
+      </script>
+    </div>
+    <div id="container">
+      <h1>About Me</h1>
+      <p class="abt">
+        My name is Kevin Huff, but please, <strong>call me Kev!</strong>
+      </p>
+      <p class="abt">
+        I have lived all over these United States.
+        Currently I call Ohio home, but unless I'm
+        there, <strong> I'll always miss the desert. </strong>
+      </p>
+      <p class="abt">
+        Though the focus of my career has mainly
+        been on systems administration and service
+        engineering, my educational background is in electronics,
+        and I aspire to be a full-stack javascript developer.
+      </p>
+      <p class="abt">
+        I've written python, perl, and bash in production,
+        contributed javascript to the node mongodb ODM package
+        mongoose, and I'm learning C/C++, ruby, rust, and go.
+      </p>
+      <p class="abt">
+        I don't do social media of any kind, it's a plague, but I'm
+        a very sociable person.
+        <strong>
+    You can reach out to me anytime at
+    lineus@gmail.com
+  </strong>
+        <br />
+        <br />
+        Find me on freenode irc,
+        <code>
+    /msg lineus
+  </code>
+        <br />
+        <br />
+        Find me on the mongoose gitter channel
+        <a href="https://gitter.im/Automattic/mongoose">
+          here.
+        </a>
+      </p>
+      <h1>About This Site</h1>
+      <p class="abt">
+        The code that generates this site is open
+        source and free for everyone to do with as they please. You can
+        view it <a href="https://github.com/lineus/site">here</a> or
+        clone it with <br /><br />
+        <code>git clone https://github.com/lineus/site.git</code>
+      </p>
+      <p class="abt">
+        I don't have any advertising on lineus.dev, and I have no
+        intention of adding any. My hope is that every once and a
+        while, when you find useful information here, you
+        will buy me a cup of coffee at the link below. If you can't
+        afford a cup of coffee, then drop me a note and just say
+        thanks!
+      </p>
+
+      <div>
+        <p class="abt">
+          <strong>
+      If you find a mistake on this site there are a few things you
+      can do:
+    </strong>
+        </p>
+        <ul class="abtList">
+          <li>
+            <a href="https://github.com/lineus/site/issues/new">
+              Open a github issue
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/lineus/site/tree/master/articles">
+              Open a pull request against a specific article
+            </a>
+          </li>
+          <li>
+            <a href="mailto:lineus@gmail.com">
+              Send me an email
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer">
+      <div id="rss"><a href="https://lineus.dev/articles.xml">Subscribe</a></div>
+      <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/dKDB8Y9Vz"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
+    </div>
+  </body>
+
+</html>

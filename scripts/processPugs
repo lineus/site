@@ -2,6 +2,7 @@
 'use strict';
 
 const pug = require('pug');
+const pretty = require('pretty');
 const { readdir, writeFile } = require('fs').promises;
 
 const PUGDIR = './includes';
@@ -22,6 +23,6 @@ async function run() {
     let fn = pug.compileFile(`./includes/${pugFile}`);
     let outName = pugFile.replace(/pug$/, 'html');
     let HTML = fn({});
-    await writeFile(`./docs/${outName}`, HTML);
+    await writeFile(`./docs/${outName}`, pretty(HTML));
   }
 }

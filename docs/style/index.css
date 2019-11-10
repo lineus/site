@@ -33,7 +33,7 @@ body {
   padding-top: 1em; }
 
 #container {
-  padding-left: 1em;
+  padding-left: 4em;
   padding-bottom: 1em; }
 
 #container > h1, h2, h3 {
@@ -41,6 +41,13 @@ body {
 
 #container > p {
   color: #43506E; }
+
+code {
+  background: #212321;
+  color: #ffffff;
+  padding: .2em;
+  padding-left: .5em;
+  padding-right: .5em; }
 
 #nav {
   flex-grow: 20;
@@ -102,6 +109,14 @@ div.qaft {
 
 .downByHalf {
   transform: translateY(10px); }
+
+p.abt {
+  margin: 2em;
+  max-width: 600px; }
+
+ul.abtList {
+  list-style: none;
+  margin: 2em; }
 
 .query {
   padding-left: 1em;
@@ -361,7 +376,7 @@ div.arrow {
   border-top: 10px solid #8EAAE8;
   margin-left: .5em; }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   body {
     display: flex;
     flex-direction: column; }
