@@ -6,5 +6,17 @@
 <link>https://lineus.dev/</link>
 <description>Words</description>
 
+<item>
+<title>Using Hapi Default Cache</title>
+<link>https://lineus.dev/articles/Using_Hapi_Default_Cache.html</link>
+<guid>https://lineus.dev./articles/Using_Hapi_Default_Cache.html</guid>
+<pubDate>Thu, 09 Jul 2020 20:47:02 GMT</pubDate>
+<description>
+It took me longer than it should have to cobble together a working example of Hapi's
+default in-memory cache. This is a step by step guide to go from 0 to caching
+in as little time as possible. 
+</description>
+</item>
+    
 </channel>
 </rss>

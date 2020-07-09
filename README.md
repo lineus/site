@@ -16,4 +16,4 @@ Ok now, for a voice in my own head you're awfully rude. I want to deepen my unde
 
 ## Put up or SHUT UP, when are we going to see real content?
 
-My first article will be published Tuesday, November 19th 2019. 
+

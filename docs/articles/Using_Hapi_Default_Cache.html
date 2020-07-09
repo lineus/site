@@ -2,7 +2,7 @@
 <html lang="en">
 
   <head>
-    <title>lineus.dev</title>
+    <title>lineus.dev Using Hapi Default Cache</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/index.css">
@@ -297,112 +297,206 @@
         };
       </script>
     </div>
-    <div id="sort"><span class="sortButton" onclick="bydate()">Oldest First</span><span class="sortButton" onclick="bytitle()">Alphabetical</span></div>
-    <div id="articles">
-      <ul id="articleList">
-        <li class="articleListing tag-hapi tag-caching tag-http tag-api"><a class="article" href="./articles/Using_Hapi_Default_Cache.html">Using Hapi Default Cache</a><a href="/ls.html?tagged=hapi">hapi</a><a href="/ls.html?tagged=caching">caching</a><a href="/ls.html?tagged=http">http</a><a href="/ls.html?tagged=api">api</a><span class="articlesDate">Thu Jul 09 2020</span></li>
-      </ul>
+    <div id="container">
+      <h1 id="using-hapis-default-cache">Using Hapi&#39;s Default Cache</h1>
+
+      <p>It took me longer than it should have to cobble together a working example of Hapi&#39;s
+        default in-memory cache. This is a step by step guide to go from 0 to caching
+        in as little time as possible. </p>
+
+
+      <h2 id="assumptions">assumptions</h2>
+      <p> 1) you understand basic bash commands</p>
+      <p> 1) basic knowledge of javascript/nodejs/npm</p>
+      <p> 1) you have node installed</p>
+      <p> 1) you can install packages</p>
+      <h2 id="lets-just-get-something-working-to-start">Let&#39;s Just Get Something Working To Start:</h2>
+      <pre><code>hapiCacheTest&gt;: npm init -y
+hapiCacheTest&gt;: npm install @hapi/hapi
+hapiCacheTest&gt;: npm install --save-dev nodemon eslint
+hapiCacheTest&gt;: cat index.js 
+
+const hapi = require(&#39;@hapi/hapi&#39;);
+
+init()
+
+async function init() {
+  const server = new hapi.Server({
+    host: &#39;localhost&#39;,
+    port: 3456
+  });
+
+  server.route({
+    method: &#39;GET&#39;,
+    path: &#39;/add/{a}/{b}&#39;,
+    handler: (req, h) =&gt; {
+      const {a, b} = req.params;
+      const sum = Number(a) + Number(b);
+      return h.response({ sum });
+    }
+  });
+
+  await server.start();
+}
+
+hapiCacheTest&gt;: nodemon -w ./index.js ./index.js
+[nodemon] 2.0.4
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): index.js
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `node ./index.js`
+</code></pre>
+      <p>This is just a very basic Hapi setup that returns the sum of two integers presented to the route handler in the form of request parameters (req.params). I&#39;m using nodemon to auto restart the process anytime I save edits to the file in my code editor.</p>
+      <h2 id="test-server-route-using-curl">Test Server Route Using Curl:</h2>
+      <pre><code>hapiCacheTest&gt;: curl &#39;http://localhost:3456/add/3/1&#39; &amp;&amp; echo
+{&quot;sum&quot;:4}
+hapiCacheTest&gt;: 
+</code></pre>
+      <p>Success! We have a simple hapi server up and running! Curl is used throughout this post for the sake of simplicity.</p>
+      <h2 id="refactoring-faux-async-ary--metrics">Refactoring, Faux-async-ary, &amp; Metrics</h2>
+      <p>Our route currently only returns the sum of the a and b parameters. Lets factor out the add functionality and make the newly refactored function take a full second to run by awaiting a promise that resolves after 1000 milliseconds. We&#39;ll also add a delta field to the http response so that we can track our api call&#39;s duration.</p>
+      <pre><code>hapiCacheTest&gt;: cat index.js 
+
+const hapi = require(&#39;@hapi/hapi&#39;);
+const { performance } = require(&#39;perf_hooks&#39;);
+
+init()
+
+async function init() {
+  const server = new hapi.Server({
+    host: &#39;localhost&#39;,
+    port: 3456
+  });
+
+  server.route({
+    method: &#39;GET&#39;,
+    path: &#39;/add/{a}/{b}&#39;,
+    handler: (req, h) =&gt; {
+      const start = performance.now();
+      const {a, b} = req.params;
+      return add(a, b)
+        .then(sum =&gt; {
+          return h.response({ sum, delta: performance.now() - start });
+        });
+    }
+  });
+
+  await server.start();
+}
+
+async function add(a,b) {
+  await wait(1000);
+  return Number(a) + Number(b);
+}
+
+function wait(n) {
+  return new Promise((res) =&gt; {
+    return setTimeout(res, n);
+  });
+}
+hapiCacheTest&gt;: nodemon -w ./index.js ./index.js
+[nodemon] 2.0.4
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): index.js
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `node ./index.js`</code></pre>
+      <h2 id="test-again-several-times-consecutively">Test Again (several times consecutively)</h2>
+      <pre><code>hapiCacheTest&gt;: i=0; while [ $i -lt 3 ]; do let i=$((i+1)); curl &#39;http://localhost:3456/add/3/1&#39;; echo ; done
+{&quot;sum&quot;:4,&quot;delta&quot;:1001.3164609670639}
+{&quot;sum&quot;:4,&quot;delta&quot;:1001.9132560491562}
+{&quot;sum&quot;:4,&quot;delta&quot;:1001.4086539745331}
+hapiCacheTest&gt;: 
+</code></pre>
+      <p>You can see that our calls to the new add function take just over 1 second <strong>each</strong> to resolve. By approximating, or in this case exagerating, the length of time that might pass in a call to an external api, we will be able to see if our future responses are being cached the way we expect them to be or not.</p>
+      <h2 id="gimmie-your-cache">Gimmie Your Cache!</h2>
+      <p>Next we&#39;ll take advantage of hapi&#39;s built-in memory cache to store the result of each unique pair of addends. This will allow us to only call the psuedo-expensive add function at most, once per every 10 seconds per pair of addends. </p>
+      <p><em>the thing to note in the example below, the part that tripped me up on the Hapi docs, is that in order to use the default cache, you <strong>do not</strong> provied the cache name in the options to <code>server.cache(...)</code></em></p>
+      <pre><code>hapiCacheTest&gt;: cat index.js 
+
+const hapi = require(&#39;@hapi/hapi&#39;);
+const { performance } = require(&#39;perf_hooks&#39;);
+
+init()
+
+async function init() {
+  const server = new hapi.Server({
+    host: &#39;localhost&#39;,
+    port: 3456
+  });
+
+  const sumCache = server.cache({
+    expiresIn: 10 * 1000,
+    segment: &#39;sums&#39;,
+    generateTimeout: 2000,
+    generateFunc: async (id) =&gt; {
+      return add(id.a, id.b);
+    }
+  });
+
+  server.route({
+    method: &#39;GET&#39;,
+    path: &#39;/add/{a}/{b}&#39;,
+    handler: (req, h) =&gt; {
+      const start = performance.now();
+      const {a, b} = req.params;
+      const id = `${a}:${b}`;
+      return sumCache.get({id, a, b })
+        .then(sum =&gt; {
+          return h.response({ sum, delta: performance.now() - start });
+        });
+    }
+  });
+
+  await server.start();
+}
+
+async function add(a,b) {
+  await wait(1000);
+  return Number(a) + Number(b);
+}
+
+function wait(n) {
+  return new Promise((res) =&gt; {
+    return setTimeout(res, n);
+  });
+}
+
+hapiCacheTest&gt;: nodemon -w ./index.js ./index.js
+[nodemon] 2.0.4
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): index.js
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `node ./index.js`</code></pre>
+      <h2 id="tests-with-cache">Tests with Cache</h2>
+      <pre><code>hapiCacheTest&gt;: i=0; while [ $i -lt 3 ]; do let i=$((i+1)); curl &#39;http://localhost:3456/add/3/1&#39;; echo ; done
+{&quot;sum&quot;:4,&quot;delta&quot;:1003.5052109956741}
+{&quot;sum&quot;:4,&quot;delta&quot;:0.04381299018859863}
+{&quot;sum&quot;:4,&quot;delta&quot;:0.0415189266204834}
+hapiCacheTest&gt;: </code></pre>
+      <p>You can see that the first call to the add-faux-api call takes the expected 1 second to complete, but the subsequent calls are served instantly from the cache. We can further demonstrate the expires setting by adding a fourth call to the api after the cache has expired:</p>
+      <pre><code>hapiCacheTest&gt;: i=0; while [ $i -lt 4 ]; do let i=$((i+1)); if [ $i -eq 4 ]; then sleep 10; fi; curl &#39;http://localhost:3456/add/3/1&#39;; echo ; done
+{&quot;sum&quot;:4,&quot;delta&quot;:1002.0322639942169}
+{&quot;sum&quot;:4,&quot;delta&quot;:0.061856985092163086}
+{&quot;sum&quot;:4,&quot;delta&quot;:0.055364012718200684}
+{&quot;sum&quot;:4,&quot;delta&quot;:1001.4537309408188}
+hapiCacheTest&gt;: </code></pre>
+      <h2 id="conclusion">Conclusion</h2>
+      <p>I hope this posts makes it a little bit easier to get started using hapi&#39;s cache system. I&#39;ll write a follow up post on the reason I was exploring hapi&#39;s cache in the first place and hopefully I&#39;ll be able to use it to store images that I want to cache in my app.</p>
+
+
+
+
     </div>
+    <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.4.0/stitch.js"></script>
     <script>
-      const isTagged = /tagged/.test(window.location);
-      let tags = [];
-      const dateBut = document.querySelector('span.sortButton:first-child');
-      const titlBut = document.querySelector('span.sortButton:last-child');
-      const list = document.querySelector('#articleList');
-      const articles = Array.from(list.childNodes);
-
-      if (isTagged) {
-        tags = `${window.location}`.split("=")[1].split(",");
-        clearAllarticles()
-        tags.map(setVisibleByTag)
-      }
-
-      function clearAllarticles() {
-        articles.map(article => {
-          if (!article.style) {
-            return;
-          }
-          article.style.display = 'none';
-        })
-      }
-
-      function setVisibleByTag(t) {
-        articles.map(article => {
-          if (!article.classList) {
-            return;
-          }
-          if (article.classList.contains(`tag-${t}`)) {
-            article.style.display = 'flex';
-          }
-        })
-      }
-
-      function replacearticles(arr) {
-        while (list.firstChild) {
-          list.removeChild(list.firstChild);
-        }
-        for (let child of arr) {
-          list.appendChild(child);
-        }
-      }
-
-      function bydate() {
-        let nodeList = [].concat(articles);
-        if (dateBut.innerText === 'Oldest First') {
-          dateBut.innerText = 'Newest First';
-          nodeList.sort(oldestFirst);
-        } else {
-          dateBut.innerText = 'Oldest First';
-          nodeList.sort(newestFirst);
-        }
-        replacearticles(nodeList);
-      }
-
-      function bytitle() {
-        let nodeList = [].concat(articles);
-        if (titlBut.innerText === 'Alphabetical') {
-          titlBut.innerText = 'Reverse Alpha';
-          nodeList.sort(alpha);
-        } else {
-          titlBut.innerText = 'Alphabetical';
-          nodeList.sort(revAlpha);
-        }
-        replacearticles(nodeList);
-      }
-
-      function oldestFirst(a, b) {
-        let aEl = a.querySelector('span.articlesDate');
-        let bEl = b.querySelector('span.articlesDate');
-        let aD = new Date(aEl.innerText);
-        let bD = new Date(bEl.innerText);
-        return aD - bD;
-      }
-
-      function newestFirst(a, b) {
-        let aEl = a.querySelector('span.articlesDate');
-        let bEl = b.querySelector('span.articlesDate');
-        let aD = new Date(aEl.innerText);
-        let bD = new Date(bEl.innerText);
-        return bD - aD;
-      }
-
-      function alpha(a, b) {
-        let aT = a.querySelector('a').innerText;
-        let bT = b.querySelector('a').innerText;
-        if (aT > bT) {
-          return 1;
-        }
-        return -1
-      }
-
-      function revAlpha(a, b) {
-        let aT = a.querySelector('a').innerText;
-        let bT = b.querySelector('a').innerText;
-        if (aT < bT) {
-          return 1;
-        }
-        return -1
-      }
+      const link = './docs/articles/Using_Hapi_Default_Cache.html';
+      const client = stitch.Stitch.initializeDefaultAppClient('blog-iydtx');
+      const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('SiteMetrics');
+      client.auth.loginWithCredential(new stitch.AnonymousCredential()).then(function(user) {
+        db.collection('visitors').insertOne({
+          path: link
+        }).catch(console.dir);
+      }).catch(console.dir);
     </script>
     <div id="footer">
       <div id="rss"><a href="https://lineus.dev/articles.xml">Subscribe</a></div>

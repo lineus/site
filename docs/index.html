@@ -300,11 +300,16 @@
     <div id="container">
       <div id="latestArticle">
         <h3 class="lp">Latest Article</h3>
-        <p><a href=""></a></p>
-        <div id="latestSyn"></div>
+        <p><a href="./articles/Using_Hapi_Default_Cache.html">Using Hapi Default Cache</a></p>
+        <div id="latestSyn">
+          It took me longer than it should have to cobble together a working example of Hapi's
+          default in-memory cache. This is a step by step guide to go from 0 to caching
+          in as little time as possible.
+        </div>
       </div>
       <div id="top3Articles">
         <h3>Top Articles</h3>
+        <div class="topPost"><a href="articles/The_Sixth_Wonder_of_the_World.html">The Sixth Wonder of the World</a></div>
       </div>
       <div id="tags">
         <h3>Articles By Tag:</h3>
@@ -312,7 +317,7 @@
       </div>
     </div>
     <script>
-      const jsonString = '[]';
+      const jsonString = '[{"path":"./articles/Using_Hapi_Default_Cache.html","tags":["hapi","caching","http","api"]}]';
       const json = JSON.parse(jsonString);
       const cont = document.querySelector('#cloud');
       const tags = [];
