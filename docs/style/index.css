@@ -42,6 +42,9 @@ body {
 #container > p {
   color: #43506E; }
 
+pre {
+  background: black; }
+
 code {
   background: black;
   color: #ffffff;
