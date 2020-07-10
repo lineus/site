@@ -16,7 +16,7 @@
       "http",
       "api"
     ],
-    "updated": 0,
+    "updated": 1594342148369,
     "synopsis": "\nIt took me longer than it should have to cobble together a working example of Hapi's\ndefault in-memory cache. This is a step by step guide to go from 0 to caching\nin as little time as possible. \n",
     "status": "PUB"
   }

@@ -6,13 +6,14 @@
 
 body {
   min-height: 100vh;
-  background-color: #8EAAE8;
+  background-color: #BBF5FA;
   color: #212321;
   font-family: 'Nanum Gothic', sans-serif;
   display: flex;
   flex-direction: column; }
 
 #header {
+  background: #8EAAE8;
   flex-grow: 0;
   display: flex;
   flex-direction: row; }
@@ -27,30 +28,41 @@ body {
   justify-self: flex-end; }
 
 #container, #articles {
-  background-color: #BBF5FA;
+  background-color: white;
   flex-grow: 30;
   font-family: 'Nanum Gothic', sans-serif;
+  align-self: center;
   padding-top: 1em; }
 
 #container {
-  padding-left: 4em;
-  padding-bottom: 1em; }
+  max-width: 80vw;
+  padding-left: 2em;
+  padding-right: 2em; }
 
 #container > h1, h2, h3 {
   font-family: 'Cabin', sans-serif; }
 
 #container > p {
-  color: #43506E; }
+  color: #43506E;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  max-width: 50vw; }
+
+#container ol {
+  margin-left: 2em;
+  margin-bottom: 1em; }
 
 pre {
-  background: black; }
+  margin-top: .5em;
+  margin-bottom: .5em;
+  background: black;
+  padding: 1em; }
 
 code {
   background: black;
-  color: #ffffff;
-  padding: .2em;
-  padding-left: .5em;
-  padding-right: .5em; }
+  color: #A28EE8;
+  font-size: 1.5em;
+  font-weight: 600; }
 
 #nav {
   flex-grow: 20;

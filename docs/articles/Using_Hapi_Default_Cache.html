@@ -305,13 +305,14 @@
         in as little time as possible. </p>
 
 
-      <h2 id="assumptions">assumptions</h2>
-      <p> 1) you understand basic bash commands</p>
-      <p> 1) basic knowledge of javascript/nodejs/npm</p>
-      <p> 1) you have node installed</p>
-      <p> 1) you can install packages</p>
+      <h2 id="prerequisites">Prerequisites</h2>
+      <ol>
+        <li>basic understanding of bash commands</li>
+        <li>basic knowledge of javascript/nodejs/npm</li>
+        <li>a working installation of nodejs</li>
+      </ol>
       <h2 id="lets-just-get-something-working-to-start">Let&#39;s Just Get Something Working To Start:</h2>
-      <pre><code>hapiCacheTest&gt;: npm init -y
+      <pre><code class="language-bash">hapiCacheTest&gt;: npm init -y
 hapiCacheTest&gt;: npm install @hapi/hapi
 hapiCacheTest&gt;: npm install --save-dev nodemon eslint
 hapiCacheTest&gt;: cat index.js 
@@ -355,7 +356,7 @@ hapiCacheTest&gt;:
       <p>Success! We have a simple hapi server up and running! Curl is used throughout this post for the sake of simplicity.</p>
       <h2 id="refactoring-faux-async-ary--metrics">Refactoring, Faux-async-ary, &amp; Metrics</h2>
       <p>Our route currently only returns the sum of the a and b parameters. Lets factor out the add functionality and make the newly refactored function take a full second to run by awaiting a promise that resolves after 1000 milliseconds. We&#39;ll also add a delta field to the http response so that we can track our api call&#39;s duration.</p>
-      <pre><code>hapiCacheTest&gt;: cat index.js 
+      <pre><code class="language-bash">hapiCacheTest&gt;: cat index.js 
 
 const hapi = require(&#39;@hapi/hapi&#39;);
 const { performance } = require(&#39;perf_hooks&#39;);
@@ -401,7 +402,12 @@ hapiCacheTest&gt;: nodemon -w ./index.js ./index.js
 [nodemon] watching extensions: js,mjs,json
 [nodemon] starting `node ./index.js`</code></pre>
       <h2 id="test-again-several-times-consecutively">Test Again (several times consecutively)</h2>
-      <pre><code>hapiCacheTest&gt;: i=0; while [ $i -lt 3 ]; do let i=$((i+1)); curl &#39;http://localhost:3456/add/3/1&#39;; echo ; done
+      <pre><code class="language-bash">hapiCacheTest&gt;: i=0; \
+  while [ $i -lt 3 ]; do \
+    let i=$((i+1)); \
+    curl &#39;http://localhost:3456/add/3/1&#39;; \
+    echo ; \
+  done
 {&quot;sum&quot;:4,&quot;delta&quot;:1001.3164609670639}
 {&quot;sum&quot;:4,&quot;delta&quot;:1001.9132560491562}
 {&quot;sum&quot;:4,&quot;delta&quot;:1001.4086539745331}
@@ -411,7 +417,7 @@ hapiCacheTest&gt;:
       <h2 id="gimmie-your-cache">Gimmie Your Cache!</h2>
       <p>Next we&#39;ll take advantage of hapi&#39;s built-in memory cache to store the result of each unique pair of addends. This will allow us to only call the psuedo-expensive add function at most, once per every 10 seconds per pair of addends. </p>
       <p><em>the thing to note in the example below, the part that tripped me up on the Hapi docs, is that in order to use the default cache, you <strong>do not</strong> provied the cache name in the options to <code>server.cache(...)</code></em></p>
-      <pre><code>hapiCacheTest&gt;: cat index.js 
+      <pre><code class="language-bash">hapiCacheTest&gt;: cat index.js 
 
 const hapi = require(&#39;@hapi/hapi&#39;);
 const { performance } = require(&#39;perf_hooks&#39;);
@@ -468,13 +474,26 @@ hapiCacheTest&gt;: nodemon -w ./index.js ./index.js
 [nodemon] watching extensions: js,mjs,json
 [nodemon] starting `node ./index.js`</code></pre>
       <h2 id="tests-with-cache">Tests with Cache</h2>
-      <pre><code>hapiCacheTest&gt;: i=0; while [ $i -lt 3 ]; do let i=$((i+1)); curl &#39;http://localhost:3456/add/3/1&#39;; echo ; done
+      <pre><code class="language-bash">hapiCacheTest&gt;: i=0; \
+  while [ $i -lt 3 ]; do \
+    let i=$((i+1)); \
+    curl &#39;http://localhost:3456/add/3/1&#39;; \
+    echo ; \
+  done
 {&quot;sum&quot;:4,&quot;delta&quot;:1003.5052109956741}
 {&quot;sum&quot;:4,&quot;delta&quot;:0.04381299018859863}
 {&quot;sum&quot;:4,&quot;delta&quot;:0.0415189266204834}
 hapiCacheTest&gt;: </code></pre>
       <p>You can see that the first call to the add-faux-api call takes the expected 1 second to complete, but the subsequent calls are served instantly from the cache. We can further demonstrate the expires setting by adding a fourth call to the api after the cache has expired:</p>
-      <pre><code>hapiCacheTest&gt;: i=0; while [ $i -lt 4 ]; do let i=$((i+1)); if [ $i -eq 4 ]; then sleep 10; fi; curl &#39;http://localhost:3456/add/3/1&#39;; echo ; done
+      <pre><code class="language-bash">hapiCacheTest&gt;: i=0; \
+  while [ $i -lt 4 ]; do \
+    let i=$((i+1)); \
+    if [ $i -eq 4 ]; then \
+      sleep 10; \
+    fi; \
+    curl &#39;http://localhost:3456/add/3/1&#39;; \
+    echo ; \
+  done
 {&quot;sum&quot;:4,&quot;delta&quot;:1002.0322639942169}
 {&quot;sum&quot;:4,&quot;delta&quot;:0.061856985092163086}
 {&quot;sum&quot;:4,&quot;delta&quot;:0.055364012718200684}

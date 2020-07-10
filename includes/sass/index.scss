@@ -18,7 +18,7 @@ $arrow_seed: 20px;
 
 body {
   min-height: 100vh;
-  background-color: $bg;
+  background-color: $bgl;
   color: $fg;
   font-family: 'Nanum Gothic', sans-serif;
   display: flex;
@@ -26,6 +26,7 @@ body {
 }
 
 #header {
+  background: $bg;
   flex-grow: 0;
   display: flex;
   flex-direction: row;
@@ -42,17 +43,17 @@ body {
 }
 
 #container, #articles {
-  background-color: $bgl;
+  background-color: white;
   flex-grow: 30;
   font-family: 'Nanum Gothic', sans-serif;
-  // margin-left: 1em;
-  // margin-right: 1em;
+  align-self: center;
   padding-top: 1em;
 }
 
 #container {
-  padding-left: 4em;
-  padding-bottom: 1em;
+  max-width: 80vw;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 
 #container > h1,h2,h3 {
@@ -61,18 +62,28 @@ body {
 
 #container > p {
   color: $fg_sup;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  max-width: 50vw;
+}
+
+#container ol {
+  margin-left: 2em;
+  margin-bottom: 1em;
 }
 
 pre {
+  margin-top: .5em;
+  margin-bottom: .5em;
   background: black;
+  padding: 1em;
 }
 
 code {
   background: black;
-  color: $w;
-  padding: .2em;
-  padding-left: .5em;
-  padding-right: .5em;
+  color: $fg_ibt;
+  font-size: 1.5em;
+  font-weight: 600;
 }
 
 #nav {

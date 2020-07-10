@@ -5,14 +5,13 @@ default in-memory cache. This is a step by step guide to go from 0 to caching
 in as little time as possible. 
 <!-- Synopsis End -->
 
-## assumptions
-   1) you understand basic bash commands
-   1) basic knowledge of javascript/nodejs/npm
-   1) you have node installed
-   1) you can install packages
+## Prerequisites
+   1. basic understanding of bash commands
+   1. basic knowledge of javascript/nodejs/npm
+   1. a working installation of nodejs
 
 ## Let's Just Get Something Working To Start:
-```
+```bash
 hapiCacheTest>: npm init -y
 hapiCacheTest>: npm install @hapi/hapi
 hapiCacheTest>: npm install --save-dev nodemon eslint
@@ -65,7 +64,7 @@ Success! We have a simple hapi server up and running! Curl is used throughout th
 ## Refactoring, Faux-async-ary, & Metrics
 Our route currently only returns the sum of the a and b parameters. Lets factor out the add functionality and make the newly refactored function take a full second to run by awaiting a promise that resolves after 1000 milliseconds. We'll also add a delta field to the http response so that we can track our api call's duration.
 
-```
+```bash
 hapiCacheTest>: cat index.js 
 
 const hapi = require('@hapi/hapi');
@@ -113,8 +112,13 @@ hapiCacheTest>: nodemon -w ./index.js ./index.js
 [nodemon] starting `node ./index.js`
 ```
 ## Test Again (several times consecutively)
-```
-hapiCacheTest>: i=0; while [ $i -lt 3 ]; do let i=$((i+1)); curl 'http://localhost:3456/add/3/1'; echo ; done
+```bash
+hapiCacheTest>: i=0; \
+  while [ $i -lt 3 ]; do \
+    let i=$((i+1)); \
+    curl 'http://localhost:3456/add/3/1'; \
+    echo ; \
+  done
 {"sum":4,"delta":1001.3164609670639}
 {"sum":4,"delta":1001.9132560491562}
 {"sum":4,"delta":1001.4086539745331}
@@ -128,7 +132,7 @@ Next we'll take advantage of hapi's built-in memory cache to store the result of
 
 *the thing to note in the example below, the part that tripped me up on the Hapi docs, is that in order to use the default cache, you **do not** provied the cache name in the options to `server.cache(...)`*
 
-```
+```bash
 hapiCacheTest>: cat index.js 
 
 const hapi = require('@hapi/hapi');
@@ -188,8 +192,13 @@ hapiCacheTest>: nodemon -w ./index.js ./index.js
 ```
 
 ## Tests with Cache
-```
-hapiCacheTest>: i=0; while [ $i -lt 3 ]; do let i=$((i+1)); curl 'http://localhost:3456/add/3/1'; echo ; done
+```bash
+hapiCacheTest>: i=0; \
+  while [ $i -lt 3 ]; do \
+    let i=$((i+1)); \
+    curl 'http://localhost:3456/add/3/1'; \
+    echo ; \
+  done
 {"sum":4,"delta":1003.5052109956741}
 {"sum":4,"delta":0.04381299018859863}
 {"sum":4,"delta":0.0415189266204834}
@@ -198,8 +207,16 @@ hapiCacheTest>:
 
 You can see that the first call to the add-faux-api call takes the expected 1 second to complete, but the subsequent calls are served instantly from the cache. We can further demonstrate the expires setting by adding a fourth call to the api after the cache has expired:
 
-```
-hapiCacheTest>: i=0; while [ $i -lt 4 ]; do let i=$((i+1)); if [ $i -eq 4 ]; then sleep 10; fi; curl 'http://localhost:3456/add/3/1'; echo ; done
+```bash
+hapiCacheTest>: i=0; \
+  while [ $i -lt 4 ]; do \
+    let i=$((i+1)); \
+    if [ $i -eq 4 ]; then \
+      sleep 10; \
+    fi; \
+    curl 'http://localhost:3456/add/3/1'; \
+    echo ; \
+  done
 {"sum":4,"delta":1002.0322639942169}
 {"sum":4,"delta":0.061856985092163086}
 {"sum":4,"delta":0.055364012718200684}
@@ -213,5 +230,5 @@ I hope this posts makes it a little bit easier to get started using hapi's cache
 
 <!-- Tags: hapi,caching,http,api -->
 <!-- Published: 1594327622230 -->
-<!-- Updated: -->
+<!-- Updated: 1594342148369 -->
 <!-- Status: PUB -->
