@@ -69,7 +69,10 @@
       },
       {
         "name": "links",
-        "tokens": []
+        "tokens": [
+          "here",
+          "hapi.dev/tutorials/caching/?lang=en_US#-server-side-caching"
+        ]
       }
     ]
   }

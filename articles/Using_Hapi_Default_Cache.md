@@ -12,6 +12,8 @@ in as little time as possible.
 
 ## Let's Just Get Something Working To Start:
 ```bash
+examples>: mkdir hapiCacheTest
+examples>: cd hapiCacheTest 
 hapiCacheTest>: npm init -y
 hapiCacheTest>: npm install @hapi/hapi
 hapiCacheTest>: npm install --save-dev nodemon eslint
@@ -49,7 +51,8 @@ hapiCacheTest>: nodemon -w ./index.js ./index.js
 
 ```
 
-This is just a very basic Hapi setup that returns the sum of two integers presented to the route handler in the form of request parameters (req.params). I'm using nodemon to auto restart the process anytime I save edits to the file in my code editor.
+This is just a very basic Hapi configuration with a single route that returns the sum of two integers presented to the route handler in the form of request parameters (req.params).
+The overarching theme of this example is taken in part from the hapi server-side caching example [here](https://hapi.dev/tutorials/caching/?lang=en_US#-server-side-caching). I'm using nodemon to auto restart the process anytime I save edits to the file in my code editor.
 
 ## Test Server Route Using Curl:
 

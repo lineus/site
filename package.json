@@ -11,7 +11,7 @@
     "build": "./scripts/build.sh",
     "dev": "./scripts/dev.sh",
     "undev": "./scripts/undev.sh",
-    "deploy": "npm test && npm run build && bash -lc \"shirley 'deploying site'\"",
+    "deploy": "npm test && npm run build && git add . && git commit -m 'deploying site' && git push origin master",
     "new": "./scripts/newarticle.sh $TITLE"
   },
   "repository": {
