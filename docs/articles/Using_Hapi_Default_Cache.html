@@ -312,7 +312,9 @@
         <li>a working installation of nodejs</li>
       </ol>
       <h2 id="lets-just-get-something-working-to-start">Let&#39;s Just Get Something Working To Start:</h2>
-      <pre><code class="language-bash">hapiCacheTest&gt;: npm init -y
+      <pre><code class="language-bash">examples&gt;: mkdir hapiCacheTest
+examples&gt;: cd hapiCacheTest 
+hapiCacheTest&gt;: npm init -y
 hapiCacheTest&gt;: npm install @hapi/hapi
 hapiCacheTest&gt;: npm install --save-dev nodemon eslint
 hapiCacheTest&gt;: cat index.js 
@@ -347,7 +349,8 @@ hapiCacheTest&gt;: nodemon -w ./index.js ./index.js
 [nodemon] watching extensions: js,mjs,json
 [nodemon] starting `node ./index.js`
 </code></pre>
-      <p>This is just a very basic Hapi setup that returns the sum of two integers presented to the route handler in the form of request parameters (req.params). I&#39;m using nodemon to auto restart the process anytime I save edits to the file in my code editor.</p>
+      <p>This is just a very basic Hapi configuration with a single route that returns the sum of two integers presented to the route handler in the form of request parameters (req.params).
+        The overarching theme of this example is taken in part from the hapi server-side caching example <a href="https://hapi.dev/tutorials/caching/?lang=en_US#-server-side-caching">here</a>. I&#39;m using nodemon to auto restart the process anytime I save edits to the file in my code editor.</p>
       <h2 id="test-server-route-using-curl">Test Server Route Using Curl:</h2>
       <pre><code>hapiCacheTest&gt;: curl &#39;http://localhost:3456/add/3/1&#39; &amp;&amp; echo
 {&quot;sum&quot;:4}

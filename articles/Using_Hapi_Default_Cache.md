@@ -233,5 +233,5 @@ I hope this posts makes it a little bit easier to get started using hapi's cache
 
 <!-- Tags: hapi,caching,http,api -->
 <!-- Published: 1594327622230 -->
-<!-- Updated: 1594342148369 -->
+<!-- Updated: 1594344528699 -->
 <!-- Status: PUB -->
